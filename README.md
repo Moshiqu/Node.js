@@ -1,17 +1,17 @@
 # Markdown 语法参考
 
-\# 一级标题
-\## 二级标题
-\##### 五级标题
-\- 列表第一项
-\- 列表第二项
-\1. 有序列表第一项
-\2. 有序列表第二项
-\[标题](链接地址)
-\![图片描述](图片链接地址) \*斜体\*
-\*\*粗体\*\*
-\> 引用段落
-\```代码块```
+\# 一级标题  
+\## 二级标题  
+\##### 五级标题  
+\- 列表第一项  
+\- 列表第二项  
+\1. 有序列表第一项  
+\2. 有序列表第二项  
+\[标题](链接地址)  
+\![图片描述](图片链接地址) \*斜体\*  
+\*\*粗体\*\*  
+\> 引用段落  
+\```代码块```  
 
 # 2022/10/12
 
@@ -23,16 +23,18 @@ console.log('\x1B[33m','express server is running at http://127.0.0.1:3001');
 
 ### 一个 scripts 同时运行两个项目
 
-(1) npm i concurrently
-(2) package.json 中修改 scripts
-"startall": "concurrently \"nodemon ./server/index.js\" \"react-scripts start\" ",
-\"中,\为转义符
+(1) npm i concurrently  
+(2) package.json 中修改 scripts  
+```
+    "startall": "concurrently \"nodemon ./server/index.js\" \"react-scripts start\" ",
+```  
+其中\\", \为转义符  
 
 ### express.static() 托管静态资源
 
-(1) express 托管静态资源
-(2) express 在指定的静态目录中查找文件, 并对外提供资源的访问路径, 因此, 存放静态资源的目录名不会出现在 URL 中
-(3) 需要用 path 拼接路径
+(1) express 托管静态资源  
+(2) express 在指定的静态目录中查找文件, 并对外提供资源的访问路径, 因此, 存放静态资源的目录名不会出现在 URL 中  
+(3) 需要用 path 拼接路径  
 
 ```
     const path = require("path")
