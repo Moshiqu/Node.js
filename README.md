@@ -1,3 +1,18 @@
+# Markdown 语法参考
+
+\# 一级标题
+\## 二级标题
+\##### 五级标题
+\- 列表第一项
+\- 列表第二项
+\1. 有序列表第一项
+\2. 有序列表第二项
+\[标题](链接地址)
+\![图片描述](图片链接地址) \*斜体\*
+\*\*粗体\*\*
+\> 引用段落
+\```代码块```
+
 # 2022/10/12
 
 ## node
@@ -13,36 +28,43 @@ console.log('\x1B[33m','express server is running at http://127.0.0.1:3001');
 "startall": "concurrently \"nodemon ./server/index.js\" \"react-scripts start\" ",
 \"中,\为转义符
 
-# Name
+### express.static() 托管静态资源
 
-[Badges]
+(1) express 托管静态资源
+(2) express 在指定的静态目录中查找文件, 并对外提供资源的访问路径, 因此, 存放静态资源的目录名不会出现在 URL 中
+(3) 需要用 path 拼接路径
 
-## Introduction - 介绍
+```
+    const path = require("path")
+    const app = express()
+    app.use(express.static(path.join(\_\_dirname, 'public')))
+```
 
-### Summary - 概要
+### 参数传递
 
-### Features - 特性
+#### params 动态参数
 
-## Requirements - 必要条件（环境，对所有项目，和所有子模块和库的描述。）
+```
+    // 监听get请求
+    // :id和:name 为动态参数
+    app.get('/user/:id/:name', (req, res) => {
+        // query参数获取, 默认为空对象
+        console.log(req.query, '---->query参数');
+        // params参数获取,:id为动态参数
+        console.log(req.params, '====>params动态参数')
+        // 调用express提供的res.send方法,向客户端相应一个JSON对象
+        res.send({ name: "zs", age: 18, gender: "男" })
+    })
+```
 
-## Configuration - 配置（配置信息。）
+#### query 参数
 
-## Installation - 安装（如何安装。）
-
-## Usage - 用法（用法。）
-
-## Development - 开发（关于怎样开发的文档信息。（API 等。））
-
-## Changelog - 更新日志（一个简短的历史记录（更改，替换或者其他）。）
-
-## FAQ - 常见问题（常见问题。）
-
-## Support - 支持
-
-### Dos - 文档（更多文档。）
-
-### Contact - 联系（其他联系信息（电子邮件地址，网站，公司名称，地址等）。提交 bug，功能要求，提交补丁，加入邮件列表，得到通知，或加入用户或开发开发区群的介绍。）
-
-## Authors and acknowledgment - 贡献者和感谢（作者列表和鸣谢。）
-
-## License - 版权信息（版权和许可信息（或阅读许可证）、法律声明。）
+```
+    // 监听post请求
+    app.post('/user', (req, res) => {
+        // query参数获取, 默认为空对象
+        console.log(req.query, '---->query参数');
+        // 调用express提供的res.send方法,向客户端相应一个字符串
+        res.send('请求成功')
+    })
+```
