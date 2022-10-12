@@ -20,7 +20,9 @@
 
 ### console.log() 带颜色
 
-console.log('\x1B[33m','express server is running at http://127.0.0.1:3001');
+```
+    console.log('\x1B[33m','express server is running at http://127.0.0.1:3001');
+```
 
 ### 一个 scripts 同时运行两个项目
 
