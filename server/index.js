@@ -9,6 +9,12 @@ const app = express()
 // 需要用path拼接路径
 app.use(express.static(path.join(__dirname, 'public')))
 
+// 托管多个静态资源, 从上往下一层一层找
+app.use(express.static(path.join(__dirname, 'static')))
+
+// 资源路径包含在URL中
+app.use(`/static`, express.static(path.join(__dirname, 'public')))
+
 // 监听get请求
 // :id和:name 为动态参数
 app.get('/user/:id/:name', (req, res) => {

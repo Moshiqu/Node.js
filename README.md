@@ -27,17 +27,19 @@
 ### 一个 scripts 同时运行两个项目
 
 (1) npm i concurrently  
-(2) package.json 中修改 scripts  
+(2) package.json 中修改 scripts
+
 ```
     "startall": "concurrently \"nodemon ./server/index.js\" \"react-scripts start\" ",
-```  
-其中\\", \为转义符  
+```
+
+其中\\", \为转义符
 
 ### express.static() 托管静态资源
 
 (1) express 托管静态资源  
 (2) express 在指定的静态目录中查找文件, 并对外提供资源的访问路径, 因此, 存放静态资源的目录名不会出现在 URL 中  
-(3) 需要用 path 拼接路径  
+(3) 需要用 path 拼接路径
 
 ```
     const path = require("path")
@@ -73,3 +75,7 @@
         res.send('请求成功')
     })
 ```
+
+# 2022/10/12
+
+## node
