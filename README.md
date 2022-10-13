@@ -21,7 +21,7 @@ _斜体_
 
 ### console.log() 带颜色
 
-```javascript
+```JavaScript
 console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 ```
 
@@ -42,7 +42,7 @@ console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 - express 在指定的静态目录中查找文件, 并对外提供资源的访问路径, 因此, 存放静态资源的目录名不会出现在 URL 中
 - 需要用 path 拼接路径
 
-```javascript
+```JavaScript
     const path = require("path")
     const app = express()
     app.use(express.static(path.join(\_\_dirname, 'public')))
@@ -54,7 +54,7 @@ console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 
 #### params 动态参数
 
-```javascript
+```JavaScript
 // 监听get请求
 // :id和:name 为动态参数
 app.get('/user/:id/:name', (req, res) => {
@@ -69,7 +69,7 @@ app.get('/user/:id/:name', (req, res) => {
 
 #### query 参数
 
-```javascript
+```JavaScript
 // 监听post请求
 app.post('/user', (req, res) => {
   // query参数获取, 默认为空对象
@@ -79,7 +79,20 @@ app.post('/user', (req, res) => {
 });
 ```
 
-# 2022/10/12
+#### body 请求体数据
+
+```javascript
+// 在服务器, 可以使用 req.body 这个属性, 来接收客户端发送过来的JSON格式表单数据 (postman: Body->raw->Text->JSON) 和 url-encoded格式的数据 (postman: Body->x-www-form-urlencoded)
+// 默认情况下, 如果不配置解析表单数据的中间件, 则 req.body 默认等于 undefined
+app.use(express.json()); // express.json()中间件,解析 JSON 格式表单数据
+app.use(express.urlencoded()) // express.urlencoded()中间件, 解析 url-encoded 格式的数据
+app.post('/json', (req, res) => {
+  console.log(req.body,'---->请求体数据);
+  res.send(req.body);
+});
+```
+
+# 2022/10/13
 
 ## node
 
@@ -96,16 +109,16 @@ app.post('/user', (req, res) => {
 #### 将路由抽离为**单独的模块**
 
 - 创建路由模块对应的 .js 文件
-- 调用**express.Route()**函数创建路由对象
+- 调用 **express.Route()** 函数创建路由对象
 - 向路由对象上挂载具体的路由
-- 使用**module.exports**向外共享路由对象
-- 使用**app.use()**函数注册路由模块
+- 使用 **module.exports** 向外共享路由对象
+- 使用 **app.use()** 函数注册路由模块
 
 #### Example
 
 index.js
 
-```javascript
+```JavaScript
 const express = require('express');
 
 // 创建服务器
@@ -122,7 +135,7 @@ app.listen(3001, () => {
 
 ./router.js
 
-```javascript
+```JavaScript
 const router = require('express').Router();
 
 router.get('/user/list', (req, res) => {
@@ -138,7 +151,7 @@ module.exports = router;
 
 ### 路由模块添加前缀
 
-```javascript
+```JavaScript
 // 导入路由模块
 const userRouter = require('./router/user.js');
 
@@ -148,5 +161,164 @@ app.use('api', userRouter);
 
 ### 中间件
 
-#### Express中间件格式
-![Express中间件格式](/public/readme/images/express_middleware.png)  
+#### 中间件作用
+
+多个中间件之间, **共享同一份 req 和 res**, 基于这样的特性, 可以在**上游**中间件中, **统一**为 req 或 res 对象添加**自定义**的**属性**和**方法**, 供下游中间件或路由使用
+
+#### 中间件分类
+
+- 应用级别
+- 路由级别
+- 错误级别
+- Express 内置的中间价
+- 第三方中间件
+- 自定义中间件
+
+##### 应用级别的中间件
+
+通过 **app.use()** 或 **app.get()** 或 **app.post()**, _绑定到 app 实例上的中间件_, 叫做应用级别的中间件
+
+##### 路由级别的中间件
+
+绑定到 **express.Router()** 实例上的中间件, 叫做路由级别的中间件. 它的用法和应用级别中间件没有任何区别. _应用级别中间件绑定到 app 实例上, 路由级别中间件绑定到 Router 实例上_.
+
+##### 错误级别的中间件
+
+错误级别中间件的**作用**: 专门用来**捕获整个项目中发生的异常错误**, 从而防止项目异常崩溃的问题  
+**格式**: 错误级别中间件的 function 处理函数中, **必须有 4 个形参**, 形参顺序从前往后, 分别是(**err**,req,res,next)  
+错误级别的中间件, **必须注册在所有路由之后**!
+
+```JavaScript
+// 错误级别中间件
+app.get('/err', (req, res) => {                 // 1.路由
+    throw new Error('服务器内部发生了错误!')      // 1.1抛出一个自定义的错误
+    res.send('Home Page.')                      // 这里的res.send()不会被触发, 因为前一行已经报错, 停止运行当前的响应函数
+})
+
+app.use((err, req, res, next) => {              // 2.错误级别中间件 捕获整个项目的异常错误
+    console.log(`发生了错误: ${err.message}`);   // 2.1在服务器打印错误消息
+    res.send(`Error!  ${err.message}`)          // 2.2向客户端响应错误消息相关的内容
+})
+```
+
+##### Express 内置的中间价
+
+自 Express 4.16.0 版本开始, Express 内置了 **3** 个常用的中间件,极大提高了 Express 项目的开发效率和体验:
+
+- **express.static** 快速托管静态资源的中间件, 例如: HTML 文件, 图片, CSS 样式等(无兼容性)
+- **express.json** 解析 JSON 格式的请求体数据(_有兼容性_, 仅在 4.16.0+版本中可用)
+- **express.urlencoded** 解析 URL-encoded 格式的请求体数据(_有兼容性_, 仅在 4.16.0+版本中可用)
+
+```JavaScript
+// 配置解析 application/json格式数据的内置中间件
+app.use(express.json())
+// 配置解析 application/x-www-form-urlencoded 格式数据的内置中间件
+app.use(express.urlencoded({ extended : false} ))
+```
+
+##### 第三方中间件
+
+非 Express 官方内置的, 而是由第三方开发出来的中间件, 在项目中按需下载并被指第三方中间件
+
+- 运行 **npm install \[中间件名称\]** 安装中间件
+- 使用 **require** 导入中间件
+- 调用 **app.use()** 注册并使用中间件
+
+##### 自定义中间件
+
+自定义一个类似于 **express.urlencoded()** 中间件的自定义中间件
+
+```JavaScript
+const qs = require('querystringify')
+// 自定义中间件
+app.use((req, res, next) => {
+    // 定义中间件具体的业务逻辑
+    // 1. 定义一个str字符串, 专门用来储存客户端发送过来的请求体数据 (数据过大时, 客户端会将数据切片, 分批次发送到服务端, 所以每次服务端接收到的数据不一定是完整的数据)
+    let str = ''
+
+    // 2. 监听req的data事件, 将每一片数据拼接到str字符串内(隐式转换)
+    req.on('data', (chunk) => {
+        str += chunk
+    })
+
+    //3. 监听req的end事件, 触发end事件, 则数据传输完成
+    req.on('end', () => {
+        // 使用querystringfy.parse()方法, 把查询字符串解析为对象
+        const body = qs.parse(str)
+        req.body = body // 将转换完成的对象挂载到req上 (中间件共用同一套req和res)
+        next() // 调用next() 流转到下一个中间件或路由
+    })
+})
+```
+
+#### Express 中间件流转过程
+
+![Express中间件流转过程](/public/readme/images/express_middleware_flow.png)
+
+#### Express 中间件格式
+
+![Express中间件格式](/public/readme/images/express_middleware.png)
+
+#### 注意事项
+
+- 一定要在**路由之前**注册中间件 **(除了错误级别的中间件)**
+- 客户端发送过来的请求, **可以连续调用多个**中间件进行处理
+- 执行完中间件函数后, **不要忘记调用 next()函数**
+- 为了**防止代码逻辑混乱**, next()之后不要再写额外的代码
+- 连续调用多个中间件时, 多个中间件之间, **共享**req 和 res 对象
+
+#### Example
+
+##### 全局中间件
+
+```JavaScript
+// 定义全局中间件 所有路由都会触发
+// next() 将流转关系
+// 注册中间件
+app.use((req, res, next) => {
+    const startTime = new Date()
+    req.startTime = startTime
+    console.log('---->全局中间件')
+    next()
+})
+// 下游中间件或路由的 req 对象中就会包含 startTime 属性
+```
+
+##### 单一局部中间件
+
+```JavaScript
+// 注册中间件
+const mw = (req, res, next) => {
+    console.log('局部中间件');
+    next()
+}
+// 只会针对当前路由触发中间件
+app.post('/', mw, (req, res) => {
+    res.send('请求成功')
+})
+// 不使用app.use()注册的中间件, 只在当前路由中生效, 不会影响其他的路由
+```
+
+##### 同时使用多个局部中间件
+
+```JavaScript
+// 注册中间件1
+const mw1 = (req, res, next) => {
+    console.log('局部中间件--->1');
+    next()
+}
+// 注册中间件2
+const mw2 = (req, res, next) => {
+    console.log('局部中间件--->2');
+    next()
+}
+// 只会针对当前路由触发中间件, 并且从中间件1到中间件2依次触发
+app.post('/', mw1, mw2, (req, res) => {
+    res.send('请求成功')
+})
+// 多个局部中间件触发也可以用数组包裹, 等效于下面这种写法
+app.post('/', [mw1, mw2], (req, res) => {
+    res.send('请求成功')
+})
+// 不使用app.use()注册的中间件, 只在当前路由中生效, 不会影响其他的路由
+```
