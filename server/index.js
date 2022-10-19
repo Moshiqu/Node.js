@@ -113,6 +113,19 @@ app.get('/err', (req, res) => {                 // 1.路由
     res.send('Home Page.')
 })
 
+// jsonp方式跨域
+app.get('/jsonp', (req, res) => {
+    console.log(req.query);
+    // 拿到请求的函数名称
+    const funcName = req.query.callback
+    // 定义要发送给客户端的数据对象
+    const data = { name: 'zs', age: 22 }
+    // 拼接出函数的调用 funcName(data)
+    const scriptStr = `${funcName}(${JSON.stringify(data)})`
+    // 把拼接的字符串相应给客户端
+    res.send(scriptStr)
+})
+
 app.use((err, req, res, next) => {              // 2.错误级别中间件
     console.log(`发生了错误: ${err.message}`);   // 2.1在服务器打印错误消息
     res.send(`Error!  ${err.message}`)          // 2.2向客户端响应错误消息相关的内容

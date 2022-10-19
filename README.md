@@ -36,7 +36,7 @@ console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 
 其中\\", \为转义符
 
-### express.static() 托管静态资源
+### `express.static()` 托管静态资源
 
 - express 托管静态资源
 - express 在指定的静态目录中查找文件, 并对外提供资源的访问路径, 因此, 存放静态资源的目录名不会出现在 URL 中
@@ -52,7 +52,7 @@ console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 
 ### 参数传递
 
-#### params 动态参数
+#### `params` 动态参数
 
 ```JavaScript
 // 监听get请求
@@ -67,7 +67,7 @@ app.get('/user/:id/:name', (req, res) => {
 });
 ```
 
-#### query 参数
+#### `query` 参数
 
 ```JavaScript
 // 监听post请求
@@ -321,4 +321,51 @@ app.post('/', [mw1, mw2], (req, res) => {
     res.send('请求成功')
 })
 // 不使用app.use()注册的中间件, 只在当前路由中生效, 不会影响其他的路由
+```
+
+# 2022/10/18
+
+## node
+
+### 解析 application/json 格式数据的内置中间件 `express.json()`
+
+```JavaScript
+app.use(express.json())
+```
+
+### 解析 application/x-www-form-urlencoded 格式数据的内置中间件 `express.urlencoded({ extended : false} )`
+
+```JavaScript
+app.use(express.urlencoded({ extended : false} ))
+```
+
+### 接口跨域 cors 中间件
+
+- 下载 npm i cors
+- 导入 cors
+- 注册 cors 中间件
+
+```JavaScript
+    // 导入cors
+    const cors = require('cors')
+    // 注册cors
+    app.use(cors())
+```
+
+### 接口跨域 jsonp 方式
+
+返回一个将数据作为参数传递的函数调用的字符串 `funcName(data)`
+
+```JavaScript
+    // jsonp方式跨域
+    app.get('/jsonp', (req, res) => {
+        // 拿到请求的函数名称
+        const funcName = req.query.callback
+        // 定义要发送给客户端的数据对象
+        const data = { name: 'zs', age: 22 }
+        // 拼接出函数的调用 funcName(data)
+        const scriptStr = `${funcName}(${JSON.stringify(data)})`
+        // 把拼接的字符串相应给客户端
+        res.send(scriptStr)
+    })
 ```
