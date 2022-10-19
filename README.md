@@ -43,11 +43,11 @@ console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 - 需要用 path 拼接路径
 
 ```JavaScript
-    const path = require("path")
-    const app = express()
-    app.use(express.static(path.join(\_\_dirname, 'public')))
-    // 资源路径包含在URL中
-    app.use(`/static`, express.static(path.join(__dirname, 'public')))
+const path = require("path")
+const app = express()
+app.use(express.static(path.join(\_\_dirname, 'public')))
+// 资源路径包含在URL中
+app.use(`/static`, express.static(path.join(__dirname, 'public')))
 ```
 
 ### 参数传递
@@ -58,12 +58,12 @@ console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 // 监听get请求
 // :id和:name 为动态参数
 app.get('/user/:id/:name', (req, res) => {
-  // query参数获取, 默认为空对象
-  console.log(req.query, '---->query参数');
-  // params参数获取,:id为动态参数
-  console.log(req.params, '====>params动态参数');
-  // 调用express提供的res.send方法,向客户端相应一个JSON对象
-  res.send({ name: 'zs', age: 18, gender: '男' });
+    // query参数获取, 默认为空对象
+    console.log(req.query, '---->query参数');
+    // params参数获取,:id为动态参数
+    console.log(req.params, '====>params动态参数');
+    // 调用express提供的res.send方法,向客户端相应一个JSON对象
+    res.send({ name: 'zs', age: 18, gender: '男' });
 });
 ```
 
@@ -72,10 +72,10 @@ app.get('/user/:id/:name', (req, res) => {
 ```JavaScript
 // 监听post请求
 app.post('/user', (req, res) => {
-  // query参数获取, 默认为空对象
-  console.log(req.query, '---->query参数');
-  // 调用express提供的res.send方法,向客户端相应一个字符串
-  res.send('请求成功');
+    // query参数获取, 默认为空对象
+    console.log(req.query, '---->query参数');
+    // 调用express提供的res.send方法,向客户端相应一个字符串
+    res.send('请求成功');
 });
 ```
 
@@ -87,8 +87,8 @@ app.post('/user', (req, res) => {
 app.use(express.json()); // express.json()中间件,解析 JSON 格式表单数据
 app.use(express.urlencoded()) // express.urlencoded()中间件, 解析 url-encoded 格式的数据
 app.post('/json', (req, res) => {
-  console.log(req.body,'---->请求体数据);
-  res.send(req.body);
+    console.log(req.body,'---->请求体数据);
+    res.send(req.body);
 });
 ```
 
@@ -129,7 +129,7 @@ app.use(router);
 
 // 终端显示console为黄色
 app.listen(3001, () => {
-  console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
+    console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 });
 ```
 
@@ -139,11 +139,11 @@ app.listen(3001, () => {
 const router = require('express').Router();
 
 router.get('/user/list', (req, res) => {
-  res.send('Get user list');
+    res.send('Get user list');
 });
 
 router.post('/user/add', (req, res) => {
-  res.send('Add user');
+    res.send('Add user');
 });
 
 module.exports = router;
@@ -357,15 +357,66 @@ app.use(express.urlencoded({ extended : false} ))
 返回一个将数据作为参数传递的函数调用的字符串 `funcName(data)`
 
 ```JavaScript
-    // jsonp方式跨域
-    app.get('/jsonp', (req, res) => {
-        // 拿到请求的函数名称
-        const funcName = req.query.callback
-        // 定义要发送给客户端的数据对象
-        const data = { name: 'zs', age: 22 }
-        // 拼接出函数的调用 funcName(data)
-        const scriptStr = `${funcName}(${JSON.stringify(data)})`
-        // 把拼接的字符串相应给客户端
-        res.send(scriptStr)
-    })
+// jsonp方式跨域
+app.get('/jsonp', (req, res) => {
+    // 拿到请求的函数名称
+    const funcName = req.query.callback
+    // 定义要发送给客户端的数据对象
+    const data = { name: 'zs', age: 22 }
+    // 拼接出函数的调用 funcName(data)
+    const scriptStr = `${funcName}(${JSON.stringify(data)})`
+    // 把拼接的字符串相应给客户端
+    res.send(scriptStr)
+})
+```
+
+# 2022/10/19
+
+## 数据库
+
+### 传统型数据库的数据组织结构
+
+![Express中间件格式](/public/readme/images/tradition_db_structure.png)
+
+- 实际项目开发中, 一般情况下, 每个项目都对应**独立的数据库**
+- 不同的数据,要存储到数据库的不同表中, 例如: 用户数据储存到 users 表中, 图书数据存储到 books 表中
+- 每个表中具体存储那些信息, 由字段来决定, 例如: 我们可以为 users 表设计 id, username, password 这 3 个字段
+- 表中的行, 代表一条数据
+
+## MySQL
+
+### SELECT
+
+SELECT 语句用于**从表中查询数据**. 执行的结果被存储在一个**结果表中**
+
+```markdown
+-- 注释
+-- 从 FORM 指定的[表]中, 查询出[所有的]数据. * 表示[所有列]
+[SELECT] * [FROMM] 表名称
+
+-- 从FORM 指定的[表]中, 查询出指定 列名称(字段) 的数据
+[SELECT] 列名称 [FORM] 表名称
+```
+
+注: SQL 语句中的*关键*字对**大小写不敏感**. SELECT 等效于 select, FORM 等效于 from
+
+### INSERT INTO
+
+INSERT INTO 语句用于向数据表中**插入新的数据行**, 语法格式如下
+
+```markdown
+-- 语法解读: 向指定的表中, 插入如下几列数据, 列的值通过 values 一一指定
+-- 注意: 列和值要一一对应, 多个列和多个值之间, 使用英文的逗号分隔
+[INSERT] [INTO] table_name (列1, 列2,...) [VALUES] (值1,值2,...)
+```
+
+### UPDATE
+
+UPDATE 语句用于**修改表中的数据**, 语法格式如下
+```markdown
+-- 语法解读: 
+-- 1. 用 UPDATE 指定要更新哪个表中的数据
+-- 2. 用SET指定列对应的新值
+-- 3. 用WHERE 指定更新的条件
+[UPDATE] 表名称 [SET] 列名称 = 新值 [WHERE] 列名称 = 某值
 ```

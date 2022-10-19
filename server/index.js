@@ -133,7 +133,8 @@ app.use((err, req, res, next) => {              // 2.错误级别中间件
 
 
 
-// 终端显示console为黄色
+// 监听3001端口 启动服务器
 app.listen(3001, () => {
+    // 终端显示console为黄色
     console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
 })
