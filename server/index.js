@@ -131,8 +131,6 @@ app.use((err, req, res, next) => {              // 2.错误级别中间件
     res.send(`Error!  ${err.message}`)          // 2.2向客户端响应错误消息相关的内容
 })
 
-
-
 // 监听3001端口 启动服务器
 app.listen(3001, () => {
     // 终端显示console为黄色

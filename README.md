@@ -391,10 +391,10 @@ SELECT 语句用于**从表中查询数据**. 执行的结果被存储在一个*
 
 ```markdown
 -- 注释
--- 从 FORM 指定的[表]中, 查询出[所有的]数据. * 表示[所有列]
-[SELECT] * [FROMM] 表名称
+-- 从 FORM 指定的[表]中, 查询出[所有的]数据. _ 表示[所有列]
+[SELECT] _ [FROMM] 表名称
 
--- 从FORM 指定的[表]中, 查询出指定 列名称(字段) 的数据
+-- 从 FORM 指定的[表]中, 查询出指定 列名称(字段) 的数据
 [SELECT] 列名称 [FORM] 表名称
 ```
 
@@ -407,16 +407,88 @@ INSERT INTO 语句用于向数据表中**插入新的数据行**, 语法格式�
 ```markdown
 -- 语法解读: 向指定的表中, 插入如下几列数据, 列的值通过 values 一一指定
 -- 注意: 列和值要一一对应, 多个列和多个值之间, 使用英文的逗号分隔
-[INSERT] [INTO] table_name (列1, 列2,...) [VALUES] (值1,值2,...)
+[INSERT] [INTO] table_name (列 1, 列 2,...) [VALUES] (值 1,值 2,...)
 ```
 
 ### UPDATE
 
 UPDATE 语句用于**修改表中的数据**, 语法格式如下
+
 ```markdown
--- 语法解读: 
+-- 语法解读:
 -- 1. 用 UPDATE 指定要更新哪个表中的数据
--- 2. 用SET指定列对应的新值
--- 3. 用WHERE 指定更新的条件
+-- 2. 用 SET 指定列对应的新值
+-- 3. 用 WHERE 指定更新的条件
 [UPDATE] 表名称 [SET] 列名称 = 新值 [WHERE] 列名称 = 某值
+```
+
+# 2022/10/26
+
+## node 中操作 MySQL
+
+- 安装操作 MySQL 数据库的第三方模块(mysql)
+- 通过 mysql 模块连接到 MySQL 数据库
+- 通过 mysql 模块执行 SQL 语句
+
+### 创建连接
+
+```JavaScript
+// 导入mysql包
+const mysql = require('mysql')
+
+//创建数据库的连接
+const db = mysql.createPool({
+    host:"127.0.0.1",// ip地址 可以省略, 如果省略则是localhost
+    user:"root", // 用户名
+    password:"12345", // 密码
+    database:"test" // 具体数据库名称
+})
+```
+
+### 查询语句
+
+执行**SELECT**查询语句 则执行的结果是数组
+
+```JavaScript
+const selectSql = 'select * from users'
+
+db.query(selectSql, (err, results) => {
+    // 打印错误信息
+    if (err) return console.log(err.message)
+    // 返回为RowDataPacket对象数组 JSON.parse(JSON.stringify(results))可以转为普通对象数组
+    results = JSON.parse(JSON.stringify(results))
+    console.log(results);
+})
+```
+
+### 新增语句(插入)
+执行**INSERT INTO**插入语句, 则返回的结果是一个对象
+
+#### 方式一
+```JavaScript
+// 新数据内容
+const newUser = { username: new Date().toLocaleString(), password: "321654" }
+// const insertSql = `INSERT INTO users (username,password) VALUES(${newUser.username},${newUser.password})`模板字符串可能会导致sql注入
+// sql语句 ? 表示占位符 占位符可以防止sql注入 
+const insertSql = 'INSERT INTO users (username,password) VALUES(?,?)'
+
+// 数组形式将值传进去
+db.query(insertSql,[newUser.username,newUser.password],(err,results)=>{
+    if(err) return console.log(err.message);
+    // 如果受影响的行数为1, 则插入成功
+    if(results.affectedRows === 1) console.log('插入数据成功');
+})
+```
+
+#### 方式二
+向表中新增数据时, 如果数据对象的每个属性和数据表的字段一一对应, 则可以通过以下方式快速插入数据
+```JavaScript
+const newUser = { username: new Date().toLocaleString(), password: "321654" }
+const insertSql = `INSERT INTO users SET ?`
+
+db.query(insertSql,newUser,(err,results)=>{
+    if(err) return console.log(err.message);
+    // 如果受影响的行数为1, 则插入成功
+    if(results.affectedRows === 1) console.log('插入数据成功');
+})
 ```
