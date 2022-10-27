@@ -8,6 +8,15 @@ const app = express()
 const router = require('./router')
 app.use(router)
 
+// 导入session中间件 
+const session = require('express-session')
+// 配置 session中间件
+app.use(session({
+    secret: 'keybord cat', // secret 属性值可以为任意字符串, 用于加密, 字符串越复杂, 加密程度越高
+    resave: false, // 固定写法
+    saveUninitialized: true // 固定写法
+}))
+
 // express托管静态资源
 // express在指定的静态目录中查找文件, 并对外提供资源的访问路径, 因此, 存放静态资源的目录名不会出现在URL中
 // 需要用path拼接路径
@@ -26,27 +35,27 @@ app.post('/json', (req, res) => {
     res.send(req.body)
 })
 
-const qs = require('querystringify')
+// const qs = require('querystringify')
 
 // 自定义中间件
-app.use((req, res, next) => {
-    // 定义中间件具体的业务逻辑
-    // 1. 定义一个str字符串, 专门用来储存客户端发送过来的请求体数据( 数据过大时, 客户端会将数据切片, 分批次发送到服务端, 所以每次服务端接收到的数据不一定是完整的数据)
-    let str = ''
+// app.use((req, res, next) => {
+//     // 定义中间件具体的业务逻辑
+//     // 1. 定义一个str字符串, 专门用来储存客户端发送过来的请求体数据( 数据过大时, 客户端会将数据切片, 分批次发送到服务端, 所以每次服务端接收到的数据不一定是完整的数据)
+//     let str = ''
 
-    // 2. 监听req的data事件, 将每一片数据拼接到str字符串内(隐式转换)
-    req.on('data', (chunk) => {
-        str += chunk
-    })
+//     // 2. 监听req的data事件, 将每一片数据拼接到str字符串内(隐式转换)
+//     req.on('data', (chunk) => {
+//         str += chunk
+//     })
 
-    //3. 监听req的end事件, 触发end事件, 则数据传输完成
-    req.on('end', () => {
-        // 使用querystringfy.parse()方法, 把查询字符串解析为对象
-        const body = qs.parse(str)
-        req.body = body
-        next() // 调用next() 流转到下一个中间件或路由
-    })
-})
+//     //3. 监听req的end事件, 触发end事件, 则数据传输完成
+//     req.on('end', () => {
+//         // 使用querystringfy.parse()方法, 把查询字符串解析为对象
+//         const body = qs.parse(str)
+//         req.body = body
+//         next() // 调用next() 流转到下一个中间件或路由
+//     })
+// })
 
 app.post('/custom', (req, res) => {
     res.send('ok')
@@ -126,7 +135,60 @@ app.get('/jsonp', (req, res) => {
     res.send(scriptStr)
 })
 
+// 用户的登录 并将用户信息存储到session中
+app.post('/api/login', (req, res) => {
+    if (req.body.username !== 'admin' || req.body.password !== '12345') {
+        return res.send({ status: 1, msg: '登录失败' })
+    }
+
+    req.session.user = req.body // 将用户信息存储到Session中
+    req.session.islogin = true // 将用户的登录状态存储到Session 中
+    res.send({ status: 0, msg: '登录成功' })
+})
+
+// 从session中拿到用户名和登录状态, 如果登录成功,将用户名返回
+app.post('/api/username', (req, res) => {
+    if (!req.session.islogin) return res.send({ status: 1, message: '用户未登录!' })
+    res.send({ status: 0, message: 'success', username: req.session.user.username })
+})
+
+// 退出登录
+app.post('/api/logout', (req, res) => {
+    req.session.destroy()
+    res.send({ status: 0, message: 'success' })
+})
+
+// 导入jwt相关的包
+const jwt = require('jsonwebtoken')
+const { expressjwt: expressJWT } = require('express-jwt')
+
+// 定义密钥
+const secretKey = 'test secretKey'
+
+// 登录后生成JWT字符串
+app.post('/api/jwt/login', (req, res) => {
+    const { username, password } = req.body
+    if (!(username === 'admin1' && password === '12345')) return res.send({ status: 1, message: "登录失败" })
+    // 登录成功后生成JWT字符串, 通过token字段响应给客户端
+    // 调用 jwt.sign() 生成 JWT 字符串, 三个参数分别是: 用户信息对象、加密密钥、配置对象
+    res.send({ status: 1, message: "登录成功", token: jwt.sign({ username: username }, secretKey, { expiresIn: '1 d' }) })
+})
+
+// 将JWT字符串还原为JSON对象
+app.use(expressJWT({ secret: secretKey, algorithms: ["HS256"] }).unless({ path: [/^\/api\//] }))
+app.get('/admin/userinfo', (req, res) => {
+    const { username } = req.auth
+    res.send({ status: 0, message: "success", data: { username } })
+})
+
+// 错误中间件
 app.use((err, req, res, next) => {              // 2.错误级别中间件
+
+    // token解析失败导致的错误
+    if (err.name === 'UnauthorizedError') {
+        return res.send({ status: 401, message: "无效的token" })
+    }
+    // 其他错误
     console.log(`发生了错误: ${err.message}`);   // 2.1在服务器打印错误消息
     res.send(`Error!  ${err.message}`)          // 2.2向客户端响应错误消息相关的内容
 })
