@@ -490,9 +490,70 @@ db.query(insertSql,[newUser.username,newUser.password],(err,results)=>{
 const newUser = { username: new Date().toLocaleString(), password: "321654" }
 const insertSql = `INSERT INTO users SET ?`
 
-db.query(insertSql,newUser,(err,results)=>{
-    if(err) return console.log(err.message);
+db.query(insertSql, newUser, (err, results) => {
+    if (err) return console.log(err.message);
     // 如果受影响的行数为1, 则插入成功
-    if(results.affectedRows === 1) console.log('插入数据成功');
+    if (results.affectedRows === 1) console.log('插入数据成功');
 })
 ```
+
+### 更新语句(修改)
+
+#### 方式一
+
+```JavaScript
+// SET 后具体要修改的字段, WHERE 后查找条件
+const updateSql = "UPDATE users SET password = ?, email = ?, nickname=? WHERE username = ?"
+const editedUserInfo = { email: '123@qq.com', nickname: "zsChanged", password: "321654987" }
+const modifiedUsername = 'zs'
+let { email, nickname, password } = editedUserInfo // 结构赋值
+db.query(updateSql, [password, email, nickname, modifiedUsername], (err, results) => {
+    if (err) return console.log(err.message);
+    if(results.affectedRows === 1) console.log('更新成功');
+})
+```
+
+#### 方式二
+
+```JavaScript
+const updateSql = `UPDATE users SET ? WHERE username = ?`
+const editedUserInfo = { email: '123@qq.com', nickname: "zsChanged2", password: "321654987" }
+const modifiedUsername = 'zs'
+db.query(updateSql, [editedUserInfo, modifiedUsername], (err, results) => {
+    if (err) return console.log(err.message);
+    if (results.affectedRows === 1) console.log('更新成功');
+})
+```
+
+### 删除语句
+
+推荐使用**主键**或**唯一标识**进行查找, 例如 id 字段  
+项目中一般不使用真正的删除语句, 而是使用*标记删除*的方式模拟删除的动作:  
+is_active 或 status 字段用于记录当前记录是否删除, is_active 为 false, 则为删除; is_active 为 true, 则为未删除.  
+执行*标记删除*, 使用修改语句将 is_active 修改为 false
+
+#### 真删除
+
+```JavaScript
+const deleteSql = 'DELETE FROM users WHERE username = ? AND email = ? '
+const deleteUsername = '2022/10/26 17:53:39'
+db.query(deleteSql, [deleteUsername, '321'], (err, results) => {
+    if (err) return console.log(err.message);
+    if (results.affectedRows === 1) console.log('删除成功');
+})
+```
+
+#### 标记删除
+
+```JavaScript
+// 修改 is_acitve 字段为false
+const fakeDeleteSql = `UPDATE users SET is_acitve = false WHERE username = ? AND email = ? AND is_active = true `
+const deleteUsername = '2022/10/26 17:53:39'
+db.query(fakeDeleteSql, [deleteUsername, '321'], (err, results) => {
+    if (err) return console.log(err.message);
+    if (results.affectedRows === 1) console.log('删除成功');
+    console.log(results);
+})
+```
+
+# 2022/10/27
