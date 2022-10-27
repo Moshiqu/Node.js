@@ -462,14 +462,16 @@ db.query(selectSql, (err, results) => {
 ```
 
 ### 新增语句(插入)
+
 执行**INSERT INTO**插入语句, 则返回的结果是一个对象
 
 #### 方式一
+
 ```JavaScript
 // 新数据内容
 const newUser = { username: new Date().toLocaleString(), password: "321654" }
 // const insertSql = `INSERT INTO users (username,password) VALUES(${newUser.username},${newUser.password})`模板字符串可能会导致sql注入
-// sql语句 ? 表示占位符 占位符可以防止sql注入 
+// sql语句 ? 表示占位符 占位符可以防止sql注入
 const insertSql = 'INSERT INTO users (username,password) VALUES(?,?)'
 
 // 数组形式将值传进去
@@ -481,7 +483,9 @@ db.query(insertSql,[newUser.username,newUser.password],(err,results)=>{
 ```
 
 #### 方式二
+
 向表中新增数据时, 如果数据对象的每个属性和数据表的字段一一对应, 则可以通过以下方式快速插入数据
+
 ```JavaScript
 const newUser = { username: new Date().toLocaleString(), password: "321654" }
 const insertSql = `INSERT INTO users SET ?`
