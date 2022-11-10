@@ -742,6 +742,7 @@ app.get('/admin/userinfo', (req, res) => {
 
 当使用 express-jwt 解析 Token 字符串时, 如果客户端发送过来的 Token 字符串**过期**或**不合法**, 会产生一个解析失败的错误,影响项目的正常运行.  
 可以通过**Express 的错误中间件**, 捕获这个错误并进行相关的处理
+
 ```JavaScript
 // 错误中间件
 app.use((err, req, res, next) => {              // 2.错误级别中间件
@@ -754,4 +755,56 @@ app.use((err, req, res, next) => {              // 2.错误级别中间件
     console.log(`发生了错误: ${err.message}`);   // 2.1在服务器打印错误消息
     res.send(`Error!  ${err.message}`)          // 2.2向客户端响应错误消息相关的内容
 })
+```
+
+# 2022/10/27
+
+## 服务器表单验证
+
+安装并导入 express 表单验证的包 express-validator
+
+### 使用
+
+#### 选择要验证的字段 check
+
+```JavaScript
+const { check } = require('express-validator');
+router.post('/reguser', [
+    //字母开头，允许5-16字节，允许字母数字下划线
+    check('account').notEmpty().withMessage('账号未设置').matches(/^[a-zA-Z][a-zA-Z0-9_]{4,15}$/).withMessage('账号格式错误'),
+    check('email').notEmpty().withMessage('邮箱未设置').isEmail().withMessage('邮箱格式错误'),
+    check('password').notEmpty().withMessage('密码未设置').matches(/^[a-zA-Z]\w{5,17}$/).withMessage('密码格式错误'),
+    check('repassword').notEmpty().withMessage('二次密码未设置'),
+], reguserHandler)
+```
+
+#### 获取验证结果
+
+```JavaScript
+const { validationResult } = require('express-validator')
+
+const reguserHandler = (req, res) => {
+    const errArray = validationResult(req).errors
+    if (errArray.length) {
+        // 未通过验证
+        res.send({
+            status: 'fail',
+            msg: errArray[0].msg
+        })
+    } else {
+        // 通过验证
+        const { password, repassword } = req.body
+        if (password === repassword) {
+            res.send({
+                status: 'success',
+            })
+        } else {
+            res.send({
+                status: 'fail',
+                msg: '两次密码输入不一致'
+            })
+        }
+    }
+
+}
 ```
