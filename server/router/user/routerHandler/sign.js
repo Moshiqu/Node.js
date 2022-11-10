@@ -1,7 +1,7 @@
 const db = require('../../../db')
 const { validationResult } = require('express-validator')
 
-const reguserHandler = async (req, res) => {
+const reguserHandler = (req, res) => {
     const errArray = validationResult(req).errors
     if (errArray.length) {
         // 未通过验证
@@ -13,15 +13,17 @@ const reguserHandler = async (req, res) => {
         // 通过验证
         const { password, repassword, account, email } = req.body
         if (password === repassword) {
-            Promise.all([isAccountExisted(account), isEmailExisted(email)]).then(result => {
-                res.send({
-                    status: 'success',
-                    msg: "可以创建当前账号"
+            Promise.all([isAccountExisted(account), isEmailExisted(email)])
+                .then(async (result) => {
+                    try {
+                        const insertResult = await insertUser(req.body)
+                        res.send(insertResult)
+                    } catch (error) {
+                        res.send(error)
+                    }
+                }).catch(err => {
+                    res.send(err)
                 })
-                // 创建账号
-            }).catch(err => {
-                res.send(err)
-            })
         } else {
             res.send({
                 status: 'fail',
@@ -85,9 +87,47 @@ const isEmailExisted = (email) => {
                 }
                 reject({
                     status: 'fail',
-                    msg: '邮箱已存在'
+                    msg: '当前邮箱已存在'
                 })
             }
+        })
+    })
+}
+
+/**
+ * @description: 新增用户
+ * @param {password,account,email} 
+ * @return {*}
+ */
+const insertUser = (userInfo) => {
+    return new Promise((resolve, reject) => {
+        const { password, account, email } = userInfo
+        const insertSql = 'INSERT INTO users SET ?'
+
+        // 使用bcrypt加密密码
+        const bcrypt = require('bcrypt')
+        const hash = bcrypt.hashSync(password, 5)
+
+        const newUserData = { password: hash, account, email }
+
+
+        db.query(insertSql, newUserData, (err, result) => {
+            if (err) {
+                // 插入数据库失败
+                reject({
+                    status: 'fail',
+                    msg: err.message
+                })
+            }
+            if (result.affectedRows === 1) {
+                resolve({
+                    status: "success"
+                })
+            }
+            reject({
+                status: "fail",
+                msg: "新增用户出错"
+            })
         })
     })
 }

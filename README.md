@@ -808,3 +808,18 @@ const reguserHandler = (req, res) => {
 
 }
 ```
+
+#### MySQL 大小写区分
+
+Windows 环境下 MySQL 不会区分大小写
+
+- 字段名
+- 字段内容
+
+数据表的字符集, 排序规则会影响是否区分大小写
+
+如要区分大小写:
+
+```mysql
+ALTER TABLE table_name CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+```
