@@ -8,10 +8,39 @@ app.use(cors())
 // 解析数据格式 application/x-www-form-urlencoded res.body 接收数据
 app.use(express.urlencoded({ extended: false }))
 
+// token解析 /api 开头的路由不需要权限
+const { expressjwt: expressJWT } = require('express-jwt')
+const { TokenSecretKey: secret } = require('../config')
+app.use(expressJWT({ secret, algorithms: ['HS256'] }).unless({ path: [/^\/user\//] }))
+
+// // 配置session
+// const session = require("express-session")
+// app.use(session({
+//     secret: '123',
+//     resave: false,
+//     saveUninitialized: true
+// }))
+
 // 导入用户模块路由
 const userRouter = require('./router/user')
 app.use('/user', userRouter)
 
-app.listen(3001, () => {
-    console.log('\x1B[33m', 'express server is running at http://127.0.0.1:3001');
+// 导入api权限路由
+const apiRouter = require('./router/api')
+app.use('/api', apiRouter)
+
+// 错误中间件
+app.use((err, req, res, next) => {
+    // token解析失败导致的错误
+    if (err.name === 'UnauthorizedError') {
+        if (err.status === 401) return res.send({ status: 'fail', msg: '用户未登录或token失效', code: err.code })
+        return res.send({ status: "fail", message: "无效的token" })
+    }
+    // 其他错误
+    res.send(`Error!  ${err.message}`)
+})
+
+const { serverAddress: address, serverPort: port } = require('../config')
+app.listen(port, () => {
+    console.log('\x1B[33m', `express server is running at ${address}:${port}`);
 }) 
