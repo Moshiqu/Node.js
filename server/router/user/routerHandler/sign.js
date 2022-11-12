@@ -1,37 +1,45 @@
 const db = require('../../../db')
 const { validationResult } = require('express-validator')
-const { text } = require('express')
 
 const reguserHandler = (req, res) => {
     const errArray = validationResult(req).errors
     if (errArray.length) {
         // 未通过验证
-        res.send({
+        return res.send({
             status: 'fail',
             msg: errArray[0].msg
         })
-    } else {
-        // 通过验证
-        const { password, repassword, account, email, captcha } = req.body
-        if (password === repassword) {
-            Promise.all([isAccountExisted(account), isEmailExisted(email), isCaptchaValidated(account, captcha)])
-                .then(async (result) => {
-                    try {
-                        const insertResult = await insertUser(req.body)
-                        res.send(insertResult)
-                    } catch (error) {
-                        res.send(error)
-                    }
-                }).catch(err => {
-                    res.send(err)
-                })
-        } else {
-            res.send({
-                status: 'fail',
-                msg: '两次密码输入不一致'
-            })
-        }
     }
+
+    // 通过验证
+    const { password, repassword, account, email, captcha } = req.body
+    isCaptchaValidated(account, captcha)
+        .then(result => {
+            if (result.status === 'success') {
+                if (password === repassword) {
+                    Promise.all([isAccountExisted(account), isEmailExisted(email)])
+                        .then(async (result) => {
+                            try {
+                                const insertResult = await insertUser(req.body)
+                                return res.send(insertResult)
+                            } catch (error) {
+                                return res.send(error)
+                            }
+                        }).catch(err => {
+                            return res.send(err)
+                        })
+                } else {
+                    return res.send({
+                        status: 'fail',
+                        msg: '两次密码输入不一致'
+                    })
+                }
+            }
+        }).catch(err => {
+            return res.send(err)
+        })
+
+
 
 }
 
@@ -91,7 +99,12 @@ const captchaHandler = (req, res) => {
     const { text, data } = captcha
 
     insertCaptcha(account, text)
-    res.send({ status: 'success', data: { img: data, str: text } })
+        .then(result => {
+            res.send({ status: 'success', data: { img: data, str: text } })
+        })
+        .catch(err => {
+            res.send(err)
+        })
 }
 
 /**
@@ -241,11 +254,11 @@ const checkPassword = (userInfo) => {
             }
 
             const jwt = require('jsonwebtoken')
-            const { TokenSecretKey } = require('../../../../config')
+            const { TokenSecretKey, TokenOptions } = require('../../../../config')
 
             resolve({
                 status: 'success',
-                token: jwt.sign({ account, email, avatar, nickname }, TokenSecretKey, { expiresIn: '5d' })
+                token: jwt.sign({ account, email, avatar, nickname }, TokenSecretKey, TokenOptions)
             })
         })
 
@@ -279,17 +292,34 @@ const insertCaptcha = (account, text) => {
     })
 }
 
+/**
+ * @description: 校验验证码结果
+ * @param {账号 } account
+ * @param {验证码} captcha
+ * @return {验证码验证结果}
+ */
 const isCaptchaValidated = (account, captcha) => {
     return new Promise((resolve, reject) => {
-        const captchaValidateSql = "SELECT text,start_time from captcha where account = ? and is_active = 'true'"
-        db.query(captchaValidateSql, account, (err, result) => {
+        const captchaValidateSql = "SELECT text, start_time FROM captcha WHERE account = ? and is_active = 'true'"
+        db.query(captchaValidateSql, account, async (err, result) => {
             if (err) {
                 return reject({
                     status: 'fail',
                     msg: err.message || err.sqlMessage
                 })
             }
-            console.log(result);
+
+            try {
+                await cancelCaptcha(account)
+            } catch (error) {
+                return reject({
+                    status: 'fail',
+                    msg: error.msg
+                })
+            }
+
+            result = JSON.parse(JSON.stringify(result))
+
             if (result.length !== 1) {
                 return reject({
                     status: 'fail',
@@ -297,8 +327,19 @@ const isCaptchaValidated = (account, captcha) => {
                 })
             }
 
-            result = JSON.parse(JSON.stringify(result))
-            const { text: resultText } = result[0]
+            const { text: resultText, start_time } = result[0]
+
+            const currentStamp = new Date().getTime()
+            const expiredVlideTime = require('../../../../config')
+            const expiredStamp = new Date(start_time).getTime() + (expiredVlideTime * 60 * 1000 / 1000)
+
+            if (currentStamp > expiredStamp || currentStamp < expiredStamp) {
+                return reject({
+                    status: 'fail',
+                    msg: "验证码已过期,请重新获取"
+                })
+            }
+
             if (captcha !== resultText) {
                 return reject({
                     status: 'fail',
@@ -313,6 +354,21 @@ const isCaptchaValidated = (account, captcha) => {
     })
 }
 
+/**
+ * @description: 将验证码删除(伪删除)
+ * @param { 账号 } account
+ * @return { 删除结果 }
+ */
+const cancelCaptcha = (account) => {
+    return new Promise((resolve, reject) => {
+        const updateCaptcha = "UPDATE captcha SET ? WHERE account = ? and is_active = 'true'"
+
+        db.query(updateCaptcha, [{ 'is_active': "false" }, account], (err, result) => {
+            if (err) return reject({ status: 'fail', msg: err.message })
+            return resolve({ status: "success", msg: "修改验证码状态成功" })
+        })
+    })
+}
 
 module.exports = {
     reguserHandler,

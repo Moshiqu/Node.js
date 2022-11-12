@@ -8,6 +8,10 @@ const RegEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 const RegNickname = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/
 // token生成的密钥
 const TokenSecretKey = 'b9fcf57e16fa23b2d81bc587ffde4788'
+// token配置对象
+const TokenOptions = { expiresIn: '5d' }
+// 验证码有效时间 以分钟为单位
+const ExpiredVlideTime = 5
 // 图形验证码配置
 const captchaOption = {
     size: 4, // 4个字母
@@ -31,5 +35,7 @@ module.exports = {
     TokenSecretKey,
     serverAddress,
     serverPort,
-    captchaOption
+    captchaOption,
+    ExpiredVlideTime,
+    TokenOptions
 }
