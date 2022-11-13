@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
 
+// 别名配置
+require('module-alias/register')
+
 // 跨域配置
 const cors = require('cors')
 app.use(cors())
@@ -10,7 +13,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // token解析 /api 开头的路由不需要权限
 const { expressjwt: expressJWT } = require('express-jwt')
-const { TokenSecretKey: secret } = require('../config')
+const { TokenSecretKey: secret } = require('@root/config')
 app.use(expressJWT({ secret, algorithms: ['HS256'] }).unless({ path: [/^\/user\//] }))
 
 // 导入用户模块路由
@@ -32,7 +35,7 @@ app.use((err, req, res, next) => {
     res.send(`Error!  ${err.message}`)
 })
 
-const { serverAddress: address, serverPort: port } = require('../config')
+const { serverAddress: address, serverPort: port } = require('@root/config')
 app.listen(port, () => {
     console.log('\x1B[33m', `express server is running at ${address}:${port}`);
 }) 

@@ -1,4 +1,4 @@
-const db = require('../../../db')
+const db = require('@root/db')
 const { validationResult } = require('express-validator')
 
 const reguserHandler = (req, res) => {
@@ -57,7 +57,7 @@ const loginHandler = (req, res) => {
         })
     } else {
         const { account, email, password } = req.body
-        const { RegEmail, RegAccount } = require('../../../../config')
+        const { RegEmail, RegAccount } = require('@root/config')
         if (account && !RegAccount.test(account)) {
             return res.send({
                 status: 'fail',
@@ -91,7 +91,7 @@ const captchaHandler = (req, res) => {
     }
     const { account } = req.body
     const svgCaptcha = require('svg-captcha')
-    const { captchaOption } = require('../../../../config')
+    const { captchaOption } = require('@root/config')
     const captcha = svgCaptcha.create(captchaOption) //字母和数字随机验证码
     // let captcha = svgCaptcha.createMathExpr(options) //数字算数随机验证码
 
@@ -254,7 +254,7 @@ const checkPassword = (userInfo) => {
             }
 
             const jwt = require('jsonwebtoken')
-            const { TokenSecretKey, TokenOptions } = require('../../../../config')
+            const { TokenSecretKey, TokenOptions } = require('@root/config')
 
             resolve({
                 status: 'success',
@@ -330,7 +330,7 @@ const isCaptchaValidated = (account, captcha) => {
             const { text: resultText, start_time } = result[0]
 
             const currentStamp = new Date().getTime()
-            const expiredVlideTime = require('../../../../config')
+            const expiredVlideTime = require('@root/config')
             const expiredStamp = new Date(start_time).getTime() + (expiredVlideTime * 60 * 1000 / 1000)
 
             if (currentStamp > expiredStamp || currentStamp < expiredStamp) {

@@ -1,4 +1,4 @@
-const db = require('../../../db')
+const db = require('@root/db')
 const { validationResult } = require('express-validator')
 
 const userUpdateHandler = (req, res) => {

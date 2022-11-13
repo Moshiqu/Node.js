@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { reguserHandler, loginHandler, captchaHandler } = require('./routerHandler/sign')
 const { oneOf, body } = require('express-validator');
-const { RegAccount, RegPassword } = require('../../../config')
+const { RegAccount, RegPassword } = require('@root/config')
 
 // 注册
 router.post('/reguser', [

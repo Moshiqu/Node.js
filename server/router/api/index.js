@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { userUpdateHandler, userInfoHandler, pswChangeHandler } = require('./routerHandler/updateUser')
 const { body } = require('express-validator');
-const { RegNickname, RegAccount, RegPassword } = require('../../../config')
+const { RegNickname, RegAccount, RegPassword } = require('@root/config')
 // 更新用户信息
 router.post('/update', [
     body('avatar').notEmpty().withMessage('未上传头像').isURL().withMessage('头像地址不合法'),
