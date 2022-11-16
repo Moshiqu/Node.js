@@ -1,19 +1,51 @@
-import App from '@/App'
 import Home from '@/views/Home'
-import About from '@/views/About'
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
+import React, { lazy } from 'react';
 
-const baseRouter = () => (
-    <BrowserRouter>
-        <Routes>
-            <Route path='/' element={<App />}>
-                {/* 配置用户访问 '/' 的时候, 重定向到home */}
-                <Route path='/' element={<Navigate to='/home'></Navigate>}></Route>
-                <Route path='/home' element={<Home />}></Route>
-                <Route path='/about' element={<About />}></Route>
-            </Route>
-        </Routes>
-    </BrowserRouter>
+const User = lazy(() => import("@/views/User"));
+const About = lazy(() => import("@/views/About"));
+const Login = lazy(() => import("@/views/Login"))
+
+const Comp1 = lazy(() => import("@/components/Comp1"))
+const Comp2 = lazy(() => import("@/components/Comp2"))
+
+const withLoaingComponent = (comp: JSX.Element) => (
+    <React.Suspense fallback={<div>Loding...</div>}>
+        {comp}
+    </React.Suspense>
 )
 
-export default baseRouter
+const router = [
+    {
+        path: '/',
+        element: <Navigate to='/about' />,
+    },
+    {
+        path: "/",
+        element: <Home />,
+        children: [
+            {
+                path: "/about",
+                element: withLoaingComponent(<About />)
+            }, {
+                path: '/user',
+                element: withLoaingComponent(<User />)
+            }, {
+                path: "/page3/page301",
+                element: withLoaingComponent(<Comp1 />)
+            }, {
+                path: "/page3/page302",
+                element: withLoaingComponent(<Comp2 />)
+            }
+        ]
+    },
+    {
+        path: '/login',
+        element: <Login />
+    },
+    {
+        path: '*',
+        element: <Navigate to='/about' />,
+    }
+]
+export default router
