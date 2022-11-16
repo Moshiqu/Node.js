@@ -17,6 +17,8 @@ const captchaOption = {
     size: 4, // 4个字母
     noise: 2, // 干扰线2条
     color: true, // 文字颜色
+    width: 90,
+    height: 32,
     background: "#666", // 背景颜色
     // 数字的时候，设置下面属性。最大，最小，加或者减
     // mathMin: 1,

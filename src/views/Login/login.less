@@ -1,0 +1,45 @@
+@color: #1890ff;
+
+.loginbox {
+
+    .ant-input,
+    .ant-input-password {
+        background: rgba(255, 255, 255, 0);
+        border-color: @color;
+        color: #fff;
+    }
+
+    .ant-input-password-icon.anticon {
+        color: @color;
+    }
+
+    .captchaBox {
+        display: flex;
+
+
+        .captcha {
+            margin-left: .32rem;
+            height: .32rem;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+    }
+
+    .toolBox {
+        display: flex;
+        justify-content: space-between;
+
+        .remember {
+            .ant-switch {
+                background-color: rgb(220, 223, 230);
+                margin-right: 20px;
+            }
+
+            .ant-switch-checked {
+                background-color: @color;
+            }
+        }
+    }
+
+
+}
