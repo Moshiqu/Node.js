@@ -1,15 +1,18 @@
 const numState = {
-    state: {
-        num: 20
+  state: {
+    num: 20,
+  },
+  actions: {
+    add1(newState: { num: number }) {
+      newState.num++;
     },
-    actions: {
-        add1(newState: { num: number }) {
-            newState.num++
-        },
-        add2(newState: { num: number }, action: { type: string, val: number }) {
-            newState.num += action.val
-        }
-    }
-}
+    add2(newState: { num: number }, action: { type: string; val: number }) {
+      newState.num += action.val;
+    },
+  },
 
-export default numState
+  add1: "add1",
+  add2: "add2",
+};
+
+export default numState;
