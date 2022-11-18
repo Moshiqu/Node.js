@@ -5,6 +5,7 @@ import React, { lazy } from 'react';
 const User = lazy(() => import("@/views/User"));
 const About = lazy(() => import("@/views/About"));
 const Login = lazy(() => import("@/views/Login"))
+const Register = lazy(() => import("@/views/Register"))
 
 const Comp1 = lazy(() => import("@/components/Comp1"))
 const Comp2 = lazy(() => import("@/components/Comp2"))
@@ -18,7 +19,7 @@ const withLoaingComponent = (comp: JSX.Element) => (
 const router = [
     {
         path: '/',
-        element: <Navigate to='/login' />,
+        element: <Navigate to='/register' />,
     },
     {
         path: "/",
@@ -42,6 +43,10 @@ const router = [
     {
         path: '/login',
         element: <Login />
+    },
+    {
+        path: '/register',
+        element: <Register />
     },
     {
         path: '*',

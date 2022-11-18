@@ -29,7 +29,7 @@ const captchaOption = {
 const serverAddress = '127.0.0.1'
 const serverPort = '3001'
 
-module.exports = {
+const configObj = {
     RegAccount,
     RegPassword,
     RegEmail,
@@ -41,3 +41,5 @@ module.exports = {
     ExpiredVlideTime,
     TokenOptions
 }
+
+export default configObj

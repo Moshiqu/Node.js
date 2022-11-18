@@ -13,7 +13,7 @@ const reguserHandler = (req, res) => {
 
     // 通过验证
     const { password, repassword, account, email, captcha, uuid } = req.body
-    isCaptchaValidated(account, captcha, uuid)
+    isCaptchaValidated(captcha, uuid)
         .then(result => {
             if (result.status === 'success') {
                 if (password === repassword) {
@@ -82,7 +82,6 @@ const loginHandler = (req, res) => {
 }
 
 const captchaHandler = (req, res) => {
-    console.log(req);
     const errArray = validationResult(req).errors
     if (errArray.length) {
         return res.send({
@@ -90,7 +89,7 @@ const captchaHandler = (req, res) => {
             msg: errArray[0].msg
         })
     }
-    const { account, uuid } = req.body
+    const { uuid } = req.query
     const svgCaptcha = require('svg-captcha')
     const { captchaOption } = require('@root/config')
     const captcha = svgCaptcha.create(captchaOption) //字母和数字随机验证码
@@ -99,7 +98,7 @@ const captchaHandler = (req, res) => {
     // text是指产生的验证码，data指svg的字节流信息
     const { text, data } = captcha
 
-    insertCaptcha(account, text, uuid)
+    insertCaptcha(text, uuid)
         .then(result => {
             res.send({ status: 'success', data: { img: data, str: text } })
         })
@@ -273,10 +272,10 @@ const checkPassword = (userInfo) => {
  * @param {uuid} uuid
  * @return {*}
  */
-const insertCaptcha = (account, text, uuid) => {
+const insertCaptcha = (text, uuid) => {
     return new Promise((resolve, reject) => {
         const insertCaptchaSql = 'INSERT INTO captcha SET ?'
-        const data = { account, text, uuid }
+        const data = { text, uuid }
         db.query(insertCaptchaSql, data, (err, result) => {
             if (err) {
                 return reject({ status: 'fail', msg: err.message || err.sqlMessage })
@@ -296,14 +295,14 @@ const insertCaptcha = (account, text, uuid) => {
 
 /**
  * @description: 校验验证码结果
- * @param {账号 } account
+ * @param {uuid } uuid
  * @param {验证码} captcha
  * @return {验证码验证结果}
  */
-const isCaptchaValidated = (account, captcha, uuid) => {
+const isCaptchaValidated = (captcha, uuid) => {
     return new Promise((resolve, reject) => {
-        const captchaValidateSql = "SELECT text, start_time FROM captcha WHERE account = ? and uuid = ? and is_active = 'true'"
-        db.query(captchaValidateSql, [account, uuid], async (err, result) => {
+        const captchaValidateSql = "SELECT text, start_time FROM captcha WHERE uuid = ? and is_active = 'true'"
+        db.query(captchaValidateSql, uuid, async (err, result) => {
             if (err) {
                 return reject({
                     status: 'fail',
@@ -312,7 +311,7 @@ const isCaptchaValidated = (account, captcha, uuid) => {
             }
 
             try {
-                await cancelCaptcha(account)
+                await cancelCaptcha(uuid)
             } catch (error) {
                 return reject({
                     status: 'fail',
@@ -322,10 +321,15 @@ const isCaptchaValidated = (account, captcha, uuid) => {
 
             result = JSON.parse(JSON.stringify(result))
 
-            if (result.length !== 1) {
+            if (result.length === 0) {
                 return reject({
                     status: 'fail',
-                    msg: '验证码错误'
+                    msg: '请先获取验证码'
+                })
+            } else if (result.length > 1) {
+                return reject({
+                    status: 'fail',
+                    msg: '验证码失效,请重新获取'
                 })
             }
 
@@ -358,14 +362,14 @@ const isCaptchaValidated = (account, captcha, uuid) => {
 
 /**
  * @description: 将验证码删除(伪删除)
- * @param { 账号 } account
+ * @param { uuid } uuid
  * @return { 删除结果 }
  */
-const cancelCaptcha = (account) => {
+const cancelCaptcha = (uuid) => {
     return new Promise((resolve, reject) => {
-        const updateCaptcha = "UPDATE captcha SET ? WHERE account = ? and is_active = 'true'"
+        const updateCaptcha = "UPDATE captcha SET ? WHERE uuid = ? and is_active = 'true'"
 
-        db.query(updateCaptcha, [{ 'is_active': "false" }, account], (err, result) => {
+        db.query(updateCaptcha, [{ is_active: "false" }, uuid], (err, result) => {
             if (err) return reject({ status: 'fail', msg: err.message })
             return resolve({ status: "success", msg: "修改验证码状态成功" })
         })

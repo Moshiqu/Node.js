@@ -7,6 +7,9 @@ const instance = axios.create({
 
 // 请求拦截器
 instance.interceptors.request.use(config => {
+    if (config.method === 'post') {
+        config.headers = { "content-type": "application/x-www-form-urlencoded" }
+    }
     return config
 }, err => {
     return Promise.reject(err)
