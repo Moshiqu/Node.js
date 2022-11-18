@@ -1,7 +1,7 @@
 type arrStateType = {
     state: {},
     actions: { [key: string]: (newState: newState, action: Action) => void },
-    actionNames: { [key: string]: string }
+    actionNames?: { [key: string]: string }
 }
 
 type newState = {
@@ -22,11 +22,11 @@ const store: arrStateType = {
         arr: [1, 2, 3]
     },
     actions: {
+        // 只处理同步
         arrPush: (newState: { arr: number[] }, action: { type: string, val: number }) => {
             newState.arr.push(action.val)
         }
     },
-    actionNames: {}
 }
 
 const actionNames: ActionNames = {}

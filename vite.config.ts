@@ -5,20 +5,27 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    // styleImport({
-    //   resolves: [AntdResolve()],
-    // }),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+    plugins: [
+        react(),
+        // styleImport({
+        //   resolves: [AntdResolve()],
+        // }),
+    ],
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "./src"),
+        },
     },
-  },
-  server: {
-    host: "127.0.0.1",
-    port: 3302,
-    open: true,
-  },
+    server: {
+        host: "127.0.0.1",
+        port: 3302,
+        open: true,
+        proxy: {
+            "/api": {
+                target: "http://localhost:3001",
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, ""),
+            },
+        },
+    },
 });

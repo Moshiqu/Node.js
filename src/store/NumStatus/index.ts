@@ -1,6 +1,8 @@
 type NumStateType = {
     state: {},
-    actions: { [key: string]: (newState: newState, action: Action) => void }, actionNames: { [key: string]: string }
+    actions: { [key: string]: (newState: newState, action: Action) => void },
+    asyncActions: { [key: string]: (dispatch: Function) => void },
+    actionNames?: { [key: string]: string }
 };
 
 type newState = {
@@ -21,14 +23,20 @@ const store: NumStateType = {
         num: 20,
     },
     actions: {
-        add1(newState: { num: number }, action: { type: string, val: number }) {
+        add1(newState, action) {
             newState.num++;
         },
-        add2(newState: { num: number }, action: { type: string; val: number }) {
+        add2(newState, action) {
             newState.num += action.val;
         },
     },
-    actionNames: {}
+    asyncActions: {
+        asyncAdd1(dispatch) {
+            setTimeout(() => {
+                dispatch({ type: 'add1' })
+            }, 3000);
+        }
+    }
 };
 
 const actionNames: ActionNames = {}
