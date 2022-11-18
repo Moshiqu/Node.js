@@ -1,7 +1,7 @@
 import { Button, Input, Space, Switch, message } from 'antd';
 import React, { useEffect, useState } from "react";
 import style from "@/views/Login/init.module.scss";
-import initLoginBg from "@/views/Login/init.js";
+import initLoginBg from "@/assets/js/init.js";
 import 'antd/dist/antd.css';
 import '@/views/Login/login.less'
 import { Link } from 'react-router-dom';

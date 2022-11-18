@@ -1,7 +1,7 @@
 import { Button, Input, message, Form, Space, } from 'antd';
 import React, { useEffect, useState } from "react";
 import style from "@/views/Login/init.module.scss";
-import initRegisterBg from "@/views/Register/init.js";
+import initRegisterBg from "@/assets/js/init.js";
 import 'antd/dist/antd.css';
 import '@/views/Register/register.less'
 import { v4 as uuidv4 } from 'uuid';
