@@ -12,8 +12,8 @@ const reguserHandler = (req, res) => {
     }
 
     // 通过验证
-    const { password, repassword, account, email, captcha } = req.body
-    isCaptchaValidated(account, captcha)
+    const { password, repassword, account, email, captcha, uuid } = req.body
+    isCaptchaValidated(account, captcha, uuid)
         .then(result => {
             if (result.status === 'success') {
                 if (password === repassword) {
@@ -82,6 +82,7 @@ const loginHandler = (req, res) => {
 }
 
 const captchaHandler = (req, res) => {
+    console.log(req);
     const errArray = validationResult(req).errors
     if (errArray.length) {
         return res.send({
@@ -89,7 +90,7 @@ const captchaHandler = (req, res) => {
             msg: errArray[0].msg
         })
     }
-    const { account } = req.body
+    const { account, uuid } = req.body
     const svgCaptcha = require('svg-captcha')
     const { captchaOption } = require('@root/config')
     const captcha = svgCaptcha.create(captchaOption) //字母和数字随机验证码
@@ -98,7 +99,7 @@ const captchaHandler = (req, res) => {
     // text是指产生的验证码，data指svg的字节流信息
     const { text, data } = captcha
 
-    insertCaptcha(account, text)
+    insertCaptcha(account, text, uuid)
         .then(result => {
             res.send({ status: 'success', data: { img: data, str: text } })
         })
@@ -269,12 +270,13 @@ const checkPassword = (userInfo) => {
  * @description: 
  * @param {用户名} account
  * @param {验证码结果} text
+ * @param {uuid} uuid
  * @return {*}
  */
-const insertCaptcha = (account, text) => {
+const insertCaptcha = (account, text, uuid) => {
     return new Promise((resolve, reject) => {
         const insertCaptchaSql = 'INSERT INTO captcha SET ?'
-        const data = { account, text }
+        const data = { account, text, uuid }
         db.query(insertCaptchaSql, data, (err, result) => {
             if (err) {
                 return reject({ status: 'fail', msg: err.message || err.sqlMessage })
@@ -298,10 +300,10 @@ const insertCaptcha = (account, text) => {
  * @param {验证码} captcha
  * @return {验证码验证结果}
  */
-const isCaptchaValidated = (account, captcha) => {
+const isCaptchaValidated = (account, captcha, uuid) => {
     return new Promise((resolve, reject) => {
-        const captchaValidateSql = "SELECT text, start_time FROM captcha WHERE account = ? and is_active = 'true'"
-        db.query(captchaValidateSql, account, async (err, result) => {
+        const captchaValidateSql = "SELECT text, start_time FROM captcha WHERE account = ? and uuid = ? and is_active = 'true'"
+        db.query(captchaValidateSql, [account, uuid], async (err, result) => {
             if (err) {
                 return reject({
                     status: 'fail',

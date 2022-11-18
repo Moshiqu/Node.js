@@ -9,6 +9,7 @@ router.post('/reguser', [
     body('email').notEmpty().withMessage('邮箱未设置').isEmail().withMessage('邮箱格式错误'),
     body('password').notEmpty().withMessage('密码未设置').matches(RegPassword).withMessage('密码格式错误'),
     body('repassword').notEmpty().withMessage('二次密码未设置'),
+    body('uuid').notEmpty().withMessage('uuid不能为空'),
     body('captcha').notEmpty().withMessage('图形验证码未输入').isLength({ min: 4, max: 4 }).withMessage('验证码格式错误')
 ], reguserHandler)
 
@@ -23,7 +24,8 @@ router.post('/login', [
 
 // 注册时获取图形验证码
 router.get('/captcha', [
-    body('account').notEmpty().withMessage('用户名不能为空')
+    body('account').notEmpty().withMessage('用户名不能为空'),
+    body('uuid').notEmpty().withMessage('uuid不能为空')
 ], captchaHandler)
 
 

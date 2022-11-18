@@ -17,15 +17,13 @@ export default defineConfig({
         },
     },
     server: {
-        host: "127.0.0.1",
-        port: 3302,
         open: true,
         proxy: {
-            "/api": {
-                target: "http://localhost:3001",
+            "/user":{
+                target: "http://127.0.0.1:3001/",
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, ""),
-            },
+                // rewrite: (path) => path.replace(/^\/user/, ""),
+            }
         },
     },
 });
