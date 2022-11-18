@@ -1,10 +1,10 @@
 type arrStateType = {
     state: {},
-    actions: { [key: string]: (newState: State, action: Action) => void },
+    actions: { [key: string]: (newState: newState, action: Action) => void },
     actionNames: { [key: string]: string }
 }
 
-type State = {
+type newState = {
     arr: number[]
 }
 
@@ -13,7 +13,11 @@ type Action = {
     val: number
 }
 
-const arrState: arrStateType = {
+type ActionNames = {
+    [key: string]: string
+}
+
+const store: arrStateType = {
     state: {
         arr: [1, 2, 3]
     },
@@ -22,9 +26,15 @@ const arrState: arrStateType = {
             newState.arr.push(action.val)
         }
     },
-    actionNames: {
-        arrPush: 'arrPush'
-    }
+    actionNames: {}
 }
 
-export default arrState
+const actionNames: ActionNames = {}
+
+for (const key in store.actions) {
+    actionNames[key] = key
+}
+
+store.actionNames = actionNames
+
+export default store

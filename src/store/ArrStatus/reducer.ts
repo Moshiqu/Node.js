@@ -8,11 +8,11 @@ const reducer = (state = { ...arrHandler.state }, action: { type: string, val: n
             const element = arrHandler.actionNames[key];
             if (action.type === element) {
                 arrHandler.actions[element](newState, action)
+                break;
             }
         }
     }
 
     return newState
 }
-
 export default reducer

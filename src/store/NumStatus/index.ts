@@ -1,9 +1,9 @@
 type NumStateType = {
     state: {},
-    actions: { [key: string]: (newState: State, action: Action) => void }, actionNames: { [key: string]: string }
+    actions: { [key: string]: (newState: newState, action: Action) => void }, actionNames: { [key: string]: string }
 };
 
-type State = {
+type newState = {
     num: number
 }
 
@@ -12,8 +12,11 @@ type Action = {
     val: number
 }
 
+type ActionNames = {
+    [key: string]: string
+}
 
-const numState: NumStateType = {
+const store: NumStateType = {
     state: {
         num: 20,
     },
@@ -25,10 +28,15 @@ const numState: NumStateType = {
             newState.num += action.val;
         },
     },
-    actionNames: {
-        add1: 'add1',
-        add2: 'add2'
-    }
+    actionNames: {}
 };
 
-export default numState;
+const actionNames: ActionNames = {}
+
+for (const key in store.actions) {
+    actionNames[key] = key
+}
+
+store.actionNames = actionNames
+
+export default store;
