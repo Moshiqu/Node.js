@@ -1,7 +1,12 @@
-import { legacy_createStore } from 'redux';
-import reducer from '@/store/reducer'
+import { legacy_createStore, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-const store = legacy_createStore(reducer, composeWithDevTools())
+import arrReducer from './ArrStatus/reducer';
+import numReducer from './NumStatus/reducer';
+
+const reducers = combineReducers({ arrReducer, numReducer })
+
+
+const store = legacy_createStore(reducers, composeWithDevTools())
 
 export default store
