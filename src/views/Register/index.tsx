@@ -1,6 +1,6 @@
 import { Button, Input, message, Form, Space, } from 'antd';
 import React, { useEffect, useState } from "react";
-import style from "@/views/Register/init.module.scss";
+import style from "@/views/Login/init.module.scss";
 import initRegisterBg from "@/views/Register/init.js";
 import 'antd/dist/antd.css';
 import '@/views/Register/register.less'
@@ -56,6 +56,7 @@ const View: React.FC = () => {
         registerAPI(data).then(res => {
             console.log(res);
             // TODO 解决setState的异步返回
+            // TODO 修改接口返回, 添加失败状态
             // TODO 注册成功后的前端处理: 注册成功后提示注册成功, 跳转登录页面
             // TODO 完成登录页面样式及功能
 
@@ -69,10 +70,10 @@ const View: React.FC = () => {
     };
 
     return (
-        <div className={style.registerPage}>
+        <div className={style.loginPage}>
             {/* canvas背景 */}
             <canvas id="canvas" className={style.canvas}></canvas>
-            <div className={style.registerBox + " registerbox"}>
+            <div className={style.loginBox + " loginbox"}>
                 {/* 标题 */}
                 <div className={style.title}>
                     <h1>这是个啥&nbsp;·&nbsp;注册</h1>
