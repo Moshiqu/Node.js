@@ -41,7 +41,6 @@ const View: React.FC = () => {
         configObj.RegEmail.test(username) ? data.email = username : data.account = username
 
         LoginAPI(data).then(res => {
-            message.success('登录成功, 正在跳转首页...')
             if (isRemember) {
                 setCookie('username', username, 1)
                 setCookie('password', password, 1)

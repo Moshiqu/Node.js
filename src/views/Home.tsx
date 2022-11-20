@@ -2,8 +2,9 @@ import { Layout } from 'antd';
 import React, { useState } from 'react';
 import { Outlet, } from 'react-router-dom';
 import MainMenu from '@/components/MainMenu';
+import HeaderView from "@/components/Header"
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 const View: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -15,8 +16,8 @@ const View: React.FC = () => {
                 <MainMenu />
             </Sider>
             <Layout className="site-layout">
-                <Header className="site-layout-background" style={{ padding: 0 }} />
-                <Content style={{ margin: '16px 16px 0' }} className="site-layout-background">
+                <HeaderView />
+                <Content style={{ margin: '.16rem .16rem 0' }} className="site-layout-background">
                     <Outlet />
                 </Content>
                 <Footer style={{ textAlign: 'center', padding: 0, lineHeight: "48px" }}>Ant Design ©2018 Created by Ant UED</Footer>

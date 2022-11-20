@@ -6,12 +6,10 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 
-// import type { MenuProps } from 'antd';
 import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-// type MenuItem = Required<MenuProps>['items'][number];
 type MenuItem = { label: string, key: string, icon?: React.ReactNode, children?: MenuItem[] };
 
 function getItem(
@@ -57,8 +55,6 @@ const View: React.FC = () => {
         }
     }
 
-
-
     const [openKeys, setOpenKeys] = useState([firstOpenKey]);
     const navigateTo = useNavigate()
 
@@ -69,7 +65,6 @@ const View: React.FC = () => {
     const handleOpenChange = (keys: string[]) => {
         setOpenKeys([keys[keys.length - 1]])
     }
-
 
     return (
         <Menu theme="dark" defaultSelectedKeys={[currentRoute.pathname]} mode="inline" items={items} onClick={menuClick} onOpenChange={handleOpenChange} openKeys={openKeys} />

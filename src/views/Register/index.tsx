@@ -59,7 +59,6 @@ const View: React.FC = () => {
             uuid
         }
         RegisterAPI(data).then(() => {
-            message.success('注册成功, 正在跳转登录页...')
             navigate('/login')
         }).catch(err => {
             setUuid(uuidv4())
