@@ -40,7 +40,7 @@ const View: React.FC = () => {
         }
     }, [uuid, flag])
 
-    const captchaBtn = () => {
+    const CaptchaBtn = () => {
         if (svgTag) {
             return <div dangerouslySetInnerHTML={{ __html: svgTag }} className="captchaImg" title='点击重新获取验证码'></div>
         }
@@ -119,7 +119,7 @@ const View: React.FC = () => {
                                         setFlag(false)
                                         setUuid(uuidv4())
                                     }}>
-                                        {captchaBtn()}
+                                        <CaptchaBtn />
                                     </span>
                                 </Space>
                             </Form.Item>

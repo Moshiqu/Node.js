@@ -1,6 +1,6 @@
 import { Button, Input, Switch, message, Form, Space, Spin } from 'antd';
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from 'react-router-dom';
 import initLoginBg from "@/assets/js/init.js";
 import 'antd/dist/antd.css';
 import '@/views/Login/login.less'
@@ -15,6 +15,7 @@ const View: React.FC = () => {
     const [loading, setLoading] = useState(false)
 
     const [form] = Form.useForm()
+    const navigate = useNavigate()
 
     useEffect(() => {
         initLoginBg();
@@ -50,10 +51,10 @@ const View: React.FC = () => {
                 removeCookie('password')
                 removeCookie('remember')
             }
+            navigate('/')
             localStorage.setItem('token', res.token as string)
         }).catch(err => {
             message.error(err.msg)
-
         }).finally(() => {
             setLoading(false)
 
