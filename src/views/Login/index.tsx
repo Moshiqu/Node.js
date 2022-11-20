@@ -1,94 +1,118 @@
-import { Button, Input, Space, Switch, message } from 'antd';
+import { Button, Input, Switch, message, Form, Space, Spin } from 'antd';
 import React, { useEffect, useState } from "react";
-import style from "@/views/Login/init.module.scss";
+
 import initLoginBg from "@/assets/js/init.js";
 import 'antd/dist/antd.css';
 import '@/views/Login/login.less'
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-import { captchaAPI } from '@/request/api';
-
-type UserInfo = { account: string, password: string, captcha: string };
+import configObj from '@/assets/js/config.js';
+import { LoginAPI } from '@/request/api';
+import { getCookie, setCookie, removeCookie } from "@/utils"
+import style from "@/views/Login/init.module.scss";
 
 const View: React.FC = () => {
-    const [isRemember, setIsRember] = useState(true)
-    const [loginInfo, setLoginInfo] = useState<UserInfo>({ account: "", password: "", captcha: "" })
-    const [uuid, setUuid] = useState('')
-    const [svgTag, setSvgTag] = useState()
+    const [isRemember, setIsRember] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const [form] = Form.useForm()
 
     useEffect(() => {
-        setUuid(uuidv4())
         initLoginBg();
         window.onresize = function () {
             initLoginBg();
         };
     }, []);
 
-    const loginInfoChangeHanlder = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
-        switch (type) {
-            case 'account':
-                setLoginInfo({ ...loginInfo, account: e.target.value })
-                break;
-            case 'password':
-                setLoginInfo({ ...loginInfo, password: e.target.value })
-                break;
-            case 'captcha':
-                setLoginInfo({ ...loginInfo, captcha: e.target.value })
-                break;
+    useEffect(() => {
+        if (getCookie('username') !== '' && getCookie('password') !== '') {
+            form.setFieldsValue({ username: getCookie('username'), password: getCookie('password') })
+            setIsRember(getCookie("remember") as boolean)
         }
-    }
+    }, [form])
 
-    const success = () => {
-        message.success('This is a success message');
+    const onFinish = (values: any) => {
+        console.log('Successed:', values);
+        setLoading(true)
+        const { username, password } = values
+        const data: LoginAPIReq = {
+            password,
+        }
+        configObj.RegEmail.test(username) ? data.email = username : data.account = username
+
+        LoginAPI(data).then(res => {
+            message.success('登录成功, 正在跳转首页...')
+            if (isRemember) {
+                setCookie('username', username, 1)
+                setCookie('password', password, 1)
+                setCookie('remember', isRemember, 1)
+            } else {
+                removeCookie('username')
+                removeCookie('password')
+                removeCookie('remember')
+            }
+            localStorage.setItem('token', res.token as string)
+        }).catch(err => {
+            message.error(err.msg)
+
+        }).finally(() => {
+            setLoading(false)
+
+        })
     };
 
-    const getCaptcha = () => {
-        const { account } = loginInfo
-        const sendData = { account, uuid }
-        console.log(sendData);
-        captchaAPI(sendData).then(res => {
-            setSvgTag(res.data.img)
-        }).catch(err => {
-            console.log(err);
-        })
-    }
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
 
     return (
         <div className={style.loginPage}>
-            {/* canvas背景 */}
-            <canvas id="canvas" className={style.canvas}></canvas>
-            <div className={style.loginBox + " loginbox"}>
-                {/* 标题 */}
-                <div className={style.title}>
-                    {/* <h1>俺自己的项目&nbsp;·&nbsp;前端</h1> */}
-                    <h1>这是个啥&nbsp;·&nbsp;登录</h1>
-                    <p>Strive Everyday</p>
+            <Spin size='large' style={{ maxHeight: 'initial' }} tip="Loading..." spinning={loading}>
+                {/* canvas背景 */}
+                <canvas id="canvas" className={style.canvas}></canvas>
+                <div className={style.loginBox + " loginbox"}>
+                    {/* 标题 */}
+                    <div className={style.title}>
+                        {/* <h1>俺自己的项目&nbsp;·&nbsp;前端</h1> */}
+                        <h1>这是个啥&nbsp;·&nbsp;登录</h1>
+                        <p>Strive Everyday</p>
+                    </div>
+                    {/* 表格 */}
+                    <div className="form">
+                        <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" form={form} >
+                            <Form.Item name="username" rules={[{ required: true, message: '请输入用户名或邮箱!' }]}>
+                                <Input placeholder='用户名或邮箱' />
+                            </Form.Item>
+
+                            <Form.Item name="password" rules={[{ required: true, message: '请输入密码!' }, { pattern: configObj.RegPassword, message: "密码格式不正确" }]}>
+                                <Input.Password placeholder='密码' onPaste={e => e.preventDefault()} onCopy={e => e.preventDefault()} />
+                            </Form.Item>
+
+                            <Form.Item>
+                                <Space size={20} style={{ width: "100%", justifyContent: "space-between" }}>
+                                    <Space className='remember' size={0}>
+                                        <Switch checked={isRemember} onChange={(val) => setIsRember(val)} />
+                                        <span>记住密码</span>
+                                    </Space>
+                                    <Space>
+                                        <Link to={'/user'}>忘记密码?</Link>
+                                    </Space>
+                                </Space>
+                            </Form.Item>
+
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit" block>
+                                    登录
+                                </Button>
+                            </Form.Item>
+
+                            <Form.Item labelAlign='right'>
+                                <Link to={'/register'}>没有账号? 去注册</Link>
+                            </Form.Item>
+                        </Form>
+                    </div>
                 </div>
-                {/* 表格 */}
-                <div className="form">
-                    <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-                        <Input placeholder='用户名' onChange={e => loginInfoChangeHanlder(e, 'account')} />
-                        <Input.Password placeholder='密码' onChange={e => loginInfoChangeHanlder(e, 'password')} />
-                        <div className='captchaBox'>
-                            <Input placeholder="验证码" onChange={e => loginInfoChangeHanlder(e, 'captcha')} />
-                            <span className="captcha" onClick={getCaptcha}>
-                                {/* <svg xmlns="http://www.w3.org/2000/svg" width="90" height="32" viewBox="0,0,90,32"><rect width="100%" height="100%" fill="#666" /><path d="M18 4 C42 15,47 10,82 24" stroke="#8ad5ef" fill="none" /><path d="M8 11 C40 13,39 21,84 15" stroke="#ec5fec" fill="none" /><path fill="#f6b5e6" d="M68.98 31.10L69.15 31.27L68.99 31.11Q67.22 31.13 65.54 31.70L65.54 31.70L65.61 31.77Q66.00 28.00 66.11 24.88L66.20 24.97L66.21 24.98Q66.27 21.88 66.04 18.23L65.99 18.18L66.16 18.34Q64.64 17.85 63.88 17.47L63.83 17.43L63.58 14.54L63.45 14.42Q64.23 15.08 65.83 15.65L65.78 15.61L65.77 15.60Q65.57 13.49 65.15 10.75L65.26 10.86L65.26 10.86Q67.59 11.59 69.23 11.44L69.17 11.39L69.04 15.97L69.00 15.93Q70.34 15.79 71.67 15.29L71.80 15.42L71.87 15.49Q71.80 16.37 71.57 18.12L71.42 17.98L71.53 18.08Q70.02 18.43 68.99 18.43L68.93 18.38L68.88 18.33Q68.95 20.56 68.95 24.82L69.00 24.88L68.98 24.86Q68.99 29.02 69.07 31.19ZM72.19 14.82L72.27 14.90L72.12 14.75Q71.96 14.97 71.35 15.20L71.30 15.15L71.61 12.30L71.78 12.47Q70.99 12.78 69.58 13.01L69.46 12.89L69.40 12.83Q69.53 12.27 69.68 10.90L69.70 10.92L69.55 10.77Q69.04 10.95 68.47 10.95L68.43 10.91L68.44 10.91Q66.42 11.03 64.78 10.31L64.75 10.27L64.70 10.23Q65.13 12.63 65.39 15.10L65.53 15.24L65.48 15.19Q64.63 14.88 63.11 13.85L63.01 13.75L63.03 13.77Q63.33 15.02 63.56 17.72L63.72 17.88L63.70 17.86Q64.04 17.98 65.23 18.40L65.24 18.41L65.22 18.40Q65.33 19.12 65.37 20.53L65.42 20.58L65.76 20.57L65.90 20.63L65.75 20.49Q65.78 21.70 65.78 22.88L65.96 23.06L65.93 23.03Q65.88 27.93 65.08 32.27L64.98 32.17L65.13 32.32Q65.25 32.14 67.20 31.60L67.20 31.60L67.11 31.52Q67.24 32.30 67.13 33.67L67.15 33.69L67.19 33.73Q67.89 33.55 68.69 33.55L68.73 33.59L68.79 33.65Q70.43 33.58 72.07 34.15L72.06 34.15L72.04 34.12Q70.79 28.50 70.98 20.58L71.02 20.62L73.25 20.07L73.42 20.24Q73.32 19.15 73.39 18.12L73.51 18.23L73.62 16.14L73.71 16.22Q73.11 16.47 71.93 16.92L71.88 16.87L71.92 16.91Q72.29 15.65 72.22 15.30L72.17 15.26L72.10 15.19Q72.08 14.97 72.15 14.78Z" /><path fill="#9797e7" d="M14.84 31.21L14.72 31.09L12.48 24.39L12.32 24.24Q8.11 11.80 2.17 5.41L2.05 5.28L2.11 5.35Q4.08 6.36 6.67 6.97L6.68 6.98L6.65 6.95Q11.86 13.31 16.20 26.06L16.18 26.04L16.20 26.06Q19.22 17.92 19.90 16.32L19.95 16.37L19.99 16.41Q22.40 10.82 25.21 7.51L25.23 7.52L25.05 7.35Q27.28 7.14 29.90 6.26L29.92 6.27L29.81 6.17Q25.29 10.82 22.25 18.06L22.16 17.97L22.19 18.01Q20.88 21.76 17.19 31.28L17.08 31.17L17.01 31.09Q16.60 31.26 16.03 31.22L15.89 31.07L16.04 31.22Q15.43 31.19 14.86 31.22ZM19.75 33.53L19.90 33.68L19.93 33.71Q22.57 23.56 24.13 19.52L24.28 19.67L24.20 19.59Q27.10 11.79 31.52 6.92L31.60 7.00L31.64 7.04Q30.65 7.47 28.56 8.19L28.46 8.09L29.67 6.83L29.64 6.80Q30.14 6.04 30.75 5.39L30.87 5.51L30.90 5.55Q28.03 6.48 25.02 7.05L25.08 7.11L24.92 6.95Q20.56 12.30 16.68 23.76L16.72 23.80L16.65 23.73Q13.13 13.74 9.93 9.36L9.97 9.40L9.94 9.37Q9.52 9.25 8.64 9.10L8.59 9.05L8.56 9.02Q8.43 8.73 6.83 6.68L6.88 6.73L6.73 6.57Q3.73 5.82 1.03 4.41L1.06 4.45L1.03 4.42Q7.80 11.65 12.18 24.44L12.04 24.30L12.20 24.46Q13.37 28.06 14.55 31.64L14.56 31.65L14.61 31.71Q14.98 31.76 15.81 31.65L15.72 31.55L15.64 31.48Q16.00 32.18 16.69 33.52L16.76 33.59L16.82 33.65Q17.63 33.54 18.35 33.62L18.33 33.59L18.33 33.59Q19.18 33.72 19.94 33.72Z" /><path fill="#6fe16f" d="M50.43 14.33L50.48 14.39L50.49 14.39Q47.36 14.46 45.53 13.40L45.51 13.38L45.41 13.28Q47.92 11.90 52.79 7.68L52.90 7.78L52.86 7.74Q53.64 7.61 54.94 7.00L54.82 6.89L54.97 7.04Q53.51 12.85 53.40 19.20L53.49 19.30L53.47 19.28Q53.40 25.68 54.47 31.77L54.35 31.66L54.35 31.66Q52.61 30.87 50.48 30.76L50.67 30.95L50.55 30.82Q50.41 26.65 50.41 22.58L50.54 22.70L50.48 22.64Q50.46 18.51 50.49 14.40ZM50.19 16.72L50.19 31.30L50.12 31.23Q51.41 31.30 52.36 31.49L52.23 31.36L52.28 31.42Q52.31 32.05 52.50 33.42L52.58 33.50L52.46 33.38Q55.46 34.05 57.89 36.30L57.83 36.24L57.80 36.21Q55.36 29.12 55.32 21.66L55.28 21.62L55.37 21.71Q55.28 14.23 57.10 7.00L57.13 7.02L57.11 7.00Q56.57 7.42 54.97 8.52L54.96 8.51L54.93 8.48Q55.18 7.78 55.49 6.26L55.46 6.24L55.48 6.25Q54.13 6.99 52.68 7.37L52.68 7.37L52.71 7.41Q48.81 10.85 44.51 13.14L44.54 13.17L44.69 13.31Q46.06 14.38 48.42 14.73L48.33 14.64L48.27 14.57Q47.66 15.15 46.37 16.21L46.48 16.33L46.40 16.24Q47.87 16.61 50.08 16.61L50.06 16.59Z" /><path fill="#9bc1e7" d="M31.52 19.66L31.48 19.62L31.40 19.54Q28.63 19.60 27.87 21.85L27.82 21.79L27.80 21.77Q27.69 22.61 27.57 23.26L27.47 23.15L27.46 23.15Q30.22 23.50 31.85 23.50L31.74 23.39L31.72 23.37Q33.35 23.36 35.94 23.25L36.04 23.35L36.10 23.41Q35.88 21.59 34.47 20.53L34.52 20.58L34.44 20.49Q33.30 19.65 31.51 19.65ZM31.46 32.09L31.52 32.15L31.62 32.25Q27.25 32.11 25.95 30.70L26.09 30.83L26.11 30.86Q25.06 29.32 24.91 26.04L24.87 26.00L24.83 25.96Q24.83 25.73 24.75 24.36L24.88 24.49L24.92 24.52Q24.65 22.09 24.65 21.36L24.64 21.36L24.79 21.50Q24.71 19.55 25.43 18.45L25.51 18.53L25.38 18.40Q26.77 16.98 29.74 16.98L29.82 17.06L31.42 17.10L31.33 17.01Q33.50 17.12 35.03 17.43L34.93 17.33L34.87 17.27Q37.02 17.82 38.01 19.04L37.90 18.93L37.90 18.93Q38.62 20.11 38.70 22.20L38.78 22.29L38.76 22.26Q38.58 23.23 38.62 25.40L38.79 25.56L38.60 25.38Q35.94 25.61 33.16 25.61L33.15 25.60L27.43 25.47L27.50 25.54Q27.64 29.95 31.71 29.72L31.75 29.75L31.74 29.74Q35.39 29.43 36.60 27.61L36.78 27.78L36.62 27.62Q37.49 28.15 39.09 29.33L39.17 29.41L39.12 29.37Q37.74 31.75 33.59 32.01L33.58 32.00L33.62 32.04Q33.01 32.19 31.64 32.27ZM33.78 34.46L33.91 34.58L33.83 34.50Q34.86 34.39 36.08 34.47L36.14 34.53L36.25 34.63Q41.08 34.67 41.99 31.89L42.12 32.02L42.07 31.97Q40.48 30.76 39.38 30.00L39.37 29.99L39.33 29.95Q39.46 29.51 39.65 29.28L39.73 29.36L39.74 29.38Q39.00 28.90 37.63 27.95L37.63 27.95L37.50 27.82Q38.74 28.03 40.79 28.33L40.78 28.31L40.64 28.18Q40.62 26.98 40.54 26.29L40.54 26.29L40.25 24.21L40.33 24.28Q40.28 22.04 39.64 20.55L39.62 20.53L39.50 20.42Q39.30 20.14 38.73 19.53L38.72 19.52L38.69 19.49Q38.63 19.27 38.40 18.70L38.39 18.69L38.32 18.63Q36.38 16.54 31.32 16.54L31.32 16.53L29.66 16.55L29.71 16.60Q26.36 16.49 24.92 17.98L24.95 18.00L24.99 18.05Q24.33 19.18 24.37 21.24L24.37 21.23L24.36 21.22Q24.53 22.30 24.64 24.55L24.63 24.54L24.63 24.54Q24.60 26.04 24.72 28.09L24.66 28.03L24.78 28.15Q25.02 30.37 25.89 31.44L25.86 31.41L25.82 31.37Q25.95 31.50 26.14 31.61L26.27 31.74L26.59 32.40L26.61 32.42Q27.38 34.26 33.96 34.64ZM31.74 29.33L31.82 29.41L31.77 29.36Q30.56 29.40 29.64 28.94L29.71 29.01L29.68 28.98Q29.60 28.56 29.41 27.87L29.39 27.85L29.45 27.91Q31.05 27.72 32.65 27.72L32.75 27.82L32.66 27.73Q34.37 27.77 36.05 27.89L36.01 27.85L36.02 27.86Q34.80 29.27 31.79 29.38ZM33.33 21.93L33.45 22.06L33.32 21.93Q33.99 21.98 35.32 22.36L35.29 22.33L35.45 22.68L35.51 22.93L35.58 23.00Q34.15 23.06 33.24 23.02L33.28 23.06L33.19 22.97Q30.91 22.94 30.87 22.94L30.90 22.97L31.01 23.08Q31.62 22.01 33.30 21.90Z" /></svg> */}
-                                <Button type='primary' block>获取验证码</Button>
-                            </span>
-                        </div>
-                        <div className='toolBox'>
-                            <div className='remember'>
-                                <Switch defaultChecked onChange={checked => setIsRember(checked)} size="small" />
-                                记住密码
-                            </div>
-                            <div>
-                                <Link to="/page/about">忘记密码?</Link>
-                            </div>
-                        </div>
-                        <Button type="primary" onClick={success} block>登录</Button>
-                    </Space>
-                </div>
-            </div>
+            </Spin>
         </div>
     );
 };

@@ -17,9 +17,25 @@ instance.interceptors.request.use(config => {
 
 // 响应拦截器
 instance.interceptors.response.use(res => {
-    return res.data
+    return Promise.resolve(res.data)
 }, err => {
-    return Promise.reject(err)
+    if (err.response) {
+        // 失败响应的status需要在response中获得
+        switch (err.response.status) {
+            // 对得到的状态码的处理，具体的设置视自己的情况而定
+            case 401:
+                console.log('未登录')
+                window.location.href = '/'
+                break
+            case 404:
+                window.location.href = '/'
+                break
+            case 405:
+                console.log('不支持的方法')
+                break
+        }
+    }
+    return Promise.reject(err.response.data)
 })
 
 export default instance

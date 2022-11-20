@@ -42,11 +42,11 @@ const router = [
     },
     {
         path: '/login',
-        element: <Login />
+        element: withLoaingComponent(<Login />)
     },
     {
         path: '/register',
-        element: <Register />
+        element: withLoaingComponent(<Register />)
     },
     {
         path: '*',

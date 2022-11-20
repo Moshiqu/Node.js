@@ -5,7 +5,7 @@ const reguserHandler = (req, res) => {
     const errArray = validationResult(req).errors
     if (errArray.length) {
         // 未通过验证
-        return res.send({
+        return res.status(500).send({
             status: 'fail',
             msg: errArray[0].msg
         })
@@ -23,35 +23,32 @@ const reguserHandler = (req, res) => {
                                 const insertResult = await insertUser(req.body)
                                 return res.send(insertResult)
                             } catch (error) {
-                                return res.send(error)
+                                return res.status(500).send(error)
                             }
                         }).catch(err => {
-                            return res.send(err)
+                            return res.status(500).send(err)
                         })
                 } else {
-                    return res.send({
+                    return res.status(500).send({
                         status: 'fail',
                         msg: '两次密码输入不一致'
                     })
                 }
             }
         }).catch(err => {
-            return res.send(err)
+            return res.status(500).send(err)
         })
-
-
-
 }
 
 const loginHandler = (req, res) => {
     const errArray = validationResult(req).errors
     if (errArray.length && errArray[0].nestedErrors) {
-        res.send({
+        res.status(500).send({
             status: 'fail',
             msg: '未输入账号或邮箱'
         })
     } else if (errArray.length) {
-        res.send({
+        res.status(500).send({
             status: 'fail',
             msg: errArray[0].msg
         })
@@ -59,14 +56,14 @@ const loginHandler = (req, res) => {
         const { account, email, password } = req.body
         const { RegEmail, RegAccount } = require('@root/config')
         if (account && !RegAccount.test(account)) {
-            return res.send({
+            return res.status(500).send({
                 status: 'fail',
                 msg: '账号格式错误'
             })
         }
 
         if (email && !RegEmail.test(email)) {
-            return res.send({
+            return res.status(500).send({
                 status: 'fail',
                 msg: '邮箱格式错误'
             })
@@ -76,7 +73,7 @@ const loginHandler = (req, res) => {
             .then(result => {
                 res.send(result)
             }).catch(err => {
-                res.send(err)
+                res.status(500).send(err)
             })
     }
 }
@@ -84,7 +81,7 @@ const loginHandler = (req, res) => {
 const captchaHandler = (req, res) => {
     const errArray = validationResult(req).errors
     if (errArray.length) {
-        return res.send({
+        return res.status(500).send({
             status: 'fail',
             msg: errArray[0].msg
         })
@@ -103,7 +100,7 @@ const captchaHandler = (req, res) => {
             res.send({ status: 'success', data: { img: data, str: text } })
         })
         .catch(err => {
-            res.send(err)
+            res.status(500).send(err)
         })
 }
 
@@ -346,7 +343,7 @@ const isCaptchaValidated = (captcha, uuid) => {
                 })
             }
 
-            if (captcha !== resultText) {
+            if (captcha.toLowerCase() !== resultText.toLowerCase()) {
                 return reject({
                     status: 'fail',
                     msg: '验证码错误'
