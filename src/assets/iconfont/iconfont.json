@@ -1,0 +1,23 @@
+{
+  "id": "3782331",
+  "name": "这是个啥",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7568836",
+      "name": "24gf-bubbles",
+      "font_class": "msg",
+      "unicode": "e95a",
+      "unicode_decimal": 59738
+    },
+    {
+      "icon_id": "1727435",
+      "name": "211铃铛",
+      "font_class": "lingdang",
+      "unicode": "e8c0",
+      "unicode_decimal": 59584
+    }
+  ]
+}
