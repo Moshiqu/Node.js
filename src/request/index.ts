@@ -10,6 +10,12 @@ instance.interceptors.request.use(config => {
     if (config.method === 'post') {
         config.headers = { "content-type": "application/x-www-form-urlencoded" }
     }
+    const token = localStorage.getItem('token')
+    if(token){
+        config.headers ={
+            "Authorization":`Bearer ${token}`
+        }
+    }
     return config
 }, err => {
     return Promise.reject(err)

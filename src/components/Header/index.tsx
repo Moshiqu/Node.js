@@ -1,9 +1,11 @@
-import { Button, Layout } from 'antd';
+import { Layout } from 'antd';
 import React, { useState } from 'react';
 import style from "@/components/Header/header.module.scss";
 import Icon from "@/components/Icon"
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import ChangePwdModal from '@/components/ChangePwdModal';
 
 const { Header } = Layout;
 
@@ -11,25 +13,28 @@ const HeaderView: React.FC = () => {
 
     const [avatarUrl, setAvatarUrl] = useState('https://pica.zhimg.com/v2-1e7a2726ba4ffd4e99060b132a70e586_l.jpg?source=32738c0c')
 
+    const navigateTo = useNavigate()
 
     const signOut = () => {
-        console.log('signOut');
+        localStorage.removeItem('token')
+        navigateTo('/login')
     }
+
     const items: MenuProps['items'] = [
         {
             label: <a href="https://www.antgroup.com">1st menu item</a>,
             key: '0',
         },
         {
-            label: <a href="https://www.aliyun.com">2nd menu item</a>,
-            key: '1',
+            label: <ChangePwdModal/>,
+            key: 'ChangePwdModal',
         },
         {
             type: 'divider',
         },
         {
             label: <span onClick={signOut}>退出登录</span>,
-            key: '3',
+            key: 'signOut',
         },
     ];
 

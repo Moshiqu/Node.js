@@ -19,7 +19,7 @@ const withLoaingComponent = (comp: JSX.Element) => (
 const router = [
     {
         path: '/',
-        element: <Navigate to='/register' />,
+        element: <Navigate to='/user' />,
     },
     {
         path: "/",

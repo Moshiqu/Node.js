@@ -22,6 +22,10 @@ const View: React.FC = () => {
         window.onresize = function () {
             initLoginBg();
         };
+
+        return ()=>{
+            window.onresize = null
+        }
     }, []);
 
     useEffect(() => {

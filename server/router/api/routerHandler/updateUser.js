@@ -40,7 +40,7 @@ const userInfoHandler = (req, res) => {
 const pswChangeHandler = (req, res) => {
     const errArray = validationResult(req).errors
     if (errArray.length) {
-        return res.send({
+        return res.status(500).send({
             status: "fail",
             msg: errArray[0].msg
         })

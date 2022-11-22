@@ -27,6 +27,10 @@ const View: React.FC = () => {
         window.onresize = function () {
             initRegisterBg();
         };
+
+        return ()=>{
+            window.onresize = null
+        }
     }, []);
 
     useEffect(() => {
@@ -94,7 +98,7 @@ const View: React.FC = () => {
                                 <Input placeholder='邮箱' />
                             </Form.Item>
 
-                            <Form.Item name="password" rules={[{ required: true, message: '请输入密码!' }, { pattern: configObj.RegPassword, message: "密码格式不正确" }]}>
+                            <Form.Item name="password" rules={[{ required: true, message: '请输入密码!' }, { pattern: configObj.RegPassword, message: "密码格式为6~18位仅包含下划线的纯数字和字母组合" }]}>
                                 <Input.Password placeholder='密码' onPaste={e => e.preventDefault()} onCopy={e => e.preventDefault()} />
                             </Form.Item>
 
