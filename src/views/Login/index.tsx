@@ -23,14 +23,19 @@ const View: React.FC = () => {
             initLoginBg();
         };
 
-        return ()=>{
+        return () => {
             window.onresize = null
         }
     }, []);
 
     useEffect(() => {
-        if (getCookie('username') !== '' && getCookie('password') !== '') {
-            form.setFieldsValue({ username: getCookie('username'), password: getCookie('password') })
+        if (getCookie('username')) {
+            form.setFieldsValue({ username: getCookie('username') })
+        }
+        if (getCookie('password')) {
+            form.setFieldsValue({ password: getCookie('password') })
+        }
+        if (getCookie("remember")) {
             setIsRember(getCookie("remember") as boolean)
         }
     }, [form])
@@ -71,17 +76,17 @@ const View: React.FC = () => {
 
     return (
         <div className={style.loginPage}>
-            <Spin size='large' style={{ maxHeight: 'initial' }} tip="Loading..." spinning={loading}>
-                {/* canvas背景 */}
-                <canvas id="canvas" className={style.canvas}></canvas>
-                <div className={style.loginBox + " loginbox"}>
-                    {/* 标题 */}
-                    <div className={style.title}>
-                        {/* <h1>俺自己的项目&nbsp;·&nbsp;前端</h1> */}
-                        <h1>这是个啥&nbsp;·&nbsp;登录</h1>
-                        <p>Strive Everyday</p>
-                    </div>
-                    {/* 表格 */}
+            {/* canvas背景 */}
+            <canvas id="canvas" className={style.canvas}></canvas>
+            <div className={style.loginBox + " loginbox"}>
+                {/* 标题 */}
+                <div className={style.title}>
+                    {/* <h1>俺自己的项目&nbsp;·&nbsp;前端</h1> */}
+                    <h1>这是个啥&nbsp;·&nbsp;登录</h1>
+                    <p>Strive Everyday</p>
+                </div>
+                {/* 表格 */}
+                <Spin style={{ maxHeight: 'initial' }} tip="Loading..." spinning={loading}>
                     <div className="form">
                         <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" form={form} >
                             <Form.Item name="username" rules={[{ required: true, message: '请输入用户名或邮箱!' }]}>
@@ -115,8 +120,8 @@ const View: React.FC = () => {
                             </Form.Item>
                         </Form>
                     </div>
-                </div>
-            </Spin>
+                </Spin>
+            </div>
         </div>
     );
 };

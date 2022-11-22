@@ -1,33 +1,42 @@
-import { Button, Modal, Form, Input } from 'antd';
+import { Button, Modal, Form, Input, message } from 'antd';
 import React, { useState } from 'react';
 import configObj from '@/assets/js/config.js';
 import { ModifyPwdAPI } from "@/request/api"
+import { useNavigate } from 'react-router-dom';
+import { removeCookie } from "@/utils"
 
-const App: React.FC = () => {
+const ChangePwdModal: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
 
     const [form] = Form.useForm()
+    const navigateTo = useNavigate()
 
     const handleOk = () => {
-        // setConfirmLoading(true);
-        // setTimeout(() => {
-        //     setOpen(false);
-        //     setConfirmLoading(false);
-        // }, 2000);
-        // TODO 提交表单导致页面刷新
+        
         form.validateFields().then(res => {
-            console.log(res,'===res');
-            setConfirmLoading(true)
             const { currentPassword, newPassword } = res
             const sendData: ModifyPwdAPIReq = { originPassword: currentPassword, password: newPassword }
-            ModifyPwdAPI(sendData).then((result) => {
-                console.log(result, '---result');
-            }).catch((err) => {
-                console.log(err, '---err');
-            });
+            setConfirmLoading(true);
+            // TODO useState 必须要有同步获取方式 rz办法:setTimeout
+            setTimeout(() => {
+                ModifyPwdAPI(sendData).then(result => {
+                    console.log(result, '---result');
+                    message.success('密码修改成功, 3秒后跳转至登录页面...')
+                    setTimeout(() => {
+                        localStorage.removeItem('token')
+                        removeCookie('password')
+                        navigateTo('/login')
+                    }, 3000);
+                }).catch(err => {
+                    message.error(err.msg)
+                    console.log(err, '---err');
+                }).finally(() => {
+                    setConfirmLoading(false);
+                })
+            }, 500);
         }).catch(error => {
-            console.log(error, '----err');
+            console.log(error, '----error');
         })
     };
 
@@ -42,7 +51,7 @@ const App: React.FC = () => {
         <Button onClick={() => setOpen(false)} key="cancel">
             取消
         </Button>,
-        <Button type="primary" onClick={handleOk} key="ok" >
+        <Button type="primary" onClick={handleOk} key="ok" loading={confirmLoading} >
             确定
         </Button>
     ]
@@ -50,7 +59,7 @@ const App: React.FC = () => {
     return (
         <>
             <span onClick={() => setOpen(true)} style={{ width: '100%', height: '100%' }}>修改密码</span>
-            <Modal title="修改密码" footer={buttons} open={open} confirmLoading={confirmLoading} maskClosable={false} destroyOnClose closable={false} centered >
+            <Modal title="修改密码" footer={buttons} open={open} confirmLoading={confirmLoading} maskClosable={false} destroyOnClose closable={false} centered afterClose={() => setConfirmLoading(false)} >
                 <Form
                     name="basic"
                     labelCol={{ span: 5 }}
@@ -95,4 +104,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default ChangePwdModal;

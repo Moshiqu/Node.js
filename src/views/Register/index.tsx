@@ -28,7 +28,7 @@ const View: React.FC = () => {
             initRegisterBg();
         };
 
-        return ()=>{
+        return () => {
             window.onresize = null
         }
     }, []);
@@ -78,16 +78,16 @@ const View: React.FC = () => {
 
     return (
         <div className={style.loginPage}>
-            <Spin size='large' style={{ maxHeight: 'initial' }} tip="Loading..." spinning={loading}>
-                {/* canvas背景 */}
-                <canvas id="canvas" className={style.canvas}></canvas>
-                <div className={style.loginBox + " registerbox  "}>
-                    {/* 标题 */}
-                    <div className={style.title}>
-                        <h1>这是个啥&nbsp;·&nbsp;注册</h1>
-                        <p>Strive Everyday</p>
-                    </div>
-                    {/* 表格 */}
+            {/* canvas背景 */}
+            <canvas id="canvas" className={style.canvas}></canvas>
+            <div className={style.loginBox + " registerbox  "}>
+                {/* 标题 */}
+                <div className={style.title}>
+                    <h1>这是个啥&nbsp;·&nbsp;注册</h1>
+                    <p>Strive Everyday</p>
+                </div>
+                {/* 表格 */}
+                <Spin style={{ maxHeight: 'initial' }} tip="Loading..." spinning={loading}>
                     <div className="form">
                         <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off" form={form} >
                             <Form.Item name="username" rules={[{ required: true, message: '请输入用户名!' }, { pattern: configObj.RegAccount, message: "账号格式为5~16位仅包含下划线的纯数字和字母组合" }]}>
@@ -139,9 +139,9 @@ const View: React.FC = () => {
                             </Form.Item>
                         </Form>
                     </div>
-                </div>
+                </Spin>
+            </div>
 
-            </Spin>
         </div >
     );
 };

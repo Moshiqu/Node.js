@@ -38,6 +38,7 @@ const userInfoHandler = (req, res) => {
 }
 
 const pswChangeHandler = (req, res) => {
+    console.log(req);
     const errArray = validationResult(req).errors
     if (errArray.length) {
         return res.status(500).send({
@@ -50,9 +51,9 @@ const pswChangeHandler = (req, res) => {
     const { originPassword, password } = req.body
 
     if (originPassword === password) {
-        return res.send({
+        return res.status(500).send({
             status: 'fail',
-            msg: "两次密码不能相同"
+            msg: "新密码和原密码不能相同"
         })
     }
 
@@ -62,10 +63,10 @@ const pswChangeHandler = (req, res) => {
                 const updateResult = await updatePwd(account, password)
                 return res.send(updateResult)
             } catch (error) {
-                return res.send(error)
+                return res.status(500).send(error)
             }
         }).catch(err => {
-            return res.send(err)
+            return res.status(500).send(err)
         })
 }
 
@@ -148,7 +149,7 @@ const checkPassword = ({ account, originPassword, password }) => {
             if (!comparison) {
                 return reject({
                     status: 'fail',
-                    msg: '密码错误'
+                    msg: '原密码错误'
                 })
             }
 
