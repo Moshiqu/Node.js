@@ -13,3 +13,6 @@ export const LoginAPI = (data: LoginAPIReq): Promise<LoginAPIRes> => request.pos
 // /api
 // 修改密码
 export const ModifyPwdAPI = (data: LoginAPIReq): Promise<ModifyPwdAPIRes> => request.post("/api/pswchange", data)
+
+// 上传头像
+export const ChangeAvatarAPI = (data) => request.post('/api/avatarchange', data)
