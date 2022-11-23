@@ -6,12 +6,13 @@ import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import ChangePwdModal from '@/components/ChangePwdModal';
+import ChangeUserInfoModal from '@/components/ChangeUserInfoModal';
 
 const { Header } = Layout;
 
 const HeaderView: React.FC = () => {
 
-    const [avatarUrl, setAvatarUrl] = useState('https://pica.zhimg.com/v2-1e7a2726ba4ffd4e99060b132a70e586_l.jpg?source=32738c0c')
+    const [avatarUrl, setAvatarUrl] = useState('http://localhost:3001/avatar/yo.jpeg')
 
     const navigateTo = useNavigate()
 
@@ -22,7 +23,7 @@ const HeaderView: React.FC = () => {
 
     const items: MenuProps['items'] = [
         {
-            label: <a href="https://www.antgroup.com">1st menu item</a>,
+            label: <ChangeUserInfoModal/>,
             key: '0',
         },
         {

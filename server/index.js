@@ -11,7 +11,11 @@ app.use(cors())
 // 解析数据格式 application/x-www-form-urlencoded res.body 接收数据
 app.use(express.urlencoded({ extended: false }))
 
-// token解析 /api 开头的路由不需要权限
+// 托管静态资源
+const path = require('path')
+app.use(express.static(path.join(__dirname, 'public')))
+
+// token解析 /users 开头的路由不需要权限
 const { expressjwt: expressJWT } = require('express-jwt')
 const { TokenSecretKey: secret } = require('@root/config')
 app.use(expressJWT({ secret, algorithms: ['HS256'] }).unless({ path: [/^\/users\//] }))

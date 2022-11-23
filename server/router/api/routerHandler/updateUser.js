@@ -38,7 +38,6 @@ const userInfoHandler = (req, res) => {
 }
 
 const pswChangeHandler = (req, res) => {
-    console.log(req);
     const errArray = validationResult(req).errors
     if (errArray.length) {
         return res.status(500).send({
@@ -68,6 +67,25 @@ const pswChangeHandler = (req, res) => {
         }).catch(err => {
             return res.status(500).send(err)
         })
+}
+
+const avatarChangeHandler = (req, res) => {
+    const { path: filePath,originalname:fileName } = req.file
+
+    if (!filePath) {
+        return res.status(500).send({
+            status: 'fail',
+            msg: "头像上传失败",
+        })
+    }
+
+    const { serverAddress: address, serverPort: port } = require('@root/config')
+    return res.send({
+        status:'success',
+        msg:'头像上传成功',
+        imgUrl: `${address}:${port}/avatar/${fileName}`,
+    })
+   
 }
 
 /**
@@ -211,5 +229,6 @@ const updatePwd = (account, pwd) => {
 module.exports = {
     userUpdateHandler,
     userInfoHandler,
-    pswChangeHandler
+    pswChangeHandler,
+    avatarChangeHandler
 }
