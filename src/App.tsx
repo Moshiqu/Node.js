@@ -3,7 +3,7 @@ import router from "@/router";
 import { useEffect } from "react";
 import { message } from "antd";
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import userInfoStatus from '@/store/UserInfo';
 
 
@@ -49,8 +49,11 @@ const BeforeRouterEnter: React.FC = () => {
 
 
 function App() {
+    const path = useLocation().pathname
     const dispatch = useDispatch()
-    dispatch(userInfoStatus.asyncActions.asyncGetUserInfo as any)
+    if (path !== '/login' && path !== '/register') {
+        dispatch(userInfoStatus.asyncActions.asyncGetUserInfo as any)
+    }
 
     return (
         <div className="App">

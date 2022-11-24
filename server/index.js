@@ -32,7 +32,7 @@ app.use('/api', apiRouter)
 app.use((err, req, res, next) => {
     // token解析失败导致的错误
     if (err.name === 'UnauthorizedError') {
-        if (err.status === 401) return res.status(500).send({ status: 'fail', msg: '用户未登录或token失效', code: err.code })
+        if (err.status === 401) return res.status(401).send({ status: 'fail', msg: '用户未登录或token失效', code: err.code })
         return res.status(500).send({ status: "fail", message: "无效的token" })
     }
     // 其他错误

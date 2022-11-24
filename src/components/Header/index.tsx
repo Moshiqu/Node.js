@@ -13,8 +13,6 @@ import { useSelector } from 'react-redux';
 const { Header } = Layout;
 
 const HeaderView: React.FC = () => {
-
-
     const [avatarUrl, setAvatarUrl] = useState('https://joeschmoe.io/api/v1/random')
 
     const navigateTo = useNavigate()
@@ -47,7 +45,7 @@ const HeaderView: React.FC = () => {
             type: 'divider',
         },
         {
-            label: <span onClick={signOut}>退出登录</span>,
+            label: <span onClick={signOut} style={{display:"block"}}>退出登录</span>,
             key: 'signOut',
         },
     ];

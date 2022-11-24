@@ -5,7 +5,7 @@ const RegPassword = /^[a-zA-Z]\w{5,17}$/
 // 邮箱正则
 const RegEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 // 昵称正则
-const RegNickname = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/
+const RegNickname = /^([a-zA-Z0-9_\u4e00-\u9fa5]{4,16})$/
 // token生成的密钥
 const TokenSecretKey = 'b9fcf57e16fa23b2d81bc587ffde4788'
 // token配置对象

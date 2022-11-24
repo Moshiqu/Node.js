@@ -13,7 +13,7 @@ const ChangePwdModal: React.FC = () => {
     const navigateTo = useNavigate()
 
     const handleOk = () => {
-        
+
         form.validateFields().then(res => {
             const { currentPassword, newPassword } = res
             const sendData: ModifyPwdAPIReq = { originPassword: currentPassword, password: newPassword }
@@ -58,7 +58,7 @@ const ChangePwdModal: React.FC = () => {
 
     return (
         <>
-            <span onClick={() => setOpen(true)} style={{ width: '100%', height: '100%' }}>修改密码</span>
+            <span onClick={() => setOpen(true)} style={{ display: "block" }}>修改密码</span>
             <Modal title="修改密码" footer={buttons} open={open} confirmLoading={confirmLoading} maskClosable={false} destroyOnClose closable={false} centered afterClose={() => setConfirmLoading(false)} >
                 <Form
                     name="basic"

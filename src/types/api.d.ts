@@ -72,3 +72,14 @@ interface UserInfoAPIResData {
     avatar?: null | string;
     nickname?: null | string;
 }
+
+// 更新用户基础信息 请求数据类型
+interface UpdateUserInfoAPIRes {
+    avatar: string,
+    nickname: string,
+}
+
+interface UpdateUserInfoAPIReq {
+    status: string,
+    msg?: string,
+}

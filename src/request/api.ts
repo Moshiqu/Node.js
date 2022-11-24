@@ -18,4 +18,7 @@ export const ModifyPwdAPI = (data: LoginAPIReq): Promise<ModifyPwdAPIRes> => req
 export const ChangeAvatarAPI = (data: ChangeAvatarAPIReq): Promise<ChangeAvatarAPIRes> => request.post('/api/avatarchange', data)
 
 // 用户基础信息
-export const UserInfoAPI = (): Promise<UserInfoAPIRes>  => request.get('/api/userinfo')
+export const UserInfoAPI = (): Promise<UserInfoAPIRes> => request.get('/api/userinfo')
+
+// 修改基础信息
+export const UpdateUserInfoAPI = (data: UpdateUserInfoAPIRes): Promise<UpdateUserInfoAPIReq> => request.post('/api/update', data)

@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import React, { lazy } from 'react';
+import NProgress from '@/components/NProgress';
 
 import Home from '@/views/Home'
 import User from "@/views/User"
@@ -11,7 +12,7 @@ const Login = lazy(() => import("@/views/Login"))
 const Register = lazy(() => import("@/views/Register"))
 
 const withLoaingComponent = (comp: JSX.Element) => (
-    <React.Suspense fallback={<div>Loding...</div>}>
+    <React.Suspense fallback={<NProgress />}>
         {comp}
     </React.Suspense>
 )

@@ -13,7 +13,7 @@ const userUpdateHandler = (req, res) => {
         .then(result => {
             res.send(result)
         }).catch(err => {
-            res.send(err)
+            res.status(500).send(err)
         })
 }
 
@@ -24,7 +24,7 @@ const userInfoHandler = (req, res) => {
         .then(result => {
             res.send(result)
         }).catch(err => {
-            res.send(err)
+            res.status(500).send(err)
         })
 }
 
@@ -61,7 +61,7 @@ const pswChangeHandler = (req, res) => {
 }
 
 const avatarChangeHandler = (req, res) => {
-    const { path: filePath,originalname:fileName } = req.file
+    const { path: filePath, originalname: fileName } = req.file
 
     if (!filePath) {
         return res.status(500).send({
@@ -72,11 +72,11 @@ const avatarChangeHandler = (req, res) => {
 
     const { serverAddress: address, serverPort: port } = require('@root/config')
     return res.send({
-        status:'success',
-        msg:'头像上传成功',
+        status: 'success',
+        msg: '头像上传成功',
         imgUrl: `${address}:${port}/avatar/${fileName}`,
     })
-   
+
 }
 
 /**
@@ -89,7 +89,7 @@ const avatarChangeHandler = (req, res) => {
 const updateUser = (account, avatar, nickname) => {
     return new Promise((resolve, reject) => {
         const updateUserSql = 'UPDATE users SET ? WHERE account = ?'
-        db.query(updateUserSql, [{ avatar, nickname }, account], (err, result) => {
+        db.query(updateUserSql, [{ avatar: avatar.indexOf('http') < 0 ? `http://${avatar}` : avatar, nickname }, account], (err, result) => {
             if (err) return reject({ status: 'fail', msg: err.message || err.sqlMessage })
             if (result.affectedRows !== 1) return reject({ status: "fail", msg: "更新用户信息失败" })
             resolve({ status: 'success' })

@@ -1,9 +1,11 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
+import { message, Upload, Form } from 'antd';
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import React, { useState, useEffect } from 'react';
 import { ChangeAvatarAPI } from '@/request/api';
+import ImgCrop from 'antd-img-crop';
+import { useSelector } from 'react-redux';
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
     const reader = new FileReader();
@@ -23,18 +25,20 @@ const beforeUpload = (file: RcFile) => {
     return isJpgOrPng && isLt2M;
 };
 
-const App: React.FC = () => {
+const AvatarUpload: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState<string>();
     const [loadingText, setLoadingText] = useState('上传')
 
-    // TODO 从redux中获取用户头像
+    // 从redux中获取用户信息
+    const { userInfo } = useSelector((state: RootState) => ({
+        userInfo: state.userInfoReducer
+    }))
 
-    // useEffect(() => {
-    //     if (props.avatarUrl) {
-    //         setImageUrl(props.avatarUrl);
-    //     }
-    // }, [props.avatarUrl])
+    useEffect(() => {
+        const { avatar } = userInfo
+        if (avatar) setImageUrl(avatar)
+    }, [userInfo])
 
     const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
         if (info.file.status === 'uploading') {
@@ -57,6 +61,9 @@ const App: React.FC = () => {
         </div>
     );
 
+    // 获取表单实例
+    const form = Form.useFormInstance();
+
     const handleUpload = (options: any) => {
         const formData = new FormData();
         const { data, file, onSuccess, onError, filename } = options
@@ -69,26 +76,40 @@ const App: React.FC = () => {
         formData.append(filename, file);
         ChangeAvatarAPI(formData as any).then(res => {
             onSuccess(res, file)
+            // 设置avatar字段的值
+            form.setFieldValue('avatar', res.imgUrl)
             setLoadingText("上传")
         }).catch(onError)
+    }
 
+    const checkFileType = (file: { type: string }) => {
+        const isFileValide = file.type === 'image/jpeg' || file.type === 'image/png'
+        if (!isFileValide) {
+            message.error('仅支持jpg和png格式!');
+            return false
+        }
+        return true
     }
 
     return (
         <>
-            <Upload
-                name="avatar"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-                customRequest={handleUpload}
-            >
-                {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-            </Upload>
+            <ImgCrop rotate modalTitle="编辑头像" modalOk="确定" modalCancel="取消" beforeCrop={checkFileType}>
+                <Upload
+                    name="avatar"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    beforeUpload={beforeUpload}
+                    onChange={handleChange}
+                    customRequest={handleUpload}
+                    accept="image/png,image/jpeg"
+                >
+                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                </Upload>
+            </ImgCrop>
+
         </>
     );
 };
 
-export default App;
+export default AvatarUpload;
