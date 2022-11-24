@@ -18,16 +18,7 @@ const userUpdateHandler = (req, res) => {
 }
 
 const userInfoHandler = (req, res) => {
-    const errArray = validationResult(req).errors
-    if (errArray.length) {
-        // 未通过验证
-        return res.send({
-            status: 'fail',
-            msg: errArray[0].msg
-        })
-    }
-
-    const { account } = req.body
+    const { account } = req.auth
 
     getUserInfo(account)
         .then(result => {

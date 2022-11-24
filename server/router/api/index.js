@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { userUpdateHandler, userInfoHandler, pswChangeHandler, avatarChangeHandler } = require('./routerHandler/updateUser')
 const { body } = require('express-validator');
-const { RegNickname, RegAccount, RegPassword } = require('@root/config')
+const { RegNickname, RegPassword } = require('@root/config')
 
 const uploadUtil = require('@root/utils/upload')
 // 更新用户信息
@@ -11,9 +11,7 @@ router.post('/update', [
 ], userUpdateHandler)
 
 // 获取用户信息
-router.get('/userinfo', [
-    body('account').notEmpty().withMessage('缺少参数account').matches(RegAccount).withMessage('账号格式错误')
-], userInfoHandler)
+router.get('/userinfo', userInfoHandler)
 
 // 修改密码
 router.post('/pswchange', [

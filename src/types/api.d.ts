@@ -47,3 +47,28 @@ interface ModifyPwdAPIRes {
     status: string;
     msg?: string;
 }
+
+// 上传头像 请求数据类型
+type ChangeAvatarAPIReq = {
+    avatar: Blob
+}
+
+
+interface ChangeAvatarAPIRes {
+    status: string;
+    msg?: string;
+    imgUrl?: string;
+}
+
+// 获取用户基础信息 请求数据类型  不需要参数 account 从token中获取
+interface UserInfoAPIRes {
+    status: string;
+    data: UserInfoAPIResData;
+}
+
+interface UserInfoAPIResData {
+    account: string;
+    email: string;
+    avatar?: null | string;
+    nickname?: null | string;
+}

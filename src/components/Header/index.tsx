@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from "@/components/Header/header.module.scss";
 import Icon from "@/components/Icon"
 import type { MenuProps } from 'antd';
@@ -8,11 +8,14 @@ import { useNavigate } from 'react-router-dom';
 import ChangePwdModal from '@/components/ChangePwdModal';
 import ChangeUserInfoModal from '@/components/ChangeUserInfoModal';
 
+import { useSelector } from 'react-redux';
+
 const { Header } = Layout;
 
 const HeaderView: React.FC = () => {
 
-    const [avatarUrl, setAvatarUrl] = useState('http://localhost:3001/avatar/yo.jpeg')
+
+    const [avatarUrl, setAvatarUrl] = useState('https://joeschmoe.io/api/v1/random')
 
     const navigateTo = useNavigate()
 
@@ -21,13 +24,23 @@ const HeaderView: React.FC = () => {
         navigateTo('/login')
     }
 
+    // 从redux中获取用户信息
+    const { userInfo } = useSelector((state: RootState) => ({
+        userInfo: state.userInfoReducer
+    }))
+
+    useEffect(() => {
+        const { avatar } = userInfo
+        if (avatar) setAvatarUrl(avatar)
+    }, [userInfo])
+
     const items: MenuProps['items'] = [
         {
-            label: <ChangeUserInfoModal/>,
+            label: <ChangeUserInfoModal />,
             key: '0',
         },
         {
-            label: <ChangePwdModal/>,
+            label: <ChangePwdModal />,
             key: 'ChangePwdModal',
         },
         {

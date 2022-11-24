@@ -41,7 +41,7 @@ const ChangeUserInfoModal: React.FC = () => {
             <Modal className={style.changeUserInfoModal} title="修改个人信息" footer={buttons} open={open} confirmLoading={confirmLoading} maskClosable={false} destroyOnClose closable={false} centered afterClose={() => setConfirmLoading(false)} >
                 <Form name="basic" labelCol={{ span: 5 }} wrapperCol={{ span: 20 }} autoComplete="off" form={form} preserve={false} >
                     <Form.Item label="头像" name="avatar" >
-                        <AvatarUpload avatarUrl={'http://localhost:3001/avatar/yo.jpeg'} />
+                        <AvatarUpload />
                     </Form.Item>
 
                     <Form.Item label="账号名" name="account" >
