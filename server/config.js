@@ -27,7 +27,10 @@ const captchaOption = {
 }
 // 服务器地址端口
 const serverAddress = '127.0.0.1'
-const serverPort = '3001'
+const serverPort = 3001
+// 客户端地址端口号
+const clientAddress = '127.0.0.1'
+const clientPort = 3002
 
 module.exports = {
     RegAccount,
@@ -39,5 +42,7 @@ module.exports = {
     serverPort,
     captchaOption,
     ExpiredVlideTime,
-    TokenOptions
+    TokenOptions,
+    clientAddress,
+    clientPort,
 }

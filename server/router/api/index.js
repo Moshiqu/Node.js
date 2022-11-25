@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { userUpdateHandler, userInfoHandler, pswChangeHandler, avatarChangeHandler } = require('./routerHandler/updateUser')
+const { userUpdateHandler, userInfoHandler, pswChangeHandler, avatarChangeHandler, emailHandler } = require('./routerHandler/updateUser')
 const { body } = require('express-validator');
 const { RegPassword } = require('@root/config')
 
@@ -18,5 +18,8 @@ router.post('/pswchange', [
 
 // 更换头像
 router.post('/avatarchange', uploadUtil.fileUpdate.single('avatar'), avatarChangeHandler)
+
+// 发送邮件
+router.post('/email', [body('email').notEmpty().withMessage('缺少邮箱').isEmail().withMessage('邮箱格式错误'),],emailHandler)
 
 module.exports = router

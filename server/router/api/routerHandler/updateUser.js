@@ -5,13 +5,13 @@ const userUpdateHandler = (req, res) => {
     const { account } = req.auth
     const { avatar, nickname } = req.body
 
-    if(!avatar && !nickname){
+    if (!avatar && !nickname) {
         return res.status(500).send({ status: "fail", msg: "还未修改个人信息" })
     }
 
     let httpAvatar = avatar
-    if(avatar){
-        httpAvatar = avatar.indexOf('http') < 0 ?`http://${avatar}` : avatar
+    if (avatar) {
+        httpAvatar = avatar.indexOf('http') < 0 ? `http://${avatar}` : avatar
     }
 
     const { RegNickname } = require('@root/config')
@@ -89,6 +89,84 @@ const avatarChangeHandler = (req, res) => {
 
 }
 
+const emailHandler = (req, res) => {
+    const errArray = validationResult(req).errors
+    if (errArray.length) {
+        return res.status(500).send({
+            status: "fail",
+            msg: errArray[0].msg
+        })
+    }
+
+    const { email: mail } = req.body
+    const { account } = req.auth
+
+    const code = parseInt(Math.random(0, 1) * 10000) //生成随机验证码
+    // 发送邮件
+    const emailUtil = require("@root/utils/sendMail")
+    const configObj = require("@root/config")
+    // 发送邮件配置对象
+    const emailSendOption = {
+        from: `"这是个啥开发者" <912323520@qq.com>`, // 发送方
+        subject: '这是个啥验证码', // 标题
+        text: 'Hello world?', // 文本内容?
+        html: `<p>这里是"这是个啥", 您的验证码为${code}:</p><a href="http://${configObj.clientAddress}:${configObj.clientPort}/">点击跳转</a>`, //页面内容
+    }
+
+    emailUtil.sendMail(mail, emailSendOption, (state, response) => {
+        if (state) {
+            recordEmail(account, emailSendOption.html, code).then(result => {
+                return res.send({
+                    status: "success",
+                })
+            }).catch(err => {
+                return res.status(500).send({
+                    status: "fail",
+                    msg: err.msg
+                })
+            })
+        } else {
+            return res.status(500).send({
+                status: "fail",
+                msg: '发送邮件失败',
+                reason: response
+            })
+        }
+    })
+}
+
+/**
+ * @description: 邮件保存
+ * @param {账号} account
+ * @param {邮件内容} html
+ * @param {验证码} code
+ * @return {*}
+ */
+
+const recordEmail = (account, html, code) => {
+    return new Promise((resolve, reject) => {
+        let recordEmailSql = 'INSERT INTO mail SET ?'
+        db.query(recordEmailSql, { account, content: html, code }, (err, result) => {
+            if (err) {
+                return reject({
+                    status: "fail",
+                    msg: err.message
+                })
+            }
+            if (result.affectedRows === 1) {
+                return resolve({
+                    status: "success"
+                })
+            }
+            return reject({
+                status: "fail",
+                msg: "记录验证码失败"
+            })
+        })
+
+    })
+}
+
 /**
  * @description: 修改头像 昵称
  * @param {账号} account
@@ -99,7 +177,7 @@ const avatarChangeHandler = (req, res) => {
 const updateUser = (account, avatar, nickname) => {
     return new Promise((resolve, reject) => {
         let updateUserSql = 'UPDATE users SET ? WHERE account = ?'
-        db.query(updateUserSql, [{avatar,nickname}, account], (err, result) => {
+        db.query(updateUserSql, [{ avatar, nickname }, account], (err, result) => {
             if (err) return reject({ status: 'fail', msg: err.message || err.sqlMessage })
             if (result.affectedRows !== 1) return reject({ status: "fail", msg: "更新用户信息失败" })
             resolve({ status: 'success' })
@@ -231,5 +309,6 @@ module.exports = {
     userUpdateHandler,
     userInfoHandler,
     pswChangeHandler,
-    avatarChangeHandler
+    avatarChangeHandler,
+    emailHandler
 }
