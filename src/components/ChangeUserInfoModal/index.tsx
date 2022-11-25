@@ -15,6 +15,14 @@ const ChangeUserInfoModal: React.FC = () => {
     const [form] = Form.useForm()
     const dispatch = useDispatch()
 
+    // 从redux中获取用户信息
+    const { userInfo } = useSelector((state: RootState) => ({
+        userInfo: state.userInfoReducer
+    }))
+
+    const { avatar, account, email, nickname } = userInfo
+    const initValues = { avatar, account, email, nickname }
+
 
     const handleOk = () => {
         setConfirmLoading(true);
@@ -22,15 +30,18 @@ const ChangeUserInfoModal: React.FC = () => {
         form.validateFields().then(res => {
             const { avatar, nickname } = res
             const sendData = { avatar, nickname }
+            if (avatar === initValues.avatar && nickname === initValues.nickname){
+                setConfirmLoading(false);
+                return message.warning('您还未修改个人信息!')
+            }
+
 
             setTimeout(() => {
                 UpdateUserInfoAPI(sendData).then((result) => {
-                    console.log(result);
                     message.success('个人信息修改成功')
                     setOpen(false)
                     dispatch(userInfoStatus.asyncActions.asyncGetUserInfo as any)
                 }).catch((err) => {
-                    console.log(err);
                     message.error(err.msg)
                 }).finally(() => {
                     setConfirmLoading(false);
@@ -57,13 +68,7 @@ const ChangeUserInfoModal: React.FC = () => {
         </Button>
     ]
 
-    // 从redux中获取用户信息
-    const { userInfo } = useSelector((state: RootState) => ({
-        userInfo: state.userInfoReducer
-    }))
 
-    const { avatar, account, email, nickname } = userInfo
-    const initValues = { avatar, account, email, nickname }
 
     return (
         <>

@@ -2,14 +2,24 @@ const db = require('@root/db')
 const { validationResult } = require('express-validator')
 
 const userUpdateHandler = (req, res) => {
-    const errArray = validationResult(req).errors
-    if (errArray.length) {
-        return res.send({ status: 'fail', msg: errArray[0].msg })
-    }
-
     const { account } = req.auth
     const { avatar, nickname } = req.body
-    updateUser(account, avatar, nickname)
+
+    if(!avatar && !nickname){
+        return res.status(500).send({ status: "fail", msg: "还未修改个人信息" })
+    }
+
+    let httpAvatar = avatar
+    if(avatar){
+        httpAvatar = avatar.indexOf('http') < 0 ?`http://${avatar}` : avatar
+    }
+
+    const { RegNickname } = require('@root/config')
+    if (nickname && !RegNickname.test(nickname)) {
+        return res.status(500).send({ status: "fail", msg: "昵称格式错误" })
+    }
+
+    updateUser(account, httpAvatar, nickname)
         .then(result => {
             res.send(result)
         }).catch(err => {
@@ -88,8 +98,8 @@ const avatarChangeHandler = (req, res) => {
  */
 const updateUser = (account, avatar, nickname) => {
     return new Promise((resolve, reject) => {
-        const updateUserSql = 'UPDATE users SET ? WHERE account = ?'
-        db.query(updateUserSql, [{ avatar: avatar.indexOf('http') < 0 ? `http://${avatar}` : avatar, nickname }, account], (err, result) => {
+        let updateUserSql = 'UPDATE users SET ? WHERE account = ?'
+        db.query(updateUserSql, [{avatar,nickname}, account], (err, result) => {
             if (err) return reject({ status: 'fail', msg: err.message || err.sqlMessage })
             if (result.affectedRows !== 1) return reject({ status: "fail", msg: "更新用户信息失败" })
             resolve({ status: 'success' })

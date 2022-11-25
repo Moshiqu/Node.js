@@ -45,7 +45,7 @@ const HeaderView: React.FC = () => {
             type: 'divider',
         },
         {
-            label: <span onClick={signOut} style={{display:"block"}}>退出登录</span>,
+            label: <span onClick={signOut} style={{ display: "block" }}>退出登录</span>,
             key: 'signOut',
         },
     ];
@@ -71,7 +71,7 @@ const HeaderView: React.FC = () => {
                     <a onClick={(e) => e.preventDefault()}>
                         <Space>
                             <div className={style.avatarBox}>
-                                <img src={avatarUrl} alt="" />
+                                <img src={avatarUrl} alt="" title={userInfo.nickname || userInfo.account} />
                             </div>
                         </Space>
                     </a>
