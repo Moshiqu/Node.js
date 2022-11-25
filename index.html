@@ -14,8 +14,6 @@
 
     <script type="text/javascript">
         //rem适配
-        Rem()
-        window.addEventListener('resize', Rem())
         function Rem() {
             let designSize = 1920; // 设计图尺寸
             let html = document.documentElement;
@@ -23,6 +21,8 @@
             let rem = wW * 100 / designSize;
             document.documentElement.style.fontSize = rem + 'px';
         }
+        Rem()
+        window.addEventListener('resize', Rem())
     </script>
 
     <script type="module" src="/src/main.tsx"></script>

@@ -7,6 +7,7 @@ import User from "@/views/User"
 import About from "@/views/About"
 import Comp1 from "@/components/Comp1"
 import Comp2 from "@/components/Comp2"
+import Postal from "@/views/Postal"
 
 const Login = lazy(() => import("@/views/Login"))
 const Register = lazy(() => import("@/views/Register"))
@@ -48,6 +49,10 @@ const router = [
     {
         path: '/register',
         element: withLoaingComponent(<Register />)
+    },
+    {
+        path: 'postal',
+        element: withLoaingComponent(<Postal/>)
     },
     {
         path: '*',

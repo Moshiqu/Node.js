@@ -1,0 +1,45 @@
+@headerBgc: #555;
+@fontColor: #DDD;
+
+#postalPage {
+    color: @fontColor;
+
+    .ant-layout-header,
+    .ant-menu.ant-menu-dark {
+        background-color: @headerBgc;
+    }
+
+    .ant-menu-dark.ant-menu-horizontal>.ant-menu-item,
+    .ant-menu-dark.ant-menu-horizontal>.ant-menu-submenu {
+        padding: 0 .15rem;
+    }
+
+    .ant-menu-item-selected {
+        background-color: #000 !important;
+    }
+
+    .ant-menu-item:hover {
+        background-color: transparent;
+    }
+
+    .ant-layout-header {
+        height: .5rem;
+        line-height: .5rem;
+        padding: 0 .15rem 0 0;
+
+        .ant-menu-overflow-item {
+            height: .5rem;
+            line-height: .5rem;
+        }
+
+        &>ul>li {
+            span {
+                font-size: .15rem;
+            }
+
+            .anticon-down {
+                font-size: .12rem;
+            }
+        }
+    }
+}

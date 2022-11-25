@@ -2,8 +2,8 @@ import {
     DesktopOutlined,
     FileOutlined,
     PieChartOutlined,
-    TeamOutlined,
     UserOutlined,
+    MailOutlined,
 } from '@ant-design/icons';
 
 import React, { useState } from 'react';
@@ -34,7 +34,7 @@ const items: MenuItem[] = [
         getItem('第二页', '/page3/page302'),
         getItem('Alex', '5'),
     ]),
-    getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
+    getItem('时光邮局', '/postal', <MailOutlined />),
     getItem('Files', '9', <FileOutlined />),
 ];
 

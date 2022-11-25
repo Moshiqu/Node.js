@@ -1,12 +1,13 @@
 import { Layout } from 'antd';
 import React, { useState, useEffect } from 'react';
-import style from "@/components/Header/header.module.scss";
 import Icon from "@/components/Icon"
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import ChangePwdModal from '@/components/ChangePwdModal';
 import ChangeUserInfoModal from '@/components/ChangeUserInfoModal';
+import style from "@/components/Header/header.module.scss";
+import '@/components/Header/header.less';
 
 import { useSelector } from 'react-redux';
 
@@ -51,7 +52,7 @@ const HeaderView: React.FC = () => {
     ];
 
     return (
-        <Header className={style.header + " site-layout-background"} style={{ padding: '0 .16rem' }}>
+        <Header className={`${style.header}`} style={{ padding: '0 .16rem' }} id="headerBox">
             <div>
                 sfasf
             </div>

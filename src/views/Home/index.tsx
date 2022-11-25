@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Outlet, } from 'react-router-dom';
 import MainMenu from '@/components/MainMenu';
 import HeaderView from "@/components/Header"
+import style from "@/views/Home/home.module.scss"
+import "@/views/Home/home.less"
 
 const { Content, Footer, Sider } = Layout;
 
@@ -10,9 +12,9 @@ const View: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout style={{ minHeight: '100vh' }} id='homePage'>
             <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
-                <div className="logo" />
+                <div className={style.logo} />
                 <MainMenu />
             </Sider>
             <Layout className="site-layout">

@@ -1,0 +1,31 @@
+.logo {
+    float: left;
+    height: 100%;
+    color: #DDD;
+    font-size: .18rem;
+    padding: 0 .15rem;
+    cursor: pointer;
+}
+
+.dropDownBtn {
+    &>div {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+
+        span:nth-child(2) {
+            margin: 0;
+            margin-right: .05rem;
+        }
+    }
+}
+
+.dropDownDiv {
+    &>ul>li:hover {
+        background-color: #f5f5f5;
+
+        span {
+            color: #000;
+        }
+    }
+}
