@@ -1,0 +1,46 @@
+.postalForm {
+    .FcheckChecked {
+        .ant-checkbox-inner {
+            position: relative;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 16px;
+            height: 16px;
+            direction: ltr;
+            background-color: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+            border-collapse: separate;
+            transition: all 0.3s;
+            width: 20px;
+            height: 20px
+        }
+
+        //下面部分不能省，会导致，虽然改变了框大小但是无法勾中复选框
+        .ant-checkbox-checked .ant-checkbox-inner {
+            background-color: #1890ff;
+            border-color: #1890ff;
+        }
+    }
+
+    .isOpenItem {
+        .ant-form-item-label-left label::before {
+            display: inline-block;
+            margin-right: 4px;
+            color: transparent;
+            font-size: 14px;
+            font-family: SimSun, sans-serif;
+            line-height: 1;
+            content: '*';
+        }
+    }
+
+    .ant-form-item {
+        margin-bottom: .2rem;
+    }
+
+    .ant-form-item-explain-error{
+        font-size: .1rem;
+    }
+}
