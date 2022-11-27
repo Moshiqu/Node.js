@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 
 import type { RangePickerProps, DatePickerProps } from 'antd/es/date-picker';
 import { Link } from 'react-router-dom';
+import RichText from "@/components/RichText"
 
 const layout = {
     labelCol: { span: 4 },
@@ -26,6 +27,12 @@ const PostalForm: React.FC = () => {
 
     const onReset = () => {
         form.resetFields();
+        // todo hideRichText 里保存的是富文本框的内容
+        form.validateFields().then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        })
     };
 
     const onFill = () => {
@@ -77,10 +84,16 @@ const PostalForm: React.FC = () => {
                     <Checkbox onChange={onChange}>选中后, 信的内容将 <span style={{ color: '#cc0000', fontWeight: 600 }}>立即</span> 在<span style={{ color: '#0066ff' }}>公开信</span> 中展示, 所有人都可以浏览和评论，建议 <span style={{ color: '#cc0000', fontWeight: 600 }}>不要在信件正文中透露姓名、联系方式等信息</span></Checkbox>
                 </div>
             </Form.Item>
-            
+
             <Link to={'/'} className={style.linkto}>邮局已经成立十年了，时光太匆匆。再过十年，又会是怎样的一个世界？</Link>
-            
-            
+
+            <Form.Item name="richText">
+                <RichText />
+            </Form.Item>
+
+            <Form.Item name="hideRichText" style={{display:"none"}}>
+                <Input />
+            </Form.Item>
 
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">

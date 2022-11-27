@@ -70,7 +70,7 @@ const pswChangeHandler = (req, res) => {
         })
 }
 
-const avatarChangeHandler = (req, res) => {
+const imageUploadHandler = (req, res) => {
     const { path: filePath, originalname: fileName } = req.file
 
     if (!filePath) {
@@ -84,7 +84,7 @@ const avatarChangeHandler = (req, res) => {
     return res.send({
         status: 'success',
         msg: '头像上传成功',
-        imgUrl: `${address}:${port}/avatar/${fileName}`,
+        imgUrl: `http://${address}:${port}/avatar/${fileName}`,
     })
 
 }
@@ -309,6 +309,6 @@ module.exports = {
     userUpdateHandler,
     userInfoHandler,
     pswChangeHandler,
-    avatarChangeHandler,
+    imageUploadHandler,
     emailHandler
 }
