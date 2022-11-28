@@ -47,6 +47,7 @@ const RichText: React.FC = () => {
         },
     };
 
+
     // 获取滚动条宽度
     const getScrollWidth = () => {
         const scroll = document.createElement("div");
@@ -72,7 +73,6 @@ const RichText: React.FC = () => {
 
     const form = Form.useFormInstance();
     const handleChange = (value: string) => {
-        console.log(value);
         form.setFieldValue('hideRichText', value)
     }
 
@@ -86,8 +86,8 @@ const RichText: React.FC = () => {
                 style={getScrollWidth()}
                 onChange={handleChange}
                 ref={ReactQuillRef as any}
-                // defaultValue={form.getFieldValue('richText')}
-                // value={form.getFieldValue('richText')}
+            // defaultValue={form.getFieldValue('richText')}
+            // value={form.getFieldValue('richText')}
             />
             <UploadModal onRef={UploadModalRef} ReactQuillRef={ReactQuillRef} Quill={Quill} />
         </>

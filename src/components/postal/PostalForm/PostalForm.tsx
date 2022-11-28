@@ -1,45 +1,41 @@
-import React from 'react';
-import { Button, Form, Input, Checkbox, DatePicker } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, Form, Input, Checkbox, DatePicker, Row, Col } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import '@/components/postal/PostalForm/postalForm.less';
 import style from '@/components/postal/PostalForm/postalForm.module.scss'
 import dayjs from 'dayjs';
+import { v4 as uuidv4 } from 'uuid';
 
 import type { RangePickerProps, DatePickerProps } from 'antd/es/date-picker';
 import { Link } from 'react-router-dom';
 import RichText from "@/components/RichText"
+import { CaptchaAPI } from '@/request/api';
 
 const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 20 },
 
 };
-const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-};
-
 const PostalForm: React.FC = () => {
     const [form] = Form.useForm();
 
+    const [flag, setFlag] = useState(true)
+    const [uuid, setUuid] = useState("")
+    const [svgTag, setSvgTag] = useState('')
+
+    useEffect(() => {
+        if (!flag) {
+            CaptchaAPI({ uuid }).then(res => {
+                setSvgTag(res.data.img)
+            }).catch(err => {
+                setSvgTag('')
+                console.log(err);
+            })
+        }
+    }, [uuid, flag])
+
     const onFinish = (values: any) => {
         console.log(values);
-    };
-
-    const onReset = () => {
-        form.resetFields();
-        // todo hideRichText 里保存的是富文本框的内容
-        form.validateFields().then(res => {
-            console.log(res);
-        }).catch(err => {
-            console.log(err);
-        })
-    };
-
-    const onFill = () => {
-        form.setFieldsValue({
-            note: 'Hello world!',
-            gender: 'male',
-        });
     };
 
     const onChange = (e: CheckboxChangeEvent) => {
@@ -52,6 +48,13 @@ const PostalForm: React.FC = () => {
 
     const dateChangeHandler: DatePickerProps['onChange'] = (date, dataString) => {
         console.log(dataString);
+    }
+
+    const CaptchaBtn = () => {
+        if (svgTag) {
+            return <div dangerouslySetInnerHTML={{ __html: svgTag }} className="captchaImg" title='点击重新获取验证码'></div>
+        }
+        return <Button type='primary' style={{ width: '1.02rem' }} >获取验证码</Button>
     }
 
     return (
@@ -91,20 +94,40 @@ const PostalForm: React.FC = () => {
                 <RichText />
             </Form.Item>
 
-            <Form.Item name="hideRichText" style={{display:"none"}}>
+            <Form.Item name="hideRichText" style={{ display: "none" }}>
                 <Input />
             </Form.Item>
 
-            <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-                <Button htmlType="button" onClick={onReset}>
-                    Reset
-                </Button>
-                <Button type="link" htmlType="button" onClick={onFill}>
-                    Fill form
-                </Button>
+            <Form.Item style={{ textAlign: "right" }} className={style.verifyItem}>
+                {/* <Form.Item style={{ display: 'inline-flex', width: ".9rem", height: ".4rem" }} >
+                    <div className="verifyImg">
+                        阿斯顿发生
+                    </div>
+                </Form.Item>
+                <Form.Item style={{ display: 'inline-flex' }} name="verifyCode" rules={[{ required: true, message: '验证码不能为空' }]} >
+                    <Input placeholder="默认原有名称" />
+                </Form.Item>
+                <Form.Item style={{ display: 'inline-flex' }} >
+                    <Button type="primary" htmlType="submit">
+                        提交
+                    </Button>
+                </Form.Item> */}
+                <Row>
+                    <Col>
+                        <div className="verifyImg" style={{ display: 'inline-flex', marginLeft: ".3rem" }} onClick={() => {
+                            setFlag(false)
+                            setUuid(uuidv4())
+                        }}>
+                            <CaptchaBtn />
+                        </div>
+                        <Form.Item style={{ display: 'inline-flex', marginLeft: ".3rem" }} name="verifyCode" rules={[{ required: true, message: '验证码不能为空' }]} >
+                            <Input placeholder="输入验证码" style={{ width: "2.8rem", borderRadius: ".04rem" }} />
+                        </Form.Item>
+                        <Button type="primary" htmlType="submit" style={{ marginLeft: ".3rem", width: "2.8rem", backgroundColor: "#337ab7", borderRadius: ".04rem", borderColor: "#337ab7" }}>
+                            提交
+                        </Button>
+                    </Col>
+                </Row>
             </Form.Item>
         </Form >
     );

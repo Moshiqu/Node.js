@@ -1,6 +1,10 @@
 .quill :global(.ql-editor) {
     height: 5rem;
 
+    background-color: #fff;
+
+    
+
     img {
         max-width: 1.5rem;
         max-height: 1.5rem;
@@ -12,4 +16,8 @@
     //     align-items: flex-end;
     // }
 
+}
+
+.quill :global(.ql-toolbar){
+    background-color: #f3f3f3;
 }

@@ -48,7 +48,7 @@ const View: React.FC = () => {
         if (svgTag) {
             return <div dangerouslySetInnerHTML={{ __html: svgTag }} className="captchaImg" title='点击重新获取验证码'></div>
         }
-        return <Button type='primary' style={{ width: '102px' }} >获取验证码</Button>
+        return <Button type='primary' style={{ width: '1.02rem' }} >获取验证码</Button>
     }
 
     const onFinish = (values: any) => {

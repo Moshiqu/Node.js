@@ -120,7 +120,7 @@ const UploadModal: React.FC<UploadModalRef> = (props) => {
                 destroyOnClose
             >
                 <div key={Math.random()}>
-                    <ImgCrop rotate modalTitle="编辑头像" modalOk="确定" modalCancel="取消" beforeCrop={checkFileType}>
+                    {/* <ImgCrop rotate modalTitle="编辑图片" modalOk="确定" modalCancel="取消" beforeCrop={checkFileType}> */}
                         <Upload
                             name="avatar"
                             listType="picture-card"
@@ -132,7 +132,7 @@ const UploadModal: React.FC<UploadModalRef> = (props) => {
                         >
                             {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                         </Upload>
-                    </ImgCrop>
+                    {/* </ImgCrop> */}
                 </div>
             </Modal>
         </>
