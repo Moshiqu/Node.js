@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : infoinge
-Source Server Version : 50720
+Source Server         : 127.0.0.1
+Source Server Version : 80029
 Source Host           : localhost:3306
 Source Database       : test
 
 Target Server Type    : MYSQL
-Target Server Version : 50720
+Target Server Version : 80029
 File Encoding         : 65001
 
-Date: 2022-11-25 16:53:51
+Date: 2022-11-29 01:01:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `aaa` (
   `sjzd` varchar(64) DEFAULT NULL COMMENT '数据长度',
   `sm` varchar(64) DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of aaa
@@ -48,17 +48,17 @@ CREATE TABLE `aebq` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `asd` varchar(255) DEFAULT NULL COMMENT '啊手动阀',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of aebq
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for APP_INFORMATION
+-- Table structure for app_information
 -- ----------------------------
-DROP TABLE IF EXISTS `APP_INFORMATION`;
-CREATE TABLE `APP_INFORMATION` (
+DROP TABLE IF EXISTS `app_information`;
+CREATE TABLE `app_information` (
   `CODE` varchar(24) NOT NULL COMMENT '映射编码',
   `IS_ACTIVE` varchar(8) DEFAULT NULL COMMENT '是否使用',
   `CHANGE_FROM` varchar(24) DEFAULT NULL COMMENT '记录来源',
@@ -79,19 +79,19 @@ CREATE TABLE `APP_INFORMATION` (
   `WEB_URL` varchar(512) DEFAULT NULL,
   `PUB_ACCOUNT` varchar(64) DEFAULT NULL,
   `PUBTIME` datetime DEFAULT CURRENT_TIMESTAMP,
-  `VISIT_NUM` int(11) DEFAULT '0',
-  `REVIEW_STATUS` tinyint(4) DEFAULT NULL COMMENT '0:审核中,1:审核成功,2:审核不成功',
+  `VISIT_NUM` int DEFAULT '0',
+  `REVIEW_STATUS` tinyint DEFAULT NULL COMMENT '0:审核中,1:审核成功,2:审核不成功',
   `REVIEW_ACCOUNT` varchar(64) DEFAULT NULL COMMENT '审核帐号',
   `CONNECTION_CODE` varchar(24) DEFAULT NULL COMMENT '数据库连接编码',
   PRIMARY KEY (`CODE`),
   KEY `INDEX_APPINFO` (`DOMAIN`,`APP_TYPE`,`REVIEW_STATUS`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Records of APP_INFORMATION
+-- Records of app_information
 -- ----------------------------
-INSERT INTO `APP_INFORMATION` VALUES ('1652941086766003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652944590473', '0', '先擦啊手动阀啊手动阀', 'app', '啊手动阀啊手动阀', '5', 'qqweqweqwe', 'qweqwe', null, 'ceshi2', '2022-05-19 15:16:30', '6', '1', null, '1516760168505001');
-INSERT INTO `APP_INFORMATION` VALUES ('1652944658348003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947141702', '0', '第二个APP', 'app', '第二个APP第二个APP第二个APP', '1', 'ASD', 'ASD', null, 'ceshi2', '2022-05-19 15:59:01', '4', '1', null, '1516760168505001');
+INSERT INTO `app_information` VALUES ('1652941086766003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652944590473', '0', '先擦啊手动阀啊手动阀', 'app', '啊手动阀啊手动阀', '5', 'qqweqweqwe', 'qweqwe', null, 'ceshi2', '2022-05-19 15:16:30', '6', '1', null, '1516760168505001');
+INSERT INTO `app_information` VALUES ('1652944658348003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947141702', '0', '第二个APP', 'app', '第二个APP第二个APP第二个APP', '1', 'ASD', 'ASD', null, 'ceshi2', '2022-05-19 15:59:01', '4', '1', null, '1516760168505001');
 
 -- ----------------------------
 -- Table structure for asdeqw1
@@ -105,7 +105,7 @@ CREATE TABLE `asdeqw1` (
   `mc` varchar(64) DEFAULT NULL COMMENT '名称',
   `nl` varchar(64) DEFAULT NULL COMMENT '年龄',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of asdeqw1
@@ -122,7 +122,7 @@ CREATE TABLE `asdf` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `a` varchar(255) DEFAULT NULL COMMENT 'a',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of asdf
@@ -133,14 +133,14 @@ CREATE TABLE `asdf` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bed_inventory`;
 CREATE TABLE `bed_inventory` (
-  `id` int(16) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `province` varchar(64) DEFAULT NULL,
   `city` varchar(64) DEFAULT NULL,
   `name` varchar(64) DEFAULT NULL,
-  `stock` int(16) DEFAULT NULL,
+  `stock` int DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1647 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1647 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of bed_inventory
@@ -221,7 +221,7 @@ INSERT INTO `bed_inventory` VALUES ('1646', null, null, '华西医院', null, nu
 -- ----------------------------
 DROP TABLE IF EXISTS `captcha`;
 CREATE TABLE `captcha` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `text` varchar(255) NOT NULL,
   `is_active` varchar(8) DEFAULT 'true',
   `account` varchar(255) DEFAULT NULL,
@@ -229,7 +229,7 @@ CREATE TABLE `captcha` (
   `start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `verify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of captcha
@@ -262,6 +262,9 @@ INSERT INTO `captcha` VALUES ('25', 'rExb', 'true', null, '037111b4-3214-4821-ad
 INSERT INTO `captcha` VALUES ('26', '5pRJ', 'false', null, 'd5d1b571-c40a-44bb-a58c-d42a601899fe', '2022-11-25 15:24:39', null);
 INSERT INTO `captcha` VALUES ('27', 'tZdk', 'false', null, 'd88a3df9-99b2-4780-98ee-ef7cf13e5288', '2022-11-25 15:24:43', null);
 INSERT INTO `captcha` VALUES ('28', '8zsL', 'true', null, '3fe4e2b9-71a1-44c5-93b1-e9071e144720', '2022-11-25 16:17:10', null);
+INSERT INTO `captcha` VALUES ('29', 'n3NX', 'true', null, null, '2022-11-29 00:38:32', null);
+INSERT INTO `captcha` VALUES ('30', 'qZxN', 'true', null, null, '2022-11-29 00:39:55', null);
+INSERT INTO `captcha` VALUES ('31', 'QxKx', 'true', null, null, '2022-11-29 00:40:13', null);
 
 -- ----------------------------
 -- Table structure for catalog
@@ -305,7 +308,7 @@ CREATE TABLE `catalog` (
   `is_home` varchar(8) DEFAULT NULL COMMENT '是否应用入口',
   `is_running` varchar(8) DEFAULT NULL,
   `frequentness` varchar(8) DEFAULT NULL COMMENT 'year|年，month|月，day|天，hour|时，minute|分，second|秒',
-  `interval_time` int(11) DEFAULT NULL COMMENT '是否入口插件',
+  `interval_time` int DEFAULT NULL COMMENT '是否入口插件',
   `join_time` datetime DEFAULT NULL,
   `run_start_hour` varchar(8) DEFAULT NULL COMMENT '是否升级',
   `run_start_minute` varchar(8) DEFAULT NULL COMMENT '是否升级',
@@ -326,7 +329,7 @@ CREATE TABLE `catalog` (
   PRIMARY KEY (`code`),
   KEY `ak_key_2` (`buddle_id`,`identifier`),
   KEY `index_catalog` (`buddle_id`,`identifier`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='catalog[功能目录]';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='catalog[功能目录]';
 
 -- ----------------------------
 -- Records of catalog
@@ -1464,7 +1467,7 @@ CREATE TABLE `data` (
   `resource_name` varchar(128) DEFAULT NULL COMMENT '操作对象',
   `operation` varchar(16) DEFAULT NULL COMMENT '操作名字',
   `is_paginate` varchar(8) DEFAULT NULL COMMENT '是否分页',
-  `position` int(11) DEFAULT NULL COMMENT '处理顺序',
+  `position` int DEFAULT NULL COMMENT '处理顺序',
   `is_permit` varchar(8) DEFAULT NULL COMMENT '是否判断权限',
   `is_full` varchar(8) DEFAULT NULL COMMENT '是否全取数据',
   `row_number` decimal(8,0) DEFAULT NULL,
@@ -1480,7 +1483,7 @@ CREATE TABLE `data` (
   `remove_repeat_field` varchar(2048) DEFAULT NULL COMMENT '去重字段',
   PRIMARY KEY (`code`),
   KEY `ak_key_2` (`buddle_id`,`catalog_id`,`resource_name`,`operation`,`position`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of data
@@ -1516,7 +1519,7 @@ INSERT INTO `data` VALUES ('1667537008158003', 'true', null, '1', '0', '0', '0',
 -- ----------------------------
 DROP TABLE IF EXISTS `ev_artical_cate`;
 CREATE TABLE `ev_artical_cate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `alias` varchar(255) NOT NULL,
   `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '数据是否被标记删除\r\n0 没有删除\r\n1 被删除',
@@ -1524,7 +1527,7 @@ CREATE TABLE `ev_artical_cate` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of ev_artical_cate
@@ -1541,18 +1544,18 @@ INSERT INTO `ev_artical_cate` VALUES ('8', '科技啊', 'Lishijkj', '0');
 -- ----------------------------
 DROP TABLE IF EXISTS `ev_articles`;
 CREATE TABLE `ev_articles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `cover_img` varchar(255) NOT NULL,
   `pub_date` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL DEFAULT '0',
   `is_delete` tinyint(1) NOT NULL,
-  `cate_id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
+  `cate_id` int NOT NULL,
+  `author_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of ev_articles
@@ -1569,7 +1572,7 @@ CREATE TABLE `lololo` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `zxc` varchar(255) DEFAULT NULL COMMENT 'qwe',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of lololo
@@ -1580,14 +1583,14 @@ CREATE TABLE `lololo` (
 -- ----------------------------
 DROP TABLE IF EXISTS `mail`;
 CREATE TABLE `mail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `is_active` varchar(8) CHARACTER SET utf8 NOT NULL DEFAULT 'true',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `is_active` varchar(8) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL DEFAULT 'true',
   `account` varchar(255) DEFAULT NULL,
   `send_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `content` text,
   `code` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of mail
@@ -1608,7 +1611,7 @@ CREATE TABLE `mmhi` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `tests` varchar(255) DEFAULT NULL COMMENT '测试',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of mmhi
@@ -1625,7 +1628,7 @@ CREATE TABLE `nrxb` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `asd` varchar(255) DEFAULT NULL COMMENT 'asd',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of nrxb
@@ -1637,12 +1640,12 @@ CREATE TABLE `nrxb` (
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE `person` (
   `code` varchar(255) NOT NULL COMMENT '编号',
-  `age` int(8) DEFAULT NULL COMMENT '年龄',
+  `age` int DEFAULT NULL COMMENT '年龄',
   `name` varchar(255) DEFAULT NULL COMMENT '姓名',
   `date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '日期',
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='人员信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='人员信息表';
 
 -- ----------------------------
 -- Records of person
@@ -1727,6 +1730,27 @@ INSERT INTO `person` VALUES ('1649837466480003', null, null, null, null);
 INSERT INTO `person` VALUES ('2', '13', '张三', '2021-11-03 10:24:02', '2021-11-03 10:23:52');
 
 -- ----------------------------
+-- Table structure for postal_options
+-- ----------------------------
+DROP TABLE IF EXISTS `postal_options`;
+CREATE TABLE `postal_options` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `is_active` varchar(8) NOT NULL DEFAULT 'true',
+  `start_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `sender` varchar(120) NOT NULL,
+  `destination_mail` varchar(255) NOT NULL,
+  `send_time` datetime NOT NULL,
+  `is_open` varchar(8) DEFAULT 'false',
+  `content` text NOT NULL,
+  `account` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of postal_options
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for rupi
 -- ----------------------------
 DROP TABLE IF EXISTS `rupi`;
@@ -1737,7 +1761,7 @@ CREATE TABLE `rupi` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `a` varchar(255) DEFAULT NULL COMMENT 'a',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of rupi
@@ -1748,32 +1772,32 @@ CREATE TABLE `rupi` (
 -- ----------------------------
 DROP TABLE IF EXISTS `st_collection_personal_account_copy`;
 CREATE TABLE `st_collection_personal_account_copy` (
-  `id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `id` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   `deleted_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `DWYJCE` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '单位月缴存额',
-  `GRCKZHHM` varchar(30) COLLATE utf8_bin DEFAULT NULL COMMENT '个人存款账户号码',
-  `GRCKZHKHYHDM` int(3) DEFAULT NULL COMMENT '个人存款账户开户银行代码',
-  `GRCKZHKH\Y%/\HMC` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '个人存款账户开户银行名称',
+  `GRCKZHHM` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '个人存款账户号码',
+  `GRCKZHKHYHDM` int DEFAULT NULL COMMENT '个人存款账户开户银行代码',
+  `GRCKZHKH\Y%/\HMC` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '个人存款账户开户银行名称',
   `GRJCJS` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '个人缴存基数',
-  `GRYJCE` smallint(18) NOT NULL DEFAULT '0' COMMENT '个人月缴存额',
-  `GRZH` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '个人账号',
+  `GRYJCE` smallint NOT NULL DEFAULT '0' COMMENT '个人月缴存额',
+  `GRZH` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '个人账号',
   `GRZHDNGJYE` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '个人账户当年归集余额',
   `GRZHSNJZYE` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '个人账户上年结转余额',
   `GRZHYE` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '个人账户余额',
-  `GRZHZT` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '个人账户状态',
+  `GRZHZT` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '个人账户状态',
   `KHRQ` datetime DEFAULT NULL COMMENT '开户日期',
   `XHRQ` datetime DEFAULT NULL COMMENT '销户日期',
-  `XHYY` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '销户原因',
+  `XHYY` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '销户原因',
   PRIMARY KEY (`id`),
   UNIQUE KEY `INDEX_GRZH` (`GRZH`) USING BTREE,
   KEY `index_GRZHZT` (`GRZHZT`) USING BTREE,
   KEY `index_created_at` (`created_at`) USING BTREE,
   KEY `index_GRZHYE` (`GRZHYE`) USING BTREE,
   KEY `I_ST_COLLECTION_PERSONAL_ACCOUNT_GGK` (`GRZH`,`GRZHZT`,`KHRQ`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='个人账户信息 表5.0.4';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='个人账户信息 表5.0.4';
 
 -- ----------------------------
 -- Records of st_collection_personal_account_copy
@@ -2785,15 +2809,15 @@ INSERT INTO `st_collection_personal_account_copy` VALUES ('006ba709d2b811e79ad84
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nickname` varchar(64) COLLATE utf8_bin DEFAULT NULL,
-  `is_active` varchar(8) COLLATE utf8_bin NOT NULL DEFAULT 'true',
-  `account` varchar(64) COLLATE utf8_bin NOT NULL,
-  `email` varchar(64) COLLATE utf8_bin NOT NULL,
-  `password` varchar(64) COLLATE utf8_bin NOT NULL,
-  `avatar` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL,
+  `is_active` varchar(8) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL DEFAULT 'true',
+  `account` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL,
+  `email` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL,
+  `password` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of users
@@ -2814,18 +2838,18 @@ INSERT INTO `users` VALUES ('20', null, 'true', 'admin', '9123232@qq.com', '$2b$
 -- ----------------------------
 DROP TABLE IF EXISTS `user_copy`;
 CREATE TABLE `user_copy` (
-  `code` int(18) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `code` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user_copy
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for USER_EVALUATION
+-- Table structure for user_evaluation
 -- ----------------------------
-DROP TABLE IF EXISTS `USER_EVALUATION`;
-CREATE TABLE `USER_EVALUATION` (
+DROP TABLE IF EXISTS `user_evaluation`;
+CREATE TABLE `user_evaluation` (
   `CODE` varchar(24) NOT NULL COMMENT '数据编码',
   `IS_ACTIVE` varchar(8) DEFAULT NULL COMMENT '是否使用',
   `CHANGE_FROM` varchar(24) DEFAULT NULL COMMENT '记录来源',
@@ -2841,20 +2865,20 @@ CREATE TABLE `USER_EVALUATION` (
   `OBJECT_TYPE` varchar(24) DEFAULT NULL COMMENT 'resource：资源/app：应用',
   `OBJECT_CODE` varchar(24) DEFAULT NULL,
   `CONTENT` varchar(512) DEFAULT NULL,
-  `SCORE` int(11) DEFAULT NULL,
+  `SCORE` int DEFAULT NULL,
   `CREATE_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `CONNECTION_CODE` varchar(24) DEFAULT NULL,
   PRIMARY KEY (`CODE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
--- Records of USER_EVALUATION
+-- Records of user_evaluation
 -- ----------------------------
-INSERT INTO `USER_EVALUATION` VALUES ('1652941087551003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652944610830', '0', 'ceshi2', 'app', '1652941086766003', 'lkj l;oj \'l; ', '5', '2022-05-19 15:16:50', '1516760168505001');
-INSERT INTO `USER_EVALUATION` VALUES ('1652944635712003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652946369493', '0', 'ceshi2', 'app', '1652941086766003', '第二条评论 评论', '4', '2022-05-19 15:46:09', '1516760168505001');
-INSERT INTO `USER_EVALUATION` VALUES ('1652944659586003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947179160', '0', 'ceshi2', 'app', '1652944658348003', '第二个app 第条评论 评分', '2', '2022-05-19 15:59:39', '1516760168505001');
-INSERT INTO `USER_EVALUATION` VALUES ('1652944660176003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947197939', '0', 'ceshi2', 'app', '1652944658348003', '第二个APP 第二条评论 评分4分', '4', '2022-05-19 15:59:57', '1516760168505001');
-INSERT INTO `USER_EVALUATION` VALUES ('1652944660833003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947218791', '0', 'ceshi2', 'app', '1652944658348003', '第二个APP 第三条评论 评分3分', '3', '2022-05-19 16:00:18', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652941087551003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652944610830', '0', 'ceshi2', 'app', '1652941086766003', 'lkj l;oj \'l; ', '5', '2022-05-19 15:16:50', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652944635712003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652946369493', '0', 'ceshi2', 'app', '1652941086766003', '第二条评论 评论', '4', '2022-05-19 15:46:09', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652944659586003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947179160', '0', 'ceshi2', 'app', '1652944658348003', '第二个app 第条评论 评分', '2', '2022-05-19 15:59:39', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652944660176003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947197939', '0', 'ceshi2', 'app', '1652944658348003', '第二个APP 第二条评论 评分4分', '4', '2022-05-19 15:59:57', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652944660833003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947218791', '0', 'ceshi2', 'app', '1652944658348003', '第二个APP 第三条评论 评分3分', '3', '2022-05-19 16:00:18', '1516760168505001');
 
 -- ----------------------------
 -- Table structure for xzcv
@@ -2867,7 +2891,7 @@ CREATE TABLE `xzcv` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `aasd` varchar(255) DEFAULT NULL COMMENT 'asd',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of xzcv
