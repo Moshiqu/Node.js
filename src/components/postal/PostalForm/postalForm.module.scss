@@ -34,7 +34,11 @@
     }
 }
 
-.verifyItem :global(.ant-row)  {
-        flex-direction: row-reverse;
+.verifyItem :global(.ant-row) {
+    flex-direction: row-reverse;
 
+}
+
+.btns :global(.ant-form-item-explain-error) {
+    text-align: left;
 }

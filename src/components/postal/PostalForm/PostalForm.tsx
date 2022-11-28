@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import type { RangePickerProps, DatePickerProps } from 'antd/es/date-picker';
 import { Link } from 'react-router-dom';
-import RichText from "@/components/RichText"
+import RichText from "@/components/postal/RichText"
 import { CaptchaAPI } from '@/request/api';
 
 const layout = {
@@ -120,7 +120,7 @@ const PostalForm: React.FC = () => {
                         }}>
                             <CaptchaBtn />
                         </div>
-                        <Form.Item style={{ display: 'inline-flex', marginLeft: ".3rem" }} name="verifyCode" rules={[{ required: true, message: '验证码不能为空' }]} >
+                        <Form.Item style={{ display: 'inline-flex', marginLeft: ".3rem" }} className={style.btns} name="verifyCode" rules={[{ required: true, message: '验证码不能为空' }]} >
                             <Input placeholder="输入验证码" style={{ width: "2.8rem", borderRadius: ".04rem" }} />
                         </Form.Item>
                         <Button type="primary" htmlType="submit" style={{ marginLeft: ".3rem", width: "2.8rem", backgroundColor: "#337ab7", borderRadius: ".04rem", borderColor: "#337ab7" }}>

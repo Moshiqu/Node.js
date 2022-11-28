@@ -22,7 +22,7 @@ router.post('/login', [
     body('password').notEmpty().withMessage('未输入密码'),
 ], loginHandler)
 
-// 注册时获取图形验证码
+// 获取图形验证码
 router.get('/captcha', [
     check('uuid').notEmpty().withMessage('uuid不能为空')
 ], captchaHandler)

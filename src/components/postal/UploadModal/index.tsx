@@ -8,7 +8,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { ChangeAvatarAPI } from '@/request/api';
 
-import style from "@/components/UploadModal/UploadModal.module.scss"
+import style from "@/components/postal/UploadModal/UploadModal.module.scss"
 import ImgCrop from 'antd-img-crop';
 
 type UploadModalRef = {

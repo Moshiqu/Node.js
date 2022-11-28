@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // token解析 /users 开头的路由不需要权限
 const { expressjwt: expressJWT } = require('express-jwt')
 const { TokenSecretKey: secret } = require('@root/config')
-app.use(expressJWT({ secret, algorithms: ['HS256'] }).unless({ path: [/^\/users\//] }))
+app.use(expressJWT({ secret, algorithms: ['HS256'] }).unless({ path: [/^(\/users\/)|(\/postal\/)/] }))
 
 // 导入用户模块路由
 const userRouter = require('./router/user')
@@ -27,6 +27,10 @@ app.use('/users', userRouter)
 // 导入api权限路由
 const apiRouter = require('./router/api')
 app.use('/api', apiRouter)
+
+// 导入api权限路由
+const postalRouter = require('./router/postal')
+app.use('/postal', postalRouter)
 
 // 错误中间件
 app.use((err, req, res, next) => {

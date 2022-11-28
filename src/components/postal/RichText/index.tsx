@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';//富文本样式文件
-import style from '@/components/RichText/RichText.module.scss';
-import UploadModal from '@/components/UploadModal';
+import style from '@/components/postal/RichText/RichText.module.scss';
+import UploadModal from '@/components/postal/UploadModal';
 
 import { Form } from 'antd';
 
@@ -15,7 +15,7 @@ const RichText: React.FC = () => {
         UploadModalRef.current.changeModalVisible()
     }
 
-    const modules = {
+    const modules = React.useMemo(() => ({
         toolbar: {
             container: [
                 ['bold', 'italic', 'underline', 'strike'],
@@ -45,7 +45,7 @@ const RichText: React.FC = () => {
             },
             imageDrop: true,
         },
-    };
+    }), []);
 
 
     // 获取滚动条宽度
