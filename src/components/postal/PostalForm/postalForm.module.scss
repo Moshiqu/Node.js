@@ -36,7 +36,9 @@
 
 .verifyItem :global(.ant-row) {
     flex-direction: row-reverse;
-
+}
+.verifyItem :global(.ant-col){
+    display: flex;
 }
 
 .btns :global(.ant-form-item-explain-error) {

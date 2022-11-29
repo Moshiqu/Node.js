@@ -24,15 +24,10 @@ export default defineConfig({
         // 是否开启 https
         https: false,
         proxy: {
-            "/users": {
+            "/apis": {
                 target: "http://127.0.0.1:3001/",
                 changeOrigin: true,
-                // rewrite: (path) => path.replace(/^\/user/, ""),
-            },
-            "/api": {
-                target: "http://127.0.0.1:3001/",
-                changeOrigin: true,
-                // rewrite: (path) => path.replace(/^\/user/, ""),
+                rewrite: (path) => path.replace(/^\/apis/, ""),
             },
         },
     },

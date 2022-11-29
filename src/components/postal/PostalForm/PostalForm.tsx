@@ -9,7 +9,9 @@ import { v4 as uuidv4 } from 'uuid';
 import type { RangePickerProps, DatePickerProps } from 'antd/es/date-picker';
 import { Link } from 'react-router-dom';
 import RichText from "@/components/postal/RichText"
-import { CaptchaAPI } from '@/request/api';
+import { CaptchaAPI, PostalAPI } from '@/request/api';
+
+import useStateRef from 'react-usestateref' // see this line
 
 const layout = {
     labelCol: { span: 4 },
@@ -22,6 +24,15 @@ const PostalForm: React.FC = () => {
     const [flag, setFlag] = useState(true)
     const [uuid, setUuid] = useState("")
     const [svgTag, setSvgTag] = useState('')
+    const [formData, setFormData, formDataRef] = useStateRef<PostalAPIRes>({
+        uuid: "",
+        verifyCode: "",
+        name: "",
+        mail: "",
+        time: "",
+        content: "",
+        isOpen: false
+    })
 
     useEffect(() => {
         if (!flag) {
@@ -34,12 +45,25 @@ const PostalForm: React.FC = () => {
         }
     }, [uuid, flag])
 
-    const onFinish = (values: any) => {
-        console.log(values);
+    const onFinish = (values: { hideRichText: string, isOpen: boolean, mail: string, name: string, verifyCode: string }) => {
+        const { verifyCode, name, mail } = values
+        setFormData({ ...formData, content: values.hideRichText, uuid, verifyCode, name, mail })
+        PostalAPI(formDataRef.current).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        }).finally(()=>{
+            setUuid(uuidv4())
+        })
     };
 
+
+    const onFinishFailed = (value: any) => {
+        console.log(value, '---->failed');
+    }
+
     const onChange = (e: CheckboxChangeEvent) => {
-        console.log(`checked = ${e.target.checked}`);
+        setFormData({ ...formData, isOpen: e.target.checked })
     };
 
     const disabledDate: RangePickerProps['disabledDate'] = (current) => {
@@ -47,7 +71,7 @@ const PostalForm: React.FC = () => {
     };
 
     const dateChangeHandler: DatePickerProps['onChange'] = (date, dataString) => {
-        console.log(dataString);
+        setFormData({ ...formData, time: dataString })
     }
 
     const CaptchaBtn = () => {
@@ -58,7 +82,7 @@ const PostalForm: React.FC = () => {
     }
 
     return (
-        <Form {...layout} labelAlign="left" form={form} name="control-hooks" onFinish={onFinish} className='postalForm'>
+        <Form {...layout} labelAlign="left" form={form} name="control-hooks" onFinish={onFinish} className='postalForm' onFinishFailed={onFinishFailed} >
             <Form.Item name="name" label="你的姓名" rules={[{ required: true, message: "请填写你的名字" }, { max: 120, message: "名字不能多于120个中文字符" }]}>
                 <Input placeholder='在收到邮件的标题中显示。新建列表、公开信中会自动打码隐藏' onBlur={e => form.setFieldValue('name', e.target.value.trim())} />
             </Form.Item>
@@ -76,7 +100,6 @@ const PostalForm: React.FC = () => {
                     className={style.datePickerBox}
                     placement="bottomLeft"
                     disabledDate={disabledDate}
-                    // disabledTime={disabledDateTime}
                     showNow={false}
                     onChange={dateChangeHandler}
                 />

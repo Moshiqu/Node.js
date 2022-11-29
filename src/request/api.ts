@@ -1,24 +1,27 @@
 import request from "@/request";
 
-// /users
+// /user
 // 验证码
-export const CaptchaAPI = (data: { uuid: string }) => request.get("/users/captcha", { params: data });
+export const CaptchaAPI = (data: { uuid: string }) => request.get("/apis/user/captcha", { params: data });
 
 // 注册
-export const RegisterAPI = (data: RegisterAPIReq): Promise<RegisterAPIRes> => request.post("/users/reguser", data)
+export const RegisterAPI = (data: RegisterAPIReq): Promise<RegisterAPIRes> => request.post("/apis/user/reguser", data)
 
 // 登录
-export const LoginAPI = (data: LoginAPIReq): Promise<LoginAPIRes> => request.post("/users/login", data)
+export const LoginAPI = (data: LoginAPIReq): Promise<LoginAPIRes> => request.post("/apis/user/login", data)
 
 // /api
 // 修改密码
-export const ModifyPwdAPI = (data: LoginAPIReq): Promise<ModifyPwdAPIRes> => request.post("/api/pswchange", data)
+export const ModifyPwdAPI = (data: LoginAPIReq): Promise<ModifyPwdAPIRes> => request.post("/apis/api/pswchange", data)
 
 // 上传头像/图片
-export const ChangeAvatarAPI = (data: ChangeAvatarAPIReq): Promise<ChangeAvatarAPIRes> => request.post('/api/imageUpload', data)
+export const ChangeAvatarAPI = (data: ChangeAvatarAPIReq): Promise<ChangeAvatarAPIRes> => request.post('/apis/api/imageUpload', data)
 
 // 用户基础信息
-export const UserInfoAPI = (): Promise<UserInfoAPIRes> => request.get('/api/userinfo')
+export const UserInfoAPI = (): Promise<UserInfoAPIRes> => request.get('/apis/api/userinfo')
 
 // 修改基础信息
-export const UpdateUserInfoAPI = (data: UpdateUserInfoAPIRes): Promise<UpdateUserInfoAPIReq> => request.post('/api/update', data)
+export const UpdateUserInfoAPI = (data: UpdateUserInfoAPIRes): Promise<UpdateUserInfoAPIReq> => request.post('/apis/api/update', data)
+
+// postal
+export const PostalAPI = (data:PostalAPIRes): Promise<PostalAPIReq> => request.post('/apis/postal/record', data)

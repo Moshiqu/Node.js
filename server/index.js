@@ -22,13 +22,13 @@ app.use(expressJWT({ secret, algorithms: ['HS256'] }).unless({ path: [/^(\/users
 
 // 导入用户模块路由
 const userRouter = require('./router/user')
-app.use('/users', userRouter)
+app.use('/user', userRouter)
 
 // 导入api权限路由
 const apiRouter = require('./router/api')
 app.use('/api', apiRouter)
 
-// 导入api权限路由
+// 导入postal路由
 const postalRouter = require('./router/postal')
 app.use('/postal', postalRouter)
 

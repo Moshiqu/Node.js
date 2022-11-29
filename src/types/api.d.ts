@@ -83,3 +83,19 @@ interface UpdateUserInfoAPIReq {
     status: string,
     msg?: string,
 }
+
+// 保存邮件信息
+type PostalAPIRes = {
+    uuid: string,
+    verifyCode: string,
+    name: string,
+    mail: string,
+    time: string,
+    content: string,
+    isOpen: boolean
+}
+
+interface PostalAPIReq {
+    status: string,
+    msg?: string,
+}

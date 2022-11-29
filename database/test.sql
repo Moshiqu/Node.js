@@ -31,7 +31,7 @@ CREATE TABLE `aaa` (
   `sjzd` varchar(64) DEFAULT NULL COMMENT '数据长度',
   `sm` varchar(64) DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of aaa
@@ -48,7 +48,7 @@ CREATE TABLE `aebq` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `asd` varchar(255) DEFAULT NULL COMMENT '啊手动阀',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of aebq
@@ -85,7 +85,7 @@ CREATE TABLE `app_information` (
   `CONNECTION_CODE` varchar(24) DEFAULT NULL COMMENT '数据库连接编码',
   PRIMARY KEY (`CODE`),
   KEY `INDEX_APPINFO` (`DOMAIN`,`APP_TYPE`,`REVIEW_STATUS`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of app_information
@@ -105,7 +105,7 @@ CREATE TABLE `asdeqw1` (
   `mc` varchar(64) DEFAULT NULL COMMENT '名称',
   `nl` varchar(64) DEFAULT NULL COMMENT '年龄',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of asdeqw1
@@ -122,7 +122,7 @@ CREATE TABLE `asdf` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `a` varchar(255) DEFAULT NULL COMMENT 'a',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of asdf
@@ -1483,7 +1483,7 @@ CREATE TABLE `data` (
   `remove_repeat_field` varchar(2048) DEFAULT NULL COMMENT '去重字段',
   PRIMARY KEY (`code`),
   KEY `ak_key_2` (`buddle_id`,`catalog_id`,`resource_name`,`operation`,`position`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of data
@@ -1527,7 +1527,7 @@ CREATE TABLE `ev_artical_cate` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of ev_artical_cate
@@ -1555,7 +1555,7 @@ CREATE TABLE `ev_articles` (
   `author_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of ev_articles
@@ -1572,7 +1572,7 @@ CREATE TABLE `lololo` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `zxc` varchar(255) DEFAULT NULL COMMENT 'qwe',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of lololo
@@ -1590,7 +1590,7 @@ CREATE TABLE `mail` (
   `content` text,
   `code` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of mail
@@ -1611,7 +1611,7 @@ CREATE TABLE `mmhi` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `tests` varchar(255) DEFAULT NULL COMMENT '测试',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of mmhi
@@ -1628,7 +1628,7 @@ CREATE TABLE `nrxb` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `asd` varchar(255) DEFAULT NULL COMMENT 'asd',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of nrxb
@@ -1645,7 +1645,7 @@ CREATE TABLE `person` (
   `date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '日期',
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='人员信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='人员信息表';
 
 -- ----------------------------
 -- Records of person
@@ -1744,7 +1744,7 @@ CREATE TABLE `postal_options` (
   `content` text NOT NULL,
   `account` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of postal_options
@@ -1761,7 +1761,7 @@ CREATE TABLE `rupi` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `a` varchar(255) DEFAULT NULL COMMENT 'a',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of rupi
@@ -2839,7 +2839,7 @@ INSERT INTO `users` VALUES ('20', null, 'true', 'admin', '9123232@qq.com', '$2b$
 DROP TABLE IF EXISTS `user_copy`;
 CREATE TABLE `user_copy` (
   `code` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of user_copy
@@ -2869,7 +2869,7 @@ CREATE TABLE `user_evaluation` (
   `CREATE_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `CONNECTION_CODE` varchar(24) DEFAULT NULL,
   PRIMARY KEY (`CODE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of user_evaluation
@@ -2891,7 +2891,7 @@ CREATE TABLE `xzcv` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `aasd` varchar(255) DEFAULT NULL COMMENT 'asd',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of xzcv

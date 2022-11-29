@@ -273,6 +273,7 @@ const insertCaptcha = (text, uuid) => {
     return new Promise((resolve, reject) => {
         const insertCaptchaSql = 'INSERT INTO captcha SET ?'
         const data = { text, uuid }
+        console.log(data);
         db.query(insertCaptchaSql, data, (err, result) => {
             if (err) {
                 return reject({ status: 'fail', msg: err.message || err.sqlMessage })
@@ -333,10 +334,10 @@ const isCaptchaValidated = (captcha, uuid) => {
             const { text: resultText, start_time } = result[0]
 
             const currentStamp = new Date().getTime()
-            const expiredVlideTime = require('@root/config')
-            const expiredStamp = new Date(start_time).getTime() + (expiredVlideTime * 60 * 1000 / 1000)
+            const { ExpiredVlideTime } = require('@root/config')
+            const expiredStamp = new Date(start_time).getTime() + (ExpiredVlideTime * 60 * 1000)
 
-            if (currentStamp > expiredStamp || currentStamp < expiredStamp) {
+            if (currentStamp > expiredStamp) {
                 return reject({
                     status: 'fail',
                     msg: "验证码已过期,请重新获取"
