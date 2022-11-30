@@ -7,7 +7,7 @@ import '@/views/Login/login.less'
 import { Link } from 'react-router-dom';
 import configObj from '@/assets/js/config.js';
 import { LoginAPI } from '@/request/api';
-import { getCookie, setCookie, removeCookie } from "@/utils"
+import { getCookie, setCookie, removeCookie } from "@/utils/cookies"
 import style from "@/views/Login/init.module.scss";
 
 const View: React.FC = () => {
@@ -59,8 +59,8 @@ const View: React.FC = () => {
                 removeCookie('password')
                 removeCookie('remember')
             }
-            navigate('/')
             localStorage.setItem('token', res.token as string)
+            navigate('/')
         }).catch(err => {
             message.error(err.msg)
         }).finally(() => {

@@ -8,6 +8,8 @@ import About from "@/views/About"
 import Comp1 from "@/components/Comp1"
 import Comp2 from "@/components/Comp2"
 import Postal from "@/views/Postal"
+import Key from '@/components/postal/KeyLetter';
+import WriteLetter from '@/components/postal/WriteLetter';
 
 const Login = lazy(() => import("@/views/Login"))
 const Register = lazy(() => import("@/views/Register"))
@@ -51,8 +53,27 @@ const router = [
         element: withLoaingComponent(<Register />)
     },
     {
-        path: 'postal',
-        element: withLoaingComponent(<Postal/>)
+        path: '/postal',
+
+        element: <Navigate to='/postal/key' />
+    },
+    {
+        path: '/postal',
+        element: withLoaingComponent(<Postal />),
+        children: [
+            {
+                path: '/postal/write',
+                element: <WriteLetter />
+            },
+            {
+                path: '/postal/key',
+                element: <Key />
+            },
+            {
+                path: '*',
+                element: <Navigate to='/postal/write' />,
+            }
+        ]
     },
     {
         path: '*',

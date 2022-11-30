@@ -12,10 +12,23 @@ const recordPostalHandler = async (req, res) => {
 
     // TODO 限制日期, 发送日期必须大于+1, (月末, 或者一年最后一天)
     // 校验验证码
-    const { uuid, verifyCode, name, mail, time, content } = req.body
+    const { uuid, verifyCode, name, mail, time, content, isOpen } = req.body
+
+    let account = undefined
+    if (req.headers.authorization) {
+        const jwt = require('jsonwebtoken')
+        const { TokenSecretKey } = require('@root/config')
+        const token = req.headers.authorization.split(" ")[1]
+
+        jwt.verify(token, TokenSecretKey, (err, decoded) => {
+            if (err) return console.log(err)
+            account = decoded.account
+        })
+    }
+
 
     try {
-        const captchaValidation = await isCaptchaValide(uuid, verifyCode, () => recordPostal({ name, mail, time, content }))
+        const captchaValidation = await isCaptchaValide(uuid, verifyCode, () => recordPostal({ name, mail, time, content, isOpen, account }))
         res.send(captchaValidation)
     } catch (error) {
         return res.status(500).send(error)
@@ -32,7 +45,6 @@ const recordPostalHandler = async (req, res) => {
 const isCaptchaValide = (uuid, verifyCode, cb) => {
     return new Promise((resolve, reject) => {
         const captchaValideSql = 'SELECT start_time, id FROM captcha WHERE uuid= ? and text= ? and is_active = "true"'
-        console.log(uuid,verifyCode);
         db.query(captchaValideSql, [uuid, verifyCode], async (err, result) => {
             if (err) {
                 return reject({ status: 'fail', msg: err.message || err.sqlMessage })
@@ -60,8 +72,6 @@ const isCaptchaValide = (uuid, verifyCode, cb) => {
                     msg: "验证码已过期,请重新获取"
                 })
             }
-
-
 
             try {
                 resolve(await cb())
@@ -98,10 +108,14 @@ const deleteCode = (id) => {
  * @param {content} 邮件内容
  * @return {*}
  */
-const recordPostal = ({ name, mail, time, content }) => {
+const recordPostal = ({ name, mail, time, content, isOpen, account }) => {
     return new Promise((resolve, reject) => {
         const recordSql = "INSERT INTO postal_options SET ?"
-        db.query(recordSql, { sender: name, destination_mail: mail, send_time: time, content }, (err, result) => {
+
+        const { v4 } = require("uuid")
+        const uuid = v4()
+
+        db.query(recordSql, { sender: name, destination_mail: mail, send_time: time, content, key: uuid, is_open: isOpen, account }, (err, result) => {
             if (err) {
                 return reject({ status: 'fail', msg: err.message || err.sqlMessage })
             }
@@ -110,7 +124,7 @@ const recordPostal = ({ name, mail, time, content }) => {
                 return reject({ status: 'fail', msg: "保存记录失败" })
             }
 
-            return resolve({ status: 'success' })
+            return resolve({ status: 'success', data: { key: uuid } })
         })
     })
 }

@@ -273,7 +273,6 @@ const insertCaptcha = (text, uuid) => {
     return new Promise((resolve, reject) => {
         const insertCaptchaSql = 'INSERT INTO captcha SET ?'
         const data = { text, uuid }
-        console.log(data);
         db.query(insertCaptchaSql, data, (err, result) => {
             if (err) {
                 return reject({ status: 'fail', msg: err.message || err.sqlMessage })

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import configObj from '@/assets/js/config.js';
 import { ModifyPwdAPI } from "@/request/api"
 import { useNavigate } from 'react-router-dom';
-import { removeCookie } from "@/utils"
+import { removeCookie } from "@/utils/cookies"
 
 const ChangePwdModal: React.FC = () => {
     const [open, setOpen] = useState(false);

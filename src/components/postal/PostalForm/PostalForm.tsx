@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, Input, Checkbox, DatePicker, Row, Col } from 'antd';
+import { Button, Form, Input, Checkbox, DatePicker, Row, Col, message } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import '@/components/postal/PostalForm/postalForm.less';
 import style from '@/components/postal/PostalForm/postalForm.module.scss'
@@ -7,11 +7,11 @@ import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 
 import type { RangePickerProps, DatePickerProps } from 'antd/es/date-picker';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import RichText from "@/components/postal/RichText"
 import { CaptchaAPI, PostalAPI } from '@/request/api';
 
-import useStateRef from 'react-usestateref' // see this line
+import useStateRef from 'react-usestateref'
 
 const layout = {
     labelCol: { span: 4 },
@@ -24,7 +24,7 @@ const PostalForm: React.FC = () => {
     const [flag, setFlag] = useState(true)
     const [uuid, setUuid] = useState("")
     const [svgTag, setSvgTag] = useState('')
-    const [formData, setFormData, formDataRef] = useStateRef<PostalAPIRes>({
+    const [formData, setFormData, formDataRef] = useStateRef({
         uuid: "",
         verifyCode: "",
         name: "",
@@ -40,19 +40,24 @@ const PostalForm: React.FC = () => {
                 setSvgTag(res.data.img)
             }).catch(err => {
                 setSvgTag('')
-                console.log(err);
+                message.error(err.msg)
             })
         }
     }, [uuid, flag])
 
+    const navigateTo = useNavigate()
     const onFinish = (values: { hideRichText: string, isOpen: boolean, mail: string, name: string, verifyCode: string }) => {
         const { verifyCode, name, mail } = values
         setFormData({ ...formData, content: values.hideRichText, uuid, verifyCode, name, mail })
         PostalAPI(formDataRef.current).then(res => {
-            console.log(res);
+            // 设置cookies 100s后过期
+            // let currentDate = new Date()
+            // const expires = new Date(currentDate.getTime() + (100 * 1000))
+            // document.cookie = `key=${res.data?.key}; expires=${expires}`  //注意；和expires之间有一个空格
+            // navigateTo('/postal/key')
         }).catch(err => {
-            console.log(err);
-        }).finally(()=>{
+            message.error(err.msg)
+        }).finally(() => {
             setUuid(uuidv4())
         })
     };

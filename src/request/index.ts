@@ -28,7 +28,6 @@ instance.interceptors.response.use(res => {
         switch (err.response.status) {
             // 对得到的状态码的处理，具体的设置视自己的情况而定
             case 401:
-                console.log('用户未登录或token失效')
                 localStorage.removeItem('token')
                 window.location.href = '/login'
                 break

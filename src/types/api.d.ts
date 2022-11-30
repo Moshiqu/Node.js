@@ -98,4 +98,7 @@ type PostalAPIRes = {
 interface PostalAPIReq {
     status: string,
     msg?: string,
+    data?: {
+        key: string
+    }
 }
