@@ -5,8 +5,7 @@ import { DownOutlined } from '@ant-design/icons';
 import style from "@/views/Postal/postal.module.scss"
 import "@/views/Postal/postal.less"
 import { useNavigate } from 'react-router';
-import Poster from "@/assets/imgs/postal/header.jpg"
-import PostalForm from '@/components/postal/PostalForm/PostalForm';
+import WriteLetter from "@/components/postal/WriteLetter"
 
 const { Header, Content, Footer, } = Layout;
 
@@ -58,10 +57,7 @@ const Postal: React.FC = () => {
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['write']} items={navItem} />
             </Header>
             <Content>
-                <img src={Poster} alt='' style={{ width: '100%' }} />
-                <div className={style.postalContent}>
-                    <PostalForm />
-                </div>
+                <WriteLetter />
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>
