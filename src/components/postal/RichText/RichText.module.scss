@@ -1,21 +1,12 @@
 .quill :global(.ql-editor) {
     height: 5rem;
-
     background-color: #fff;
-
-    
 
     img {
         max-width: 1.5rem;
         max-height: 1.5rem;
         vertical-align: baseline;
     }
-
-    // >p {
-    //     display: flex;
-    //     align-items: flex-end;
-    // }
-
 }
 
 .quill :global(.ql-toolbar){

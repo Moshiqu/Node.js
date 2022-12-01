@@ -48,19 +48,23 @@ const PostalForm: React.FC = () => {
     const navigateTo = useNavigate()
     const onFinish = (values: { hideRichText: string, isOpen: boolean, mail: string, name: string, verifyCode: string }) => {
         const { verifyCode, name, mail } = values
-        setFormData({ ...formData, content: values.hideRichText, uuid, verifyCode, name, mail })
+        setFormData({ ...formData, content:parseQuillContent(values.hideRichText), uuid, verifyCode, name, mail })
         PostalAPI(formDataRef.current).then(res => {
             // 设置cookies 100s后过期
             // let currentDate = new Date()
             // const expires = new Date(currentDate.getTime() + (100 * 1000))
             // document.cookie = `key=${res.data?.key}; expires=${expires}`  //注意；和expires之间有一个空格
-            // navigateTo('/postal/key')
+            navigateTo(`/postal/key?key=${res.data?.key}`)
         }).catch(err => {
             message.error(err.msg)
         }).finally(() => {
             setUuid(uuidv4())
         })
     };
+
+    const parseQuillContent = (text: string) => {
+        return text.replace(/<img src=/g, "<img style='max-width:max-width: 1.5rem;max-height: 1.5rem;vertical-align: baseline;' src=")
+    }
 
 
     const onFinishFailed = (value: any) => {
@@ -127,19 +131,6 @@ const PostalForm: React.FC = () => {
             </Form.Item>
 
             <Form.Item style={{ textAlign: "right" }} className={style.verifyItem}>
-                {/* <Form.Item style={{ display: 'inline-flex', width: ".9rem", height: ".4rem" }} >
-                    <div className="verifyImg">
-                        阿斯顿发生
-                    </div>
-                </Form.Item>
-                <Form.Item style={{ display: 'inline-flex' }} name="verifyCode" rules={[{ required: true, message: '验证码不能为空' }]} >
-                    <Input placeholder="默认原有名称" />
-                </Form.Item>
-                <Form.Item style={{ display: 'inline-flex' }} >
-                    <Button type="primary" htmlType="submit">
-                        提交
-                    </Button>
-                </Form.Item> */}
                 <Row>
                     <Col>
                         <div className="verifyImg" style={{ display: 'inline-flex', marginLeft: ".3rem" }} onClick={() => {

@@ -23,5 +23,9 @@ export const UserInfoAPI = (): Promise<UserInfoAPIRes> => request.get('/apis/api
 // 修改基础信息
 export const UpdateUserInfoAPI = (data: UpdateUserInfoAPIRes): Promise<UpdateUserInfoAPIReq> => request.post('/apis/api/update', data)
 
-// postal
-export const PostalAPI = (data:PostalAPIRes): Promise<PostalAPIReq> => request.post('/apis/postal/record', data)
+// /postal
+// 保存邮件信息
+export const PostalAPI = (data: PostalAPIRes): Promise<PostalAPIReq> => request.post('/apis/postal/record', data)
+
+// 获取邮件信息
+export const EmailInfoAPI = (data: EmailInfoAPIRes): Promise<EmailInfoAPIReq> => request.post('/apis/postal/email/info', data)

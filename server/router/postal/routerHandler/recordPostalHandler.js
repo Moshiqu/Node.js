@@ -115,7 +115,7 @@ const recordPostal = ({ name, mail, time, content, isOpen, account }) => {
         const { v4 } = require("uuid")
         const uuid = v4()
 
-        db.query(recordSql, { sender: name, destination_mail: mail, send_time: time, content, key: uuid, is_open: isOpen, account }, (err, result) => {
+        db.query(recordSql, { sender: name, destination_mail: mail, send_time: time, content, mail_key: uuid, is_open: isOpen, account }, (err, result) => {
             if (err) {
                 return reject({ status: 'fail', msg: err.message || err.sqlMessage })
             }

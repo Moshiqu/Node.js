@@ -102,3 +102,22 @@ interface PostalAPIReq {
         key: string
     }
 }
+
+// 获取邮件信息
+type EmailInfoAPIRes = {
+    key: string
+}
+
+interface EmailInfoAPIReq {
+    status: string,
+    msg: string,
+    data?: EmailInfoAPIReqData
+}
+
+type EmailInfoAPIReqData = {
+    start_time: string,
+    send_time: string,
+    destination_mail: string,
+    content: string,
+    mail_key: string
+}

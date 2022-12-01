@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const { recordPostalHandler } = require('./routerHandler/recordPostalHandler')
+const { emailInfoHandler } = require('./routerHandler/emailInfoHandler')
 const { body } = require('express-validator');
 const { RegDateTime } = require('@root/config')
 
-// 获取图形验证码
+// 记录邮件信息
 router.post('/record', [
     body('uuid').notEmpty().withMessage('uuid不能为空'),
     body('verifyCode').notEmpty().withMessage("验证码不能为空"),
@@ -12,6 +13,9 @@ router.post('/record', [
     body('time').notEmpty().withMessage('发信时间不能为空').matches(RegDateTime).withMessage('发信时间格式错误'),
     body("content").notEmpty().withMessage("发信内容不能为空"),
 ], recordPostalHandler)
+
+// 获取邮件信息
+router.post("/email/info", emailInfoHandler)
 
 
 module.exports = router
