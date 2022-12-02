@@ -15,7 +15,15 @@
     .red_bold {
         font-weight: 900;
         padding: .02rem;
-        font-size: .15rem;
+        font-size: .2rem;
         color: red;
     }
+}
+
+.key_letter_content :global(.ant-form-item-label){
+    font-weight: 900;
+}
+
+.key_letter_content :global(#keyForm){
+    width: 12rem;
 }

@@ -33,6 +33,8 @@ const serverPort = 3001
 // 客户端地址端口号
 const clientAddress = '127.0.0.1'
 const clientPort = 3002
+// 邮件发送 发送方的邮箱
+const postalSender = `"这是个啥时光邮局" <912323520@qq.com>`
 
 module.exports = {
     RegAccount,
@@ -48,4 +50,5 @@ module.exports = {
     TokenOptions,
     clientAddress,
     clientPort,
+    postalSender
 }

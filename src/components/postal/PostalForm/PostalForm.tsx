@@ -48,7 +48,7 @@ const PostalForm: React.FC = () => {
     const navigateTo = useNavigate()
     const onFinish = (values: { hideRichText: string, isOpen: boolean, mail: string, name: string, verifyCode: string }) => {
         const { verifyCode, name, mail } = values
-        setFormData({ ...formData, content:parseQuillContent(values.hideRichText), uuid, verifyCode, name, mail })
+        setFormData({ ...formData, content: parseQuillContent(values.hideRichText), uuid, verifyCode, name, mail })
         PostalAPI(formDataRef.current).then(res => {
             // 设置cookies 100s后过期
             // let currentDate = new Date()
@@ -63,7 +63,13 @@ const PostalForm: React.FC = () => {
     };
 
     const parseQuillContent = (text: string) => {
-        return text.replace(/<img src=/g, "<img style='max-width:max-width: 1.5rem;max-height: 1.5rem;vertical-align: baseline;' src=")
+        // 图片添加最大宽高
+        text = text.replace(/<img src=/g, "<img style='max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;' src=")
+        // 添加ql-snow 和ql-editor 样式
+        text = `<link href="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css" rel="stylesheet">` + text
+        text = `<div class="ql-snow"><div class="ql-editor">${text}</div></div>`
+        
+        return text
     }
 
 

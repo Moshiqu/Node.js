@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer'); //引入模块
+const configObj = require("@root/config")
 let transporter = nodemailer.createTransport({
     //node_modules/nodemailer/lib/well-known/services.json  查看相关的配置，如果使用qq邮箱，就查看qq邮箱的相关配置
     service: 'qq', //类型qq邮箱
@@ -15,7 +16,7 @@ let transporter = nodemailer.createTransport({
 function sendMail(mail, emailSendOption, call) {
     // 发送的配置项
     let mailOptions = {
-        from: emailSendOption.from, // 发送方
+        from: configObj.postalSender, // 发送方
         to: mail, //接收者邮箱，多个邮箱用逗号间隔
         subject: emailSendOption.subject, // 标题
         text: emailSendOption.text, // 文本内容
@@ -36,7 +37,7 @@ function sendMail(mail, emailSendOption, call) {
         if (error) {
             call(false, error)
         } else {
-            call(true) //因为是异步 所有需要回调函数通知成功结果
+            call(true,info) //因为是异步 所有需要回调函数通知成功结果
         }
     });
 

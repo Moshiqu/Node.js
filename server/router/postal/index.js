@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const { recordPostalHandler } = require('./routerHandler/recordPostalHandler')
 const { emailInfoHandler } = require('./routerHandler/emailInfoHandler')
+const { emailManualHandler } = require('./routerHandler/emailManualHandler')
 const { body } = require('express-validator');
 const { RegDateTime } = require('@root/config')
 
@@ -16,6 +17,11 @@ router.post('/record', [
 
 // 获取邮件信息
 router.post("/email/info", emailInfoHandler)
+
+// 手动发送
+router.post("/mail/manual",[
+    body("email_key").notEmpty().withMessage("提取码不能为空")
+], emailManualHandler)
 
 
 module.exports = router
