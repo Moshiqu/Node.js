@@ -25,7 +25,7 @@ const emailManualHandler = async (req, res) => {
  */
 const getEmailInfo = (email_key) => {
     return new Promise((resolve, reject) => {
-        const getEmailInfoSql = "SELECT sender, start_time, send_time, mail_key, destination_mail, content FROM postal_options WHERE mail_key = ? AND is_active = 'true'"
+        const getEmailInfoSql = "SELECT sender, is_send, start_time, send_time, mail_key, destination_mail, content FROM postal_options WHERE mail_key = ? AND is_active = 'true'"
 
         db.query(getEmailInfoSql, email_key, async (err, res) => {
             if (err) {
@@ -39,7 +39,7 @@ const getEmailInfo = (email_key) => {
 
             result = result[0]
             const { is_send } = result
-            if (is_send) {
+            if (JSON.parse(is_send)) {
                 return reject({ status: "fail", msg: "该邮件已经发送过了" })
             }
 
@@ -91,7 +91,7 @@ const updateEmail = (emailInfo) => {
         // 发送邮件
         const updateEmailSql = `UPDATE postal_options SET ? WHERE mail_key = ? and is_active = 'true' and is_send = 'false'`
         const { mail_key } = emailInfo
-        db.query(updateEmailSql, [{ is_send: true }, mail_key], async (err, result) => {
+        db.query(updateEmailSql, [{ is_send: "true" }, mail_key], async (err, result) => {
             if (err) return reject({ status: 'fail', msg: err.message || err.sqlMessage })
 
             if (result.affectedRows !== 1) {

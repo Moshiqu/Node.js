@@ -10,6 +10,7 @@ import Comp2 from "@/components/Comp2"
 import Postal from "@/views/Postal"
 import Key from '@/components/postal/KeyLetter';
 import WriteLetter from '@/components/postal/WriteLetter';
+import Mail from '@/components/postal/Mail';
 
 const Login = lazy(() => import("@/views/Login"))
 const Register = lazy(() => import("@/views/Register"))
@@ -66,12 +67,16 @@ const router = [
                 element: <WriteLetter />
             },
             {
-                path: '/postal/key',
-                element: <Key />
+                path: "/postal/mail",
+                element: <Mail />
             },
             {
                 path: '*',
                 element: <Navigate to='/postal/write' />,
+            },
+            {
+                path: "/postal/manual",
+                element: <Key />
             }
         ]
     },

@@ -1,0 +1,14 @@
+.Mail{
+    padding: .05rem .15rem 0;
+}
+
+.Mail :global(.ant-tabs-nav){
+    display: none !important;
+}
+
+.card_header{
+    color: #06F;
+    &>span:last-child{
+        float: right;
+    }
+}

@@ -6,6 +6,7 @@ import style from "@/views/Postal/postal.module.scss"
 import "@/views/Postal/postal.less"
 import { useNavigate } from 'react-router';
 import { Outlet, useLocation } from 'react-router-dom';
+import Poster from "@/assets/imgs/postal/header.jpg"
 
 const { Header, Content, Footer, } = Layout;
 
@@ -14,8 +15,7 @@ const navItem: MenuProps['items'] = [
         key: '/postal/write',
         label: "写一封信"
     }, {
-        // key: 'open',
-        key: '/postal/key',
+        key: '/postal/mail',
         label: "公开信"
     }, {
         key: 'random',
@@ -32,7 +32,7 @@ const navItem: MenuProps['items'] = [
         popupClassName: style.dropDownDiv,
         children: [
             {
-                key: 'manual',
+                key: '/postal/manual',
                 label: '手动提取'
             }, {
                 key: 'cancel',
@@ -70,6 +70,7 @@ const Postal: React.FC = () => {
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[location]} items={navItem} onClick={menuClick} />
             </Header>
             <Content>
+                <img src={Poster} alt='' style={{ width: '100%' }} />
                 <Outlet />
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
-import Poster from "@/assets/imgs/postal/header.jpg"
-import { useLocation } from "react-router-dom"
-import { EmailInfoAPI } from "@/request/api"
+import { Link, useLocation } from "react-router-dom"
+import { EmailInfoAPI, ManualEmailAPI } from "@/request/api"
 import { Form, message, Space, Input, Button } from "antd"
 import dayjs from "dayjs"
 import style from "@/components/postal/KeyLetter/KeyLetter.module.scss"
@@ -34,17 +33,22 @@ const Key: React.FC = () => {
     }, [search])
 
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: { key: string }) => {
+        ManualEmailAPI({ email_key: values.key }).then(res => {
+            message.success('邮件发送成功')
+        }).catch(err => {
+            message.error(err.msg)
+        })
+
     };
 
     const InfoWithData: React.FC = () => {
         return (
             <Space direction="vertical" style={{ display: 'flex' }}>
                 <div>邮件提交成功! 它将在<span className={style.black_bold}>{dayjs(emailInfo?.send_time).format('YYYY-MM-DD HH:mm:ss')}</span>发往<span className={style.black_bold}>{emailInfo?.destination_mail}</span></div>
-                <div>你也可以保存以下提取码, 到期后在<span className={style.blue}>手动提取</span>页面获得邮件。（此页面仅你可见, 且将在<span style={{ color: "red" }}>100</span>秒后过期）</div>
+                <div>你也可以保存以下提取码, 到期后在<Link className={style.blue} to="/postal/manual">手动提取</Link>页面获得邮件。（此页面仅你可见, 且将在<span style={{ color: "red" }}>100</span>秒后过期）</div>
                 <CopyToClipboard text={emailInfo!.mail_key} onCopy={() => message.success("复制成功")}>
-                    <span className={style.red_bold} style={{cursor:"pointer"}} title="点击复制">{emailInfo?.mail_key}</span>
+                    <span className={style.red_bold} style={{ cursor: "pointer" }} title="点击复制">{emailInfo?.mail_key}</span>
                 </CopyToClipboard>
                 <div>邮件发送和手工提取两种方式不会互相影响, 只是多一种提取手段!</div>
                 <div><span className={style.black_bold} style={{ fontSize: ".17rem" }}>邮件内容预览</span></div>
@@ -87,12 +91,9 @@ const Key: React.FC = () => {
     }
 
     return (
-        <>
-            <img src={Poster} alt='' style={{ width: '100%' }} />
-            <div className={style.key_letter_content}>
-                {emailInfo ? <InfoWithData /> : <InfoWithoutData />}
-            </div>
-        </>
+        <div className={style.key_letter_content}>
+            {emailInfo ? <InfoWithData /> : <InfoWithoutData />}
+        </div>
     )
 }
 

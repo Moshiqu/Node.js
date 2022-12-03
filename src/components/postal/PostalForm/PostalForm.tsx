@@ -54,7 +54,7 @@ const PostalForm: React.FC = () => {
             // let currentDate = new Date()
             // const expires = new Date(currentDate.getTime() + (100 * 1000))
             // document.cookie = `key=${res.data?.key}; expires=${expires}`  //注意；和expires之间有一个空格
-            navigateTo(`/postal/key?key=${res.data?.key}`)
+            navigateTo(`/postal/manual?key=${res.data?.key}`)
         }).catch(err => {
             message.error(err.msg)
         }).finally(() => {

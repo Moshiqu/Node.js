@@ -29,3 +29,6 @@ export const PostalAPI = (data: PostalAPIRes): Promise<PostalAPIReq> => request.
 
 // 获取邮件信息
 export const EmailInfoAPI = (data: EmailInfoAPIRes): Promise<EmailInfoAPIReq> => request.post('/apis/postal/email/info', data)
+
+// 手动发送邮件
+export const ManualEmailAPI = (data: ManualEmailAPIRes): Promise<ManualEmailAPIReq> => request.post('/apis/postal/mail/manual', data)

@@ -121,3 +121,14 @@ type EmailInfoAPIReqData = {
     content: string,
     mail_key: string
 }
+
+// 手动发送邮件 请求
+type ManualEmailAPIRes = {
+    email_key: string
+}
+
+// 手动发送邮件 
+interface ManualEmailAPIReq {
+    status: string,
+    msg?: string
+}
