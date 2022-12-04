@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80029
 File Encoding         : 65001
 
-Date: 2022-11-29 01:01:17
+Date: 2022-12-05 00:23:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `aaa` (
   `sjzd` varchar(64) DEFAULT NULL COMMENT '数据长度',
   `sm` varchar(64) DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of aaa
@@ -48,7 +48,7 @@ CREATE TABLE `aebq` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `asd` varchar(255) DEFAULT NULL COMMENT '啊手动阀',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of aebq
@@ -85,7 +85,7 @@ CREATE TABLE `app_information` (
   `CONNECTION_CODE` varchar(24) DEFAULT NULL COMMENT '数据库连接编码',
   PRIMARY KEY (`CODE`),
   KEY `INDEX_APPINFO` (`DOMAIN`,`APP_TYPE`,`REVIEW_STATUS`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of app_information
@@ -105,7 +105,7 @@ CREATE TABLE `asdeqw1` (
   `mc` varchar(64) DEFAULT NULL COMMENT '名称',
   `nl` varchar(64) DEFAULT NULL COMMENT '年龄',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of asdeqw1
@@ -122,7 +122,7 @@ CREATE TABLE `asdf` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `a` varchar(255) DEFAULT NULL COMMENT 'a',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of asdf
@@ -229,7 +229,7 @@ CREATE TABLE `captcha` (
   `start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `verify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of captcha
@@ -265,6 +265,16 @@ INSERT INTO `captcha` VALUES ('28', '8zsL', 'true', null, '3fe4e2b9-71a1-44c5-93
 INSERT INTO `captcha` VALUES ('29', 'n3NX', 'true', null, null, '2022-11-29 00:38:32', null);
 INSERT INTO `captcha` VALUES ('30', 'qZxN', 'true', null, null, '2022-11-29 00:39:55', null);
 INSERT INTO `captcha` VALUES ('31', 'QxKx', 'true', null, null, '2022-11-29 00:40:13', null);
+INSERT INTO `captcha` VALUES ('32', '8ei3', 'true', null, '3f27aac5-9042-474c-a09f-ca3cf973dc96', '2022-11-29 20:14:41', null);
+INSERT INTO `captcha` VALUES ('33', 'wrJ0', 'false', null, 'd2f682f8-dac3-4538-98b9-668c504fdb32', '2022-12-03 13:41:16', null);
+INSERT INTO `captcha` VALUES ('34', 'Dsnl', 'false', null, 'd9f3c7be-87a3-41c1-a56a-95180d9c8baf', '2022-12-03 16:18:03', null);
+INSERT INTO `captcha` VALUES ('35', 'Q3ep', 'false', null, '0d986c1c-c1ab-4797-a006-e58e46cd465d', '2022-12-03 17:41:16', null);
+INSERT INTO `captcha` VALUES ('36', 'rKYy', 'false', null, 'e8884c41-d425-4bf9-9ae0-4368edb36c26', '2022-12-03 20:17:52', null);
+INSERT INTO `captcha` VALUES ('37', 'lfX1', 'false', null, '952d7d1e-79db-476d-a0fe-fd25836d9147', '2022-12-03 20:20:06', null);
+INSERT INTO `captcha` VALUES ('38', 'blns', 'false', null, 'ade0cdee-2c2a-4708-a0a2-28c4731a3092', '2022-12-03 20:32:16', null);
+INSERT INTO `captcha` VALUES ('39', 'nc2J', 'false', null, 'ccb59952-48c0-48f2-ab10-d3d9f1ac22eb', '2022-12-03 20:38:17', null);
+INSERT INTO `captcha` VALUES ('40', 'XjTq', 'false', null, 'e550334e-c247-4039-8840-182401f27450', '2022-12-03 20:40:34', null);
+INSERT INTO `captcha` VALUES ('41', 'F7h6', 'false', null, '1423351b-0b59-4abf-9ff4-5e9cf447dd74', '2022-12-03 20:47:32', null);
 
 -- ----------------------------
 -- Table structure for catalog
@@ -1483,7 +1493,7 @@ CREATE TABLE `data` (
   `remove_repeat_field` varchar(2048) DEFAULT NULL COMMENT '去重字段',
   PRIMARY KEY (`code`),
   KEY `ak_key_2` (`buddle_id`,`catalog_id`,`resource_name`,`operation`,`position`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of data
@@ -1527,7 +1537,7 @@ CREATE TABLE `ev_artical_cate` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of ev_artical_cate
@@ -1555,7 +1565,7 @@ CREATE TABLE `ev_articles` (
   `author_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of ev_articles
@@ -1572,7 +1582,7 @@ CREATE TABLE `lololo` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `zxc` varchar(255) DEFAULT NULL COMMENT 'qwe',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of lololo
@@ -1590,7 +1600,7 @@ CREATE TABLE `mail` (
   `content` text,
   `code` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of mail
@@ -1611,7 +1621,7 @@ CREATE TABLE `mmhi` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `tests` varchar(255) DEFAULT NULL COMMENT '测试',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of mmhi
@@ -1628,7 +1638,7 @@ CREATE TABLE `nrxb` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `asd` varchar(255) DEFAULT NULL COMMENT 'asd',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of nrxb
@@ -1645,7 +1655,7 @@ CREATE TABLE `person` (
   `date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '日期',
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC COMMENT='人员信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='人员信息表';
 
 -- ----------------------------
 -- Records of person
@@ -1743,12 +1753,55 @@ CREATE TABLE `postal_options` (
   `is_open` varchar(8) DEFAULT 'false',
   `content` text NOT NULL,
   `account` varchar(255) DEFAULT NULL,
+  `mail_key` varchar(120) NOT NULL DEFAULT 'false' COMMENT '是否寄出',
+  `is_send` varchar(8) DEFAULT 'false',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of postal_options
 -- ----------------------------
+INSERT INTO `postal_options` VALUES ('14', 'true', '2022-11-30 15:10:33', '阿松大', '123@qq.com', '2022-12-01 15:09:13', 'false', '<p>123</p>', null, '29b0491c-64f2-4add-a05b-a1b09e04061e', 'false');
+INSERT INTO `postal_options` VALUES ('15', 'true', '2022-11-30 15:12:27', '请问', '123@qq.com', '2022-12-01 15:09:13', 'false', '<p>123</p>', null, 'cee8afc6-544a-4e0f-ba9f-999ebf729666', 'false');
+INSERT INTO `postal_options` VALUES ('16', 'true', '2022-11-30 15:16:12', '1312123', '91233520@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '64fcfb89-5427-4759-bdff-1e5ebda94599', 'false');
+INSERT INTO `postal_options` VALUES ('17', 'true', '2022-11-29 15:17:33', '阿道夫34', '125415@163.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '520313cb-6015-4e0c-8d88-ecd62b1dbe77', 'false');
+INSERT INTO `postal_options` VALUES ('18', 'true', '2022-11-28 15:26:53', '士大夫', '852145@gmail.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '269f4d4d-f683-46a8-b4d6-040a95ae4e3f', 'false');
+INSERT INTO `postal_options` VALUES ('19', 'true', '2022-11-30 15:28:00', '肉体与', 'le123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '3f94fc4f-46e4-494f-bfd3-edee52c966bb', 'false');
+INSERT INTO `postal_options` VALUES ('20', 'true', '2022-11-30 15:29:24', '虚啊速度去额特大犯罪', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, 'e2aa6c6d-4b8a-4b3d-ae65-4298828eaa98', 'false');
+INSERT INTO `postal_options` VALUES ('21', 'true', '2022-11-30 15:32:07', '黄河流域体育', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, 'b0788e74-77de-497a-80c0-702b42aed975', 'false');
+INSERT INTO `postal_options` VALUES ('22', 'true', '2022-11-30 15:32:23', '儿童夫', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '00698c09-c837-409b-a5ef-805d86e2f5f4', 'false');
+INSERT INTO `postal_options` VALUES ('23', 'true', '2022-11-30 15:32:41', '是否输入有误', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '803d4d5f-5a5d-46dc-845e-190e0c62782e', 'false');
+INSERT INTO `postal_options` VALUES ('24', 'true', '2022-11-30 15:34:45', '额外消费', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '488cc30e-f938-417b-855a-305cdae8cd29', 'false');
+INSERT INTO `postal_options` VALUES ('25', 'true', '2022-11-30 15:36:49', '立刻就会', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '5080f078-d38d-4039-abb9-34cc7abecc9d', 'false');
+INSERT INTO `postal_options` VALUES ('26', 'true', '2022-11-30 15:38:11', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '68e80953-35ff-4606-9b59-25daac02fb86', 'false');
+INSERT INTO `postal_options` VALUES ('27', 'true', '2022-11-30 15:42:17', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', 'admin', '5050991b-2118-4991-b9d4-7ed239ecfdef', 'false');
+INSERT INTO `postal_options` VALUES ('28', 'true', '2022-11-30 15:52:22', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '349b06d8-2966-45e1-af99-8f71562fda1b', 'false');
+INSERT INTO `postal_options` VALUES ('29', 'true', '2022-11-30 16:02:20', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '2ef30cb2-2227-4d89-a019-67c7e94d9d29', 'false');
+INSERT INTO `postal_options` VALUES ('30', 'true', '2022-11-30 16:06:42', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', 'db927e18-8cb0-4976-8dc5-52d2239d45a5', 'false');
+INSERT INTO `postal_options` VALUES ('31', 'true', '2022-11-30 16:11:35', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '94341be4-8e54-4805-b5a1-4a1db9889981', 'false');
+INSERT INTO `postal_options` VALUES ('32', 'true', '2022-11-30 16:12:14', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '99838a15-ff46-4a59-b91a-d406787fc382', 'false');
+INSERT INTO `postal_options` VALUES ('33', 'true', '2022-11-30 16:12:36', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '516256cb-721e-49b4-b07d-3d6ed1841d76', 'false');
+INSERT INTO `postal_options` VALUES ('34', 'true', '2022-11-30 16:13:21', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '3833597f-e5ca-4e63-b976-2494fddb1bb9', 'false');
+INSERT INTO `postal_options` VALUES ('35', 'true', '2022-11-30 16:17:09', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', 'fc57fe50-c538-4fe8-8a77-197f25744713', 'false');
+INSERT INTO `postal_options` VALUES ('36', 'true', '2022-11-30 16:28:18', 'asdf12313', '9123232@qq.com', '2022-12-01 16:27:56', 'true', '<p>asdasd as Ad 123</p>', 'admin', '7c252860-5b5d-4cce-9f68-df4ca60e576a', 'false');
+INSERT INTO `postal_options` VALUES ('37', 'true', '2022-11-30 16:31:15', 'asdf12313', '9123232@qq.com', '2022-12-01 16:27:56', 'true', '<p>asdasd as Ad 123</p>', 'admin', 'defaa1ba-6032-49de-80ec-73871c0ee472', 'false');
+INSERT INTO `postal_options` VALUES ('38', 'true', '2022-11-30 16:34:05', 'qweqwe', 'qwe@qq.com', '2022-12-01 16:33:55', 'false', '<p>asdasd</p>', 'admin', 'a88638d7-5309-4abf-bfc6-4cafa4fa6b1e', 'false');
+INSERT INTO `postal_options` VALUES ('39', 'true', '2022-11-30 16:37:03', '123123', '912323520@qq.com', '2022-12-02 16:36:54', 'false', '<p>啊实打实的</p>', 'admin', 'eb2e498b-c021-49e4-9d90-339edb5cf777', 'false');
+INSERT INTO `postal_options` VALUES ('40', 'true', '2022-12-01 10:40:10', 'asdasdadasdasdadasdads', '912323520@qq.com', '2022-12-02 10:39:57', 'true', '<p>asd</p>', 'admin', 'b057f0d6-9eb0-4323-a3b0-1217effea073', 'false');
+INSERT INTO `postal_options` VALUES ('41', 'true', '2022-12-01 11:51:55', '啊实打实的', '912323520@qq.com', '2023-01-01 11:51:35', 'false', '<p>阿松大</p>', 'admin', 'b9783e7b-7cfc-4ed5-88f5-c676ba3d17b6', 'false');
+INSERT INTO `postal_options` VALUES ('42', 'true', '2022-12-01 14:42:39', '得到充分v把你后面就,', '912323520@qq.com', '2023-01-06 14:42:30', 'false', '<p>啊实打实大苏打</p>', 'admin', '9b67edf0-399f-4db3-934e-38eb5135974b', 'false');
+INSERT INTO `postal_options` VALUES ('43', 'true', '2022-12-01 16:04:48', '123123', '912323520@qq.com', '2023-01-01 16:04:34', 'true', '<p>的风格斯大法官</p>', 'admin', 'c70c8bab-5f77-4fb9-baee-1159ba7ebacc', 'false');
+INSERT INTO `postal_options` VALUES ('44', 'true', '2022-12-01 16:07:09', '123123', '912323520@qq.com', '2023-01-01 16:06:26', 'false', '<p>   asd asd ASd asASDF ASDF 啊手动阀 啊手<span class=\"ql-size-huge\">动阀手动阀阿斯顿发生阿道夫啊手</span><span class=\"ql-size-huge ql-font-serif\">动阀aasdf</span><img src=\"http://127.0.0.1:3001/avatar/asd.jpg\"></p>', 'admin', 'a3e60696-d743-4e7e-8ad1-44cfa28f0271', 'false');
+INSERT INTO `postal_options` VALUES ('45', 'true', '2022-12-01 16:41:03', '啊手动阀手动阀', '912323520@qq.com', '2023-01-01 16:39:47', 'true', '<p><img style=\'max-width:max-width: 1.5rem;max-height: 1.5rem;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\">asdfasdfasa<span class=\"ql-size-small\">sdfasdfasdfasdfasdfasfasdfasdfasdf </span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">啊手动阀阿三阿松大</span><span style=\"color: rgb(156, 220, 254);\" class=\"ql-size-large\">阿萨大大俺的</span><img style=\'max-width:max-width: 1.5rem;max-height: 1.5rem;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/asd.jpg\"></p>', 'admin', '150137ba-a7fa-4cf7-875e-032bba1943be', 'false');
+INSERT INTO `postal_options` VALUES ('46', 'true', '2022-12-03 13:41:28', '时镜涵是弱智', '854086822@qq.com', '2022-12-04 13:40:56', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>ask的发挥噢方案及配偶欧洲的噢<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\"></p></div></div>', 'admin', '0bbd479f-7251-4d75-9d2f-6f09b9a4ee6f', 'true');
+INSERT INTO `postal_options` VALUES ('47', 'true', '2022-12-03 16:18:12', '啊撒打发是', '912323520@qq.com', '2022-12-25 16:17:59', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>asdfasf</p></div></div>', 'admin', 'cae4303f-6588-4ac6-8d47-17bfad11f6a0', 'true');
+INSERT INTO `postal_options` VALUES ('48', 'true', '2022-12-03 17:41:24', '咯咯咯', '912323520@qq.com', '2022-12-17 17:41:11', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>asfasdf</p></div></div>', 'admin', '6dc2a83a-12d4-4207-a0f8-d7fddc85b5a7', 'false');
+INSERT INTO `postal_options` VALUES ('49', 'true', '2022-12-03 20:18:05', '略略略', '1416254740@qq.com', '2022-12-04 20:16:32', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\"><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/default-male.png\"></p></div></div>', 'admin', '54140b98-f653-47e8-9af2-dce4c18daa43', 'false');
+INSERT INTO `postal_options` VALUES ('50', 'true', '2022-12-03 20:20:11', '咯咯咯', '1416254740@qq.com', '2022-12-04 20:19:38', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p><span style=\"background-color: rgb(255, 255, 255);\">1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com</span><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\"><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/default-male.png\"></p></div></div>', 'admin', 'c76de19b-7365-4f57-aeb2-4fc6beb66910', 'true');
+INSERT INTO `postal_options` VALUES ('51', 'true', '2022-12-03 20:32:25', '蒲晓雪', '1416254740@qq.com', '2022-12-04 20:31:52', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>这个是有效信息<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', 'd08c69ec-8e52-4664-9607-68ee979999a2', 'true');
+INSERT INTO `postal_options` VALUES ('52', 'true', '2022-12-03 20:38:22', '咯咯咯', '912323520@qq.com', '2022-12-04 20:38:08', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>asdfas fas s f<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '29b3ec07-a3d2-48f4-aed5-95b9abcb3fb0', 'false');
+INSERT INTO `postal_options` VALUES ('53', 'true', '2022-12-03 20:40:41', 'asdfasfd 啊撒打发', 'lee912323520@163.com', '2022-12-04 20:40:18', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\">asdf <img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '953e6884-e189-4d92-8a53-5a83032c38dd', 'true');
+INSERT INTO `postal_options` VALUES ('54', 'true', '2022-12-03 20:47:38', '哟西哟西', '912323520@qq.com', '2022-12-18 20:47:17', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>哟西哟西大大地<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '93dbcb66-ee7f-4fae-9a81-6c6e98a6e046', 'true');
 
 -- ----------------------------
 -- Table structure for rupi
@@ -1761,7 +1814,7 @@ CREATE TABLE `rupi` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `a` varchar(255) DEFAULT NULL COMMENT 'a',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of rupi
@@ -2831,7 +2884,7 @@ INSERT INTO `users` VALUES ('16', null, 'true', 'Moshiqu1', '9123223@qq.com', 'M
 INSERT INTO `users` VALUES ('17', null, 'true', 'Moshiqu2', '91232223@qq.com', '$2b$10$wmYo5TPkZCmdx83XJJxy0OAp2ewlJ0nURT9q8pIowh/uroDmDjAAK', null);
 INSERT INTO `users` VALUES ('18', null, 'true', 'lalala', '159@qq.com', '$2b$10$YKRZrX5jgd5MscGFB46SwuFtaVyc4pvifcAeDUu7hQl1DW0JiGZ6q', null);
 INSERT INTO `users` VALUES ('19', '鱼_天_海', 'true', 'Moshiqu3332', '912323520@qq.com', '$2b$10$RmiwTHkPk8OHyUWOrVzUlew89VbSIfQV23hy6v6trXOs54Zg5WlcO', 'http://127.0.0.1:3001/avatar/default-female.png');
-INSERT INTO `users` VALUES ('20', null, 'true', 'admin', '9123232@qq.com', '$2b$10$OdcW.DVLLRV6hQLVwNmprOr9b6UMKxMZ1yOW3088rJLL3DyawAFdC', null);
+INSERT INTO `users` VALUES ('20', '鱼_天_海', 'true', 'admin', '9123232@qq.com', '$2b$10$OdcW.DVLLRV6hQLVwNmprOr9b6UMKxMZ1yOW3088rJLL3DyawAFdC', 'http://127.0.0.1:3001/avatar/yo.jpeg');
 
 -- ----------------------------
 -- Table structure for user_copy
@@ -2839,7 +2892,7 @@ INSERT INTO `users` VALUES ('20', null, 'true', 'admin', '9123232@qq.com', '$2b$
 DROP TABLE IF EXISTS `user_copy`;
 CREATE TABLE `user_copy` (
   `code` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user_copy
@@ -2869,7 +2922,7 @@ CREATE TABLE `user_evaluation` (
   `CREATE_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `CONNECTION_CODE` varchar(24) DEFAULT NULL,
   PRIMARY KEY (`CODE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of user_evaluation
@@ -2891,7 +2944,7 @@ CREATE TABLE `xzcv` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `aasd` varchar(255) DEFAULT NULL COMMENT 'asd',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of xzcv

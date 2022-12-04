@@ -1,6 +1,6 @@
 import type { MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import style from "@/views/Postal/postal.module.scss"
 import "@/views/Postal/postal.less"
@@ -48,7 +48,7 @@ const navItem: MenuProps['items'] = [
 const Postal: React.FC = () => {
     const navigateTo = useNavigate()
 
-    const location = useLocation().pathname
+    const currentRoute = useLocation()
 
     useEffect(() => {
         document.title = "这是个啥时光邮局"
@@ -67,7 +67,7 @@ const Postal: React.FC = () => {
         <Layout id='postalPage'>
             <Header style={{ position: 'sticky', top: 0, zIndex: 1, width: '100%' }}>
                 <span className={style.logo} onClick={logoClick} >时光邮局</span>
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[location]} items={navItem} onClick={menuClick} />
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[currentRoute.pathname]} items={navItem} onClick={menuClick} />
             </Header>
             <Content>
                 <img src={Poster} alt='' style={{ width: '100%' }} />

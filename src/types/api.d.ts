@@ -17,7 +17,7 @@ type LoginAPIReq = {
 
 // 获取验证码接口返回数据类型
 interface CaptchaAPIRes {
-    status: string;
+    status: 'fail' | 'success';
     data: {
         img: string;
         str: string;
@@ -26,13 +26,13 @@ interface CaptchaAPIRes {
 
 // 注册接口返回数据类型
 interface RegisterAPIRes {
-    status: string;
+    status: 'fail' | 'success';
     msg?: string;
 }
 
 // 登录接口返回数据类型
 interface LoginAPIRes {
-    status: string;
+    status: 'fail' | 'success';
     token?: string;
     msg?: string;
 }
@@ -44,7 +44,7 @@ type ModifyPwdAPIReq = {
 }
 
 interface ModifyPwdAPIRes {
-    status: string;
+    status: 'fail' | 'success';
     msg?: string;
 }
 
@@ -55,14 +55,14 @@ type ChangeAvatarAPIReq = {
 
 
 interface ChangeAvatarAPIRes {
-    status: string;
+    status: 'fail' | 'success';
     msg?: string;
     imgUrl?: string;
 }
 
 // 获取用户基础信息 请求数据类型  不需要参数 account 从token中获取
 interface UserInfoAPIRes {
-    status: string;
+    status: 'fail' | 'success';
     data: UserInfoAPIResData;
 }
 
@@ -80,7 +80,7 @@ interface UpdateUserInfoAPIRes {
 }
 
 interface UpdateUserInfoAPIReq {
-    status: string,
+    status: 'fail' | 'success',
     msg?: string,
 }
 
@@ -96,7 +96,7 @@ type PostalAPIRes = {
 }
 
 interface PostalAPIReq {
-    status: string,
+    status: 'fail' | 'success',
     msg?: string,
     data?: {
         key: string
@@ -109,7 +109,7 @@ type EmailInfoAPIRes = {
 }
 
 interface EmailInfoAPIReq {
-    status: string,
+    status: 'fail' | 'success',
     msg: string,
     data?: EmailInfoAPIReqData
 }
@@ -129,6 +129,36 @@ type ManualEmailAPIRes = {
 
 // 手动发送邮件 
 interface ManualEmailAPIReq {
-    status: string,
+    status: 'fail' | 'success',
     msg?: string
+}
+
+// 获取公开邮件
+type PublicEmailsAPIReq = {
+    pageNum: number,
+    pageSize: number,
+    type: 1 | 2 | 3
+}
+
+interface PublicEmailsAPIRes {
+    status: 'fail' | 'success',
+    msg?: string,
+    data?: PublicEmailsAPIResData[],
+    pagination?: PaginationType
+}
+
+type PublicEmailsAPIResData = {
+    sender: string,
+    destination_mail: string,
+    send_time: string,
+    start_time: string,
+    id: number,
+    content: string,
+    is_send: boolean
+}
+
+type PaginationType = {
+    pageNum: number,
+    pageSize: number,
+    total: number
 }

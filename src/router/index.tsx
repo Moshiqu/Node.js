@@ -55,8 +55,7 @@ const router = [
     },
     {
         path: '/postal',
-
-        element: <Navigate to='/postal/key' />
+        element: <Navigate to='/postal/write' />
     },
     {
         path: '/postal',

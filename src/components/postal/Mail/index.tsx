@@ -2,22 +2,46 @@ import React, { useState, useEffect } from 'react'
 import style from '@/components/postal/Mail/Mail.module.scss';
 import { Button, Segmented, Tabs, Card, Space } from 'antd';
 import { SegmentedValue } from 'antd/lib/segmented';
+import PaginationView from '@/components/Pagination';
+import { PublicEmailsAPI } from '@/request/api';
 
 const Mail: React.FC = () => {
     const [segment, setSegment] = useState<SegmentedValue>("最新公开信")
+    const [emailsList, setEmailsList] = useState<PublicEmailsAPIResData[]>()
+    const [pagination, setPagination] = useState<PaginationType>({ pageNum: 1, pageSize: 5, total: 0 })
 
-    // useEffect(() => {
-    //     let segmentType = undefined
-    //     switch (segment) {
-    //         case '最新公开信':
-    //             segmentType = 1
-    //             break;
-
-    //         default:
-    //             break;
-    //     }
-    // }, [segment])
     const options = ['最新公开信', '最新评论', '最多评论']
+    // TODO 分页器闪烁, 切换页面后scroll到页面顶部
+
+    useEffect(() => {
+        getEmailsData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [segment, pagination.pageNum, pagination.pageSize])
+
+    const getEmailsData = () => {
+        const sendData: PublicEmailsAPIReq = {
+            pageNum: pagination.pageNum,
+            pageSize: pagination.pageSize,
+            type: 1
+        }
+        switch (segment) {
+            case '最新公开信':
+                sendData.type = 1
+                break;
+            case '最新评论':
+                sendData.type = 2
+                break;
+            case '最多评论':
+                sendData.type = 3
+                break;
+        }
+        PublicEmailsAPI(sendData).then(res => {
+            setEmailsList(res.data)
+            setPagination(res.pagination!)
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
     const onChange = (key: string) => {
         console.log(key);
@@ -29,13 +53,19 @@ const Mail: React.FC = () => {
 
     const Cards: React.FC<CardsProps> = (props) => {
         const { type } = props
+        type CardHeaderProps = {
+            sender: string,
+            destination: string,
+            send_time: string,
+            start_time: string
+        }
 
-        const CardHeader: React.FC = () => {
+        const CardHeader: React.FC<CardHeaderProps> = (props) => {
             return (
                 <div className={style.card_header}>
-                    <span>投递人:<span>李*</span><span>198*******@qq.com</span></span>
+                    <span>投递人:<span>{props.sender}</span><span>{props.destination}</span></span>
                     <span>
-                        <span style={{ color: '#000' }}>2022-12-12 14: 02 寄往 202212-13 14:02</span><span style={{marginLeft:"20px"}}>【0】个评论</span>
+                        <span style={{ color: '#000' }}>{props.send_time} 寄往 {props.send_time}</span><span style={{ marginLeft: "20px" }}>【0】个评论</span>
                     </span>
                 </div>
             )
@@ -44,15 +74,11 @@ const Mail: React.FC = () => {
         return (
             <>
                 <Space direction="vertical" size="middle" style={{ width: "100%" }}>
-                    <Card title={<CardHeader />} bordered={false} hoverable>
-                        <p>{type}</p>
-                    </Card>
-                    <Card title={<CardHeader />} bordered={false} hoverable>
-                        <p>{type}</p>
-                    </Card>
-                    <Card title={<CardHeader />} bordered={false} hoverable>
-                        <p>{type}</p>
-                    </Card>
+                    {emailsList?.map(item =>
+                        <Card title={<CardHeader sender={item.sender} destination={item.destination_mail} send_time={item.send_time} start_time={item.start_time} />} bordered={false} hoverable key={`${type}-${item.id}`}>
+                            <div dangerouslySetInnerHTML={{ __html: item.content }}></div>
+                        </Card>
+                    )}
                 </Space>
             </>
         )
@@ -77,6 +103,7 @@ const Mail: React.FC = () => {
                         };
                     })}
                 />
+                <PaginationView setPagination={setPagination} pagination={pagination} />
             </div>
         </div>
     )
