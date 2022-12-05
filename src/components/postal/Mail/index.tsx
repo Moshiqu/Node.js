@@ -4,6 +4,7 @@ import { Button, Segmented, Tabs, Card, Space } from 'antd';
 import { SegmentedValue } from 'antd/lib/segmented';
 import PaginationView from '@/components/Pagination';
 import { PublicEmailsAPI } from '@/request/api';
+import { useNavigate } from 'react-router-dom';
 
 const Mail: React.FC = () => {
     const [segment, setSegment] = useState<SegmentedValue>("最新公开信")
@@ -11,10 +12,11 @@ const Mail: React.FC = () => {
     const [pagination, setPagination] = useState<PaginationType>({ pageNum: 1, pageSize: 5, total: 0 })
 
     const options = ['最新公开信', '最新评论', '最多评论']
-    // TODO 分页器闪烁, 切换页面后scroll到页面顶部
+    const navigateTo = useNavigate()
 
     useEffect(() => {
         getEmailsData()
+        window.scrollTo(0, 0)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [segment, pagination.pageNum, pagination.pageSize])
 
@@ -39,6 +41,8 @@ const Mail: React.FC = () => {
             setEmailsList(res.data)
             setPagination(res.pagination!)
         }).catch(err => {
+            setEmailsList([])
+            console.log(pagination, '===>pagination');
             console.log(err);
         })
     }
@@ -57,12 +61,17 @@ const Mail: React.FC = () => {
             sender: string,
             destination: string,
             send_time: string,
-            start_time: string
+            start_time: string,
+            id: number
+        }
+
+        const cardClickHandler = (id: number) => {
+            navigateTo(`/postal/detail?${id}`)
         }
 
         const CardHeader: React.FC<CardHeaderProps> = (props) => {
             return (
-                <div className={style.card_header}>
+                <div className={style.card_header} onClick={() => cardClickHandler(props.id)}>
                     <span>投递人:<span>{props.sender}</span><span>{props.destination}</span></span>
                     <span>
                         <span style={{ color: '#000' }}>{props.send_time} 寄往 {props.send_time}</span><span style={{ marginLeft: "20px" }}>【0】个评论</span>
@@ -72,15 +81,13 @@ const Mail: React.FC = () => {
         }
 
         return (
-            <>
-                <Space direction="vertical" size="middle" style={{ width: "100%" }}>
-                    {emailsList?.map(item =>
-                        <Card title={<CardHeader sender={item.sender} destination={item.destination_mail} send_time={item.send_time} start_time={item.start_time} />} bordered={false} hoverable key={`${type}-${item.id}`}>
-                            <div dangerouslySetInnerHTML={{ __html: item.content }}></div>
-                        </Card>
-                    )}
-                </Space>
-            </>
+            <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+                {emailsList?.map(item =>
+                    <Card title={<CardHeader sender={item.sender} destination={item.destination_mail} send_time={item.send_time} start_time={item.start_time} id={item.id} />} bordered={false} hoverable key={`${type}-${item.id}`} style={{ cursor: "pointer" }}>
+                        <div dangerouslySetInnerHTML={{ __html: item.content }}></div>
+                    </Card>
+                )}
+            </Space>
         )
     }
 
@@ -88,7 +95,7 @@ const Mail: React.FC = () => {
         <div className={style.Mail}>
             <div style={{ marginBottom: ".1rem" }}>
                 <Segmented options={options} style={{ backgroundColor: "#ebebeb" }} onChange={(value) => setSegment(value)} />
-                <Button type="primary" style={{ marginLeft: ".3rem" }}>随即阅读一篇公开信</Button>
+                <Button type="primary" style={{ marginLeft: ".3rem" }}>随机阅读一篇公开信</Button>
             </div>
             <div>
                 <Tabs

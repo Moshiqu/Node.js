@@ -13,7 +13,6 @@ const NotLoginPage = () => {
     useEffect(() => {
         navigateTo('/home')
         message.warn('您已经登录过了!')
-        console.log('asd');
     }, [navigateTo])
 
     return <div></div>

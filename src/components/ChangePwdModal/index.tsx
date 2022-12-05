@@ -18,7 +18,6 @@ const ChangePwdModal: React.FC = () => {
             const { currentPassword, newPassword } = res
             const sendData: ModifyPwdAPIReq = { originPassword: currentPassword, password: newPassword }
             setConfirmLoading(true);
-            // TODO useState 必须要有同步获取方式 rz办法:setTimeout
             setTimeout(() => {
                 ModifyPwdAPI(sendData).then(result => {
                     console.log(result, '---result');

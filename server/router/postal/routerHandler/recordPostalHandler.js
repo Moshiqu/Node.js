@@ -10,7 +10,6 @@ const recordPostalHandler = async (req, res) => {
         })
     }
 
-    // TODO 限制日期, 发送日期必须大于+1, (月末, 或者一年最后一天)
     // 校验验证码
     const { uuid, verifyCode, name, mail, time, content, isOpen } = req.body
 

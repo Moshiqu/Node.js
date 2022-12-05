@@ -11,6 +11,7 @@ import Postal from "@/views/Postal"
 import Key from '@/components/postal/KeyLetter';
 import WriteLetter from '@/components/postal/WriteLetter';
 import Mail from '@/components/postal/Mail';
+import EmailDetail from '@/components/postal/EmailDetail';
 
 const Login = lazy(() => import("@/views/Login"))
 const Register = lazy(() => import("@/views/Register"))
@@ -44,42 +45,37 @@ const router = [
                 element: <Comp2 />
             }
         ]
-    },
-    {
+    }, {
         path: '/login',
         element: withLoaingComponent(<Login />)
-    },
-    {
+    }, {
         path: '/register',
         element: withLoaingComponent(<Register />)
-    },
-    {
+    }, {
         path: '/postal',
         element: <Navigate to='/postal/write' />
-    },
-    {
+    }, {
         path: '/postal',
         element: withLoaingComponent(<Postal />),
         children: [
             {
-                path: '/postal/write',
-                element: <WriteLetter />
-            },
-            {
-                path: "/postal/mail",
-                element: <Mail />
-            },
-            {
                 path: '*',
                 element: <Navigate to='/postal/write' />,
-            },
-            {
+            }, {
+                path: '/postal/write',
+                element: <WriteLetter />
+            }, {
+                path: "/postal/mail",
+                element: <Mail />
+            }, {
                 path: "/postal/manual",
                 element: <Key />
+            }, {
+                path: "/postal/detail",
+                element: <EmailDetail />
             }
         ]
-    },
-    {
+    }, {
         path: '*',
         element: <Navigate to='/about' />,
     }

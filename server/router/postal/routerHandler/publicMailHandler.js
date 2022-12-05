@@ -51,7 +51,7 @@ const getPublicEmails = (pageNum, pageSize, type) => {
                 const list = JSON.parse(JSON.stringify(result1))
 
                 list.forEach(item => {
-                    const { sender, destination_mail, send_time, is_open, start_time } = item
+                    const { sender, destination_mail, send_time, is_open, start_time, content } = item
                     item.sender = sender[0] + makeStar(sender.length - 1)
 
                     const [address, suffix] = destination_mail.split("@")
@@ -62,8 +62,10 @@ const getPublicEmails = (pageNum, pageSize, type) => {
                     item.start_time = dayjs(start_time).format('YYYY-MM-DD HH:mm:ss')
 
                     item.is_open = is_open === 'true' ? true : false
+
+                    item.content = content.replace(`<link href="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css" rel="stylesheet">`,'')
                 })
-                resolve({ status: 'success', data: list, pagination: { pageNum: parseInt(pageNum), total: total, pageSize:parseInt(pageSize) } })
+                resolve({ status: 'success', data: list, pagination: { pageNum: parseInt(pageNum), total: total, pageSize: parseInt(pageSize) } })
             })
         })
     })

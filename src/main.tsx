@@ -9,6 +9,7 @@ import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/es/locale-provider/zh_CN';
 import moment from 'moment';
 import 'moment/dist/locale/zh-cn'
+import 'default-passive-events'
 
 // 状态管理 
 import { Provider } from 'react-redux';
