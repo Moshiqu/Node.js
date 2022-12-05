@@ -1,0 +1,28 @@
+.EmailDetail {
+    padding: .2rem .15rem;
+    min-height: 4.5rem;
+
+    .EmailDetail_header {
+        display: flex;
+        font-size: 15px;
+
+        &>div {
+            width: 5rem;
+            margin-bottom: .15rem;
+
+            &:first-child {
+                color: #06F;
+            }
+        }
+    }
+
+    .verifyCode_box{
+        width: 90px;
+        height: 40px;
+        background-color: red;
+    }
+}
+
+.EmailDetail :global(.ant-form-item-label){
+    font-weight: 900;
+}
