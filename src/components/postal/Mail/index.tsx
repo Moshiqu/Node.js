@@ -20,6 +20,14 @@ const Mail: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [segment, pagination.pageNum, pagination.pageSize])
 
+    useEffect(() => {
+        document.title = '这是个啥邮箱|公开信箱'
+
+        return () => {
+            document.title = "这是个啥邮箱"
+        }
+    }, [])
+
     const getEmailsData = () => {
         const sendData: PublicEmailsAPIReq = {
             pageNum: pagination.pageNum,

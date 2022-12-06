@@ -35,3 +35,6 @@ export const ManualEmailAPI = (data: ManualEmailAPIRes): Promise<ManualEmailAPIR
 
 // 获取公开信
 export const PublicEmailsAPI = (data: PublicEmailsAPIReq): Promise<PublicEmailsAPIRes> => request.get('/apis/postal/mail/public', { params: data })
+
+// 根据邮件id获取邮件信息和评论
+export const EmailInfoAndCommentAPI = (data: EmailInfoAndCommentAPIReq): Promise<EmailInfoAndCommentAPIRes> => request.get('/apis/postal/email', { params: data })

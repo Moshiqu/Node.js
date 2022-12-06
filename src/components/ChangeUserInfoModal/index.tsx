@@ -68,8 +68,6 @@ const ChangeUserInfoModal: React.FC = () => {
         </Button>
     ]
 
-
-
     return (
         <>
             <span onClick={() => setOpen(true)} style={{ display: "block" }}>修改个人信息</span>

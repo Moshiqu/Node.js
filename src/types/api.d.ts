@@ -162,3 +162,25 @@ type PaginationType = {
     pageSize: number,
     total: number
 }
+
+// 根据邮件id获取邮件信息
+type EmailInfoAndCommentAPIReq = {
+    email_id: number
+}
+
+interface EmailInfoAndCommentAPIRes {
+    status: string;
+    message: string;
+    data: {
+        email_info: EmailInfoAndCommentAPIResData
+    };
+}
+
+type EmailInfoAndCommentAPIResData = {
+    sender: string;
+    destination_mail: string;
+    send_time: string;
+    start_time: string;
+    is_send: boolean;
+    content: string;
+}

@@ -1,19 +1,97 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : infoinge
-Source Server Version : 50720
+Source Server         : 127.0.0.1
+Source Server Version : 80029
 Source Host           : localhost:3306
 Source Database       : test
 
 Target Server Type    : MYSQL
-Target Server Version : 50720
+Target Server Version : 80029
 File Encoding         : 65001
 
-Date: 2022-12-05 17:52:37
+Date: 2022-12-06 23:12:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for aaa
+-- ----------------------------
+DROP TABLE IF EXISTS `aaa`;
+CREATE TABLE `aaa` (
+  `code` varchar(24) NOT NULL COMMENT '风格编码',
+  `is_active` varchar(8) DEFAULT NULL COMMENT '是否使用',
+  `last_modify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
+  `xh` varchar(64) DEFAULT NULL COMMENT '序号',
+  `sjbs` varchar(64) DEFAULT NULL COMMENT '数据标识',
+  `sjmc` varchar(64) DEFAULT NULL COMMENT '数据名称',
+  `sjlx` varchar(64) DEFAULT NULL COMMENT '数据类型',
+  `sjzd` varchar(64) DEFAULT NULL COMMENT '数据长度',
+  `sm` varchar(64) DEFAULT NULL COMMENT '说明',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of aaa
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for aebq
+-- ----------------------------
+DROP TABLE IF EXISTS `aebq`;
+CREATE TABLE `aebq` (
+  `code` varchar(24) NOT NULL COMMENT '风格编码',
+  `is_active` varchar(8) DEFAULT NULL COMMENT '是否使用',
+  `last_modify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
+  `asd` varchar(255) DEFAULT NULL COMMENT '啊手动阀',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of aebq
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for app_information
+-- ----------------------------
+DROP TABLE IF EXISTS `app_information`;
+CREATE TABLE `app_information` (
+  `CODE` varchar(24) NOT NULL COMMENT '映射编码',
+  `IS_ACTIVE` varchar(8) DEFAULT NULL COMMENT '是否使用',
+  `CHANGE_FROM` varchar(24) DEFAULT NULL COMMENT '记录来源',
+  `CHANGE_INDEX` decimal(8,0) DEFAULT NULL,
+  `CHANGE_NUMBER` decimal(8,0) DEFAULT NULL,
+  `SECRET` decimal(4,0) DEFAULT NULL,
+  `SECRECY` decimal(4,0) DEFAULT NULL COMMENT '密级',
+  `BUILDER` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `OWNER` varchar(64) DEFAULT NULL,
+  `START_DATE` decimal(15,0) DEFAULT NULL COMMENT '开始使用日期',
+  `END_DATE` decimal(15,0) DEFAULT NULL COMMENT '结束使用日期',
+  `APP_NAME` varchar(128) DEFAULT NULL,
+  `APP_TYPE` varchar(24) DEFAULT NULL COMMENT 'app/web/report/ applets/programme',
+  `DESCRIPTION` varchar(256) DEFAULT NULL,
+  `DOMAIN` varchar(24) DEFAULT NULL COMMENT '1 教育 、2 文化、3 地理、4 社会保障、5 就业、6 卫生、7 医疗、8 企业登记监管、9 海洋、10 交通运输、11 气象、12 统计、13 质量、14 金融、15 安全监管、16 环境、17 农业、18 生态、19 自然人库信息、20 法人库信息、21 人口库信息',
+  `ANDROID_URL` varchar(512) DEFAULT NULL,
+  `IOS_URL` varchar(512) DEFAULT NULL,
+  `WEB_URL` varchar(512) DEFAULT NULL,
+  `PUB_ACCOUNT` varchar(64) DEFAULT NULL,
+  `PUBTIME` datetime DEFAULT CURRENT_TIMESTAMP,
+  `VISIT_NUM` int DEFAULT '0',
+  `REVIEW_STATUS` tinyint DEFAULT NULL COMMENT '0:审核中,1:审核成功,2:审核不成功',
+  `REVIEW_ACCOUNT` varchar(64) DEFAULT NULL COMMENT '审核帐号',
+  `CONNECTION_CODE` varchar(24) DEFAULT NULL COMMENT '数据库连接编码',
+  PRIMARY KEY (`CODE`),
+  KEY `INDEX_APPINFO` (`DOMAIN`,`APP_TYPE`,`REVIEW_STATUS`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of app_information
+-- ----------------------------
+INSERT INTO `app_information` VALUES ('1652941086766003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652944590473', '0', '先擦啊手动阀啊手动阀', 'app', '啊手动阀啊手动阀', '5', 'qqweqweqwe', 'qweqwe', null, 'ceshi2', '2022-05-19 15:16:30', '6', '1', null, '1516760168505001');
+INSERT INTO `app_information` VALUES ('1652944658348003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947141702', '0', '第二个APP', 'app', '第二个APP第二个APP第二个APP', '1', 'ASD', 'ASD', null, 'ceshi2', '2022-05-19 15:59:01', '4', '1', null, '1516760168505001');
 
 -- ----------------------------
 -- Table structure for asdeqw1
@@ -27,7 +105,7 @@ CREATE TABLE `asdeqw1` (
   `mc` varchar(64) DEFAULT NULL COMMENT '名称',
   `nl` varchar(64) DEFAULT NULL COMMENT '年龄',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of asdeqw1
@@ -44,7 +122,7 @@ CREATE TABLE `asdf` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `a` varchar(255) DEFAULT NULL COMMENT 'a',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of asdf
@@ -55,14 +133,14 @@ CREATE TABLE `asdf` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bed_inventory`;
 CREATE TABLE `bed_inventory` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `province` varchar(64) DEFAULT NULL,
   `city` varchar(64) DEFAULT NULL,
   `name` varchar(64) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL,
+  `stock` int DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1647 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1647 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of bed_inventory
@@ -143,7 +221,7 @@ INSERT INTO `bed_inventory` VALUES ('1646', null, null, '华西医院', null, nu
 -- ----------------------------
 DROP TABLE IF EXISTS `captcha`;
 CREATE TABLE `captcha` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `text` varchar(255) NOT NULL,
   `is_active` varchar(8) DEFAULT 'true',
   `account` varchar(255) DEFAULT NULL,
@@ -151,7 +229,7 @@ CREATE TABLE `captcha` (
   `start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `verify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of captcha
@@ -263,6 +341,29 @@ INSERT INTO `captcha` VALUES ('143', 'hwLu', 'true', null, '39ecd22a-d6f7-4c3b-a
 INSERT INTO `captcha` VALUES ('144', 'vZFv', 'false', null, 'e8aad498-09aa-4c9c-9544-3faa60c8325b', '2022-12-02 15:06:55', null);
 INSERT INTO `captcha` VALUES ('145', 'd3bQ', 'false', null, '78db281d-c7f2-4d05-bf31-0bcfeabc747e', '2022-12-02 15:10:39', null);
 INSERT INTO `captcha` VALUES ('146', 'd2mN', 'false', null, 'f64df50e-407d-4565-bedc-28ef1271f0f8', '2022-12-02 17:02:28', null);
+INSERT INTO `captcha` VALUES ('147', 'sw1y', 'true', null, 'ece66e1d-a349-4340-a0ac-c8bde6c7c3d8', '2022-12-06 22:24:49', null);
+INSERT INTO `captcha` VALUES ('148', 'G97Q', 'true', null, 'c62e89bd-61b9-4baa-bbd0-aa22a6844311', '2022-12-06 22:24:51', null);
+INSERT INTO `captcha` VALUES ('149', 'Gve6', 'true', null, 'c62e89bd-61b9-4baa-bbd0-aa22a6844311', '2022-12-06 22:24:51', null);
+INSERT INTO `captcha` VALUES ('150', 'Rufn', 'true', null, 'c62e89bd-61b9-4baa-bbd0-aa22a6844311', '2022-12-06 22:25:23', null);
+INSERT INTO `captcha` VALUES ('151', 'UHDB', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:25:28', null);
+INSERT INTO `captcha` VALUES ('152', 'P4LZ', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:25:28', null);
+INSERT INTO `captcha` VALUES ('153', 'E3nH', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:33:17', null);
+INSERT INTO `captcha` VALUES ('154', 'ciYg', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:33:27', null);
+INSERT INTO `captcha` VALUES ('155', '4d24', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:34:05', null);
+INSERT INTO `captcha` VALUES ('156', 'Buxy', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:35:27', null);
+INSERT INTO `captcha` VALUES ('157', 'BMVj', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:35:31', null);
+INSERT INTO `captcha` VALUES ('158', '1fOf', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:35:35', null);
+INSERT INTO `captcha` VALUES ('159', 'MIwH', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:35:40', null);
+INSERT INTO `captcha` VALUES ('160', 'tSr6', 'true', null, '01626050-d868-4dd1-8f0d-a255553e1905', '2022-12-06 22:35:43', null);
+INSERT INTO `captcha` VALUES ('161', '5DPe', 'true', null, 'e04819b4-02ce-45ca-a89c-3f9ccc4e8650', '2022-12-06 22:45:17', null);
+INSERT INTO `captcha` VALUES ('162', 'xgAF', 'true', null, 'e04819b4-02ce-45ca-a89c-3f9ccc4e8650', '2022-12-06 22:45:17', null);
+INSERT INTO `captcha` VALUES ('163', '4Aq8', 'true', null, '1d5d7679-049b-4a17-998f-fc7f1a1a908a', '2022-12-06 22:45:51', null);
+INSERT INTO `captcha` VALUES ('164', 'ClQ7', 'true', null, '1d5d7679-049b-4a17-998f-fc7f1a1a908a', '2022-12-06 22:45:51', null);
+INSERT INTO `captcha` VALUES ('165', 'i1Qe', 'true', null, '1d5d7679-049b-4a17-998f-fc7f1a1a908a', '2022-12-06 22:57:44', null);
+INSERT INTO `captcha` VALUES ('166', 'HzaT', 'true', null, '1d5d7679-049b-4a17-998f-fc7f1a1a908a', '2022-12-06 22:59:03', null);
+INSERT INTO `captcha` VALUES ('167', 'KlIc', 'true', null, '1d5d7679-049b-4a17-998f-fc7f1a1a908a', '2022-12-06 23:00:02', null);
+INSERT INTO `captcha` VALUES ('168', 'CwLi', 'true', null, '7f63bfb3-aa1c-4272-8ae1-bb92c47a7b7d', '2022-12-06 23:10:46', null);
+INSERT INTO `captcha` VALUES ('169', 'zgac', 'true', null, '7f63bfb3-aa1c-4272-8ae1-bb92c47a7b7d', '2022-12-06 23:10:46', null);
 
 -- ----------------------------
 -- Table structure for catalog
@@ -306,7 +407,7 @@ CREATE TABLE `catalog` (
   `is_home` varchar(8) DEFAULT NULL COMMENT '是否应用入口',
   `is_running` varchar(8) DEFAULT NULL,
   `frequentness` varchar(8) DEFAULT NULL COMMENT 'year|年，month|月，day|天，hour|时，minute|分，second|秒',
-  `interval_time` int(11) DEFAULT NULL COMMENT '是否入口插件',
+  `interval_time` int DEFAULT NULL COMMENT '是否入口插件',
   `join_time` datetime DEFAULT NULL,
   `run_start_hour` varchar(8) DEFAULT NULL COMMENT '是否升级',
   `run_start_minute` varchar(8) DEFAULT NULL COMMENT '是否升级',
@@ -327,7 +428,7 @@ CREATE TABLE `catalog` (
   PRIMARY KEY (`code`),
   KEY `ak_key_2` (`buddle_id`,`identifier`),
   KEY `index_catalog` (`buddle_id`,`identifier`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='catalog[功能目录]';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='catalog[功能目录]';
 
 -- ----------------------------
 -- Records of catalog
@@ -1441,11 +1542,83 @@ INSERT INTO `catalog` VALUES ('lock-cat-1010040', 'true', null, '1', '0', '0', '
 INSERT INTO `catalog` VALUES ('lock-cat-1010050', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '0', '0', 'lock', null, 'chargedep.search.view', '查看分管部门列表', 'function', null, null, null, null, null, null, null, null, null, null, null, '2021-08-26 15:11:08', null, null, 'true', 'text/html', null, 'true', 'false', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'spruce-con-2010001', '列表显示分管部门记录', null, null, null);
 
 -- ----------------------------
+-- Table structure for data
+-- ----------------------------
+DROP TABLE IF EXISTS `data`;
+CREATE TABLE `data` (
+  `code` varchar(24) NOT NULL COMMENT '数据编码',
+  `is_active` varchar(8) DEFAULT NULL COMMENT '是否使用',
+  `change_from` varchar(24) DEFAULT NULL COMMENT '记录来源',
+  `change_index` decimal(8,0) DEFAULT NULL,
+  `change_number` decimal(8,0) DEFAULT NULL,
+  `secret` decimal(4,0) DEFAULT NULL,
+  `secrecy` decimal(4,0) DEFAULT NULL COMMENT '密级',
+  `builder` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `owner` varchar(64) DEFAULT NULL,
+  `start_date` decimal(15,0) DEFAULT NULL COMMENT '开始使用日期',
+  `end_date` decimal(15,0) DEFAULT NULL COMMENT '结束使用日期',
+  `buddle_id` varchar(64) DEFAULT NULL COMMENT '插件标识',
+  `catalog_id` varchar(64) DEFAULT NULL COMMENT '目录编码',
+  `version` decimal(4,0) DEFAULT NULL COMMENT '版本号',
+  `name` varchar(128) DEFAULT NULL COMMENT '数据名字',
+  `type` varchar(16) DEFAULT NULL COMMENT '数据类型：DB[数据库]，Hinge[枢纽]，WS[其他服务]，XML[XML存储]',
+  `connection_id` varchar(128) DEFAULT NULL COMMENT '连接标识',
+  `resource_name` varchar(128) DEFAULT NULL COMMENT '操作对象',
+  `operation` varchar(16) DEFAULT NULL COMMENT '操作名字',
+  `is_paginate` varchar(8) DEFAULT NULL COMMENT '是否分页',
+  `position` int DEFAULT NULL COMMENT '处理顺序',
+  `is_permit` varchar(8) DEFAULT NULL COMMENT '是否判断权限',
+  `is_full` varchar(8) DEFAULT NULL COMMENT '是否全取数据',
+  `row_number` decimal(8,0) DEFAULT NULL,
+  `uniques` varchar(128) DEFAULT NULL COMMENT '唯一描述',
+  `is_descend` varchar(8) DEFAULT NULL,
+  `description` varchar(256) DEFAULT NULL COMMENT '描述',
+  `is_for_each` varchar(8) DEFAULT NULL,
+  `classify` varchar(32) DEFAULT NULL,
+  `data_method` varchar(128) DEFAULT NULL,
+  `connection_code` varchar(24) DEFAULT NULL,
+  `select_expression` varchar(1024) DEFAULT NULL,
+  `resource_buddle` varchar(1024) DEFAULT NULL COMMENT '查询语句',
+  `remove_repeat_field` varchar(2048) DEFAULT NULL COMMENT '去重字段',
+  PRIMARY KEY (`code`),
+  KEY `ak_key_2` (`buddle_id`,`catalog_id`,`resource_name`,`operation`,`position`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of data
+-- ----------------------------
+INSERT INTO `data` VALUES ('1530079471066002', 'true', '1592370798307003', '1', '1', '0', '0', 'admin', 'admin', '1547792979426', '0', 'rainbow', 'gai.resource.setting.process', null, '资源目录_信息资源文件上传', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '2', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1583469065179003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1583469566694', '0', 'rainbow', 'resource.annex.download.process', null, '资源详情_附件下载', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileDownload', 'search', 'false', '0', 'false', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1584439572962003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1584439817347', '0', 'rainbow', 'file.upload.record.upload.process', null, '文件上传_上传文件', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1584497493755003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1584498023735', '0', 'rainbow', 'file.upload.record.download.process', null, '文件上传_下载文件', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileDownload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'output', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1595927625268003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1595928127668', '0', 'rainbow', 'resource.apply.add.setting.process', null, '资源权限', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '3', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1595927631461003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1595928303414', '0', 'rainbow', 'resource.apply.again.setting.process', null, '资源权限', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '4', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1597038967159003', 'true', '1597039004841003', '1', '1', '0', '0', 'admin', 'admin', '1597039069685', '0', 'rainbow', 'gai.resource.manual.upload.process', null, '资源目录_接口手册上传', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1597109040825003', 'true', '1597109069352003', '1', '1', '0', '0', 'admin', 'admin', '1597111476555', '0', 'rainbow', 'gai.resource.manual.download.process', null, '资源目录_接口手册下载', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileDownload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'output', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1599211891805003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1599213663677', '0', 'rainbow', 'file.cycle.record.upload.process', null, '文件上传_周期性文件上传查询处理类', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'true', '1', 'true', 'false', '0', null, 'false', null, 'false', 'input', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1600824004863003', 'true', '1600916549755003', '1', '1', '0', '0', 'admin', 'admin', '1600825038996', '0', 'rainbow', 'file.upload.config.setting.process', null, '文件上传_上传配置新增修改', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '0', 'false', 'false', '0', null, 'false', null, 'false', 'input', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1600926144743003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1600930620976', '0', 'rainbow', 'file.template.download.two.process', null, '文件上传_入库模板下载', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileDownload', 'search', 'false', '0', 'false', 'false', '0', null, 'false', null, 'false', 'output', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1615892819929003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1615892901749', '0', 'rainbow', 'gai.resource.image.upload.process', null, '资源目录_上传图片', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1615950918373003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1615950979212', '0', 'rainbow', 'resource.door.setting.process', null, '系统设置_门户设置', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1615967356200003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1615967640148', '0', 'rainbow', 'resource.door.image.download.process', null, '系统设置_图片显示', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileDownload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1622597571402003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1622599234348', '0', 'rainbow', 'gai.resource.upload.process', null, '资源目录_信息资源文件上传', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileDownload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'none', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1622597571914003', 'false', null, '1', '0', '0', '0', 'admin', 'admin', '1622599254826', '0', 'rainbow', 'gai.resource.upload.process', null, '信息资源', 'DB', 'cludove.spruce.ocean', 'gai_resource', 'search', 'false', '1', 'true', 'false', '0', null, 'false', null, 'false', null, null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1622597605004003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1622600899253', '0', 'rainbow', 'resource.apply.search.view', null, '资源权限', 'DB', 'cludove.spruce.ocean', 'resource_permission', 'search', 'true', '2', 'true', 'false', '0', null, 'false', null, 'false', null, null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1662554773775003', 'true', '1663811040938003', '1', '1', '0', '0', 'admin', 'admin', '1662562904589', '0', 'rainbow', 'requirement.form.setting.process', null, '附件上传', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '4', 'true', 'false', '0', null, 'false', null, 'false', 'input', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1663135914459003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1663142640887', '0', 'rainbow', 'requirement.attachment.down.process', null, '附件下载', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileDownload', 'search', 'false', '0', 'true', 'false', '0', null, 'false', null, 'false', 'output', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1663141481082003', 'true', '1663645296213003', '1', '1', '0', '0', 'admin', 'admin', '1663148385667', '0', 'rainbow', 'requirement.form.modify.process', null, '附件上传', 'Class', 'infoinge.cludove', 'com.cludove.hinge.processor.data.file.FileUpload', 'search', 'false', '5', 'true', 'false', '0', null, 'false', null, 'false', 'input', null, 'spruce-con-2010001', null, null, null);
+INSERT INTO `data` VALUES ('1667452362079003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1667459490867', '0', 'rainbow', 'file.upload.record.upload.process', null, '用户信息', 'DB', 'cludove.spruce.lock', 'v_account_info', 'search', 'false', '1', 'true', 'false', '0', '', 'false', null, 'false', null, null, 'spruce-con-2010001', '', '', null);
+INSERT INTO `data` VALUES ('1667452368311003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1667460003580', '0', 'rainbow', 'file.upload.record.upload.process', null, '信息保存', 'DB', 'cludove.spruce.ocean', 'file_upload_record', 'build', 'false', '2', 'true', 'false', '0', '', 'false', null, 'false', null, null, 'spruce-con-2010001', '', '', null);
+INSERT INTO `data` VALUES ('1667456783847003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1667463783962', '0', 'rainbow', 'file.upload.record.download.process', null, '文件上传_下载文件_记录下载', 'DB', 'cludove.spruce.ocean', 'file_download_record', 'build', 'false', '1', 'true', 'false', '0', '', 'false', null, 'false', null, null, 'spruce-con-2010001', '', '', null);
+INSERT INTO `data` VALUES ('1667518632944003', 'true', '1667523534550003', '1', '1', '0', '0', 'admin', 'admin', '1667527812101', '0', 'rainbow', 'resource.apply.add.setting.process', null, '保存文件数据', 'DB', 'cludove.spruce.ocean', 'resource_permission_annex', 'build', 'false', '4', 'true', 'false', '0', '', 'false', null, 'false', null, null, 'spruce-con-2010001', '', '', null);
+INSERT INTO `data` VALUES ('1667537008158003', 'true', null, '1', '0', '0', '0', 'admin', 'admin', '1667544323931', '0', 'rainbow', 'resource.apply.again.setting.process', null, '附件', 'DB', 'cludove.spruce.ocean', 'resource_permission_annex', 'build', 'false', '5', 'true', 'false', '0', '', 'false', null, 'false', null, null, 'spruce-con-2010001', '', '', null);
+
+-- ----------------------------
 -- Table structure for ev_artical_cate
 -- ----------------------------
 DROP TABLE IF EXISTS `ev_artical_cate`;
 CREATE TABLE `ev_artical_cate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `alias` varchar(255) NOT NULL,
   `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '数据是否被标记删除\r\n0 没有删除\r\n1 被删除',
@@ -1453,7 +1626,7 @@ CREATE TABLE `ev_artical_cate` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of ev_artical_cate
@@ -1470,18 +1643,18 @@ INSERT INTO `ev_artical_cate` VALUES ('8', '科技啊', 'Lishijkj', '0');
 -- ----------------------------
 DROP TABLE IF EXISTS `ev_articles`;
 CREATE TABLE `ev_articles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `cover_img` varchar(255) NOT NULL,
   `pub_date` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL DEFAULT '0',
   `is_delete` tinyint(1) NOT NULL,
-  `cate_id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
+  `cate_id` int NOT NULL,
+  `author_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of ev_articles
@@ -1498,7 +1671,7 @@ CREATE TABLE `lololo` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `zxc` varchar(255) DEFAULT NULL COMMENT 'qwe',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of lololo
@@ -1509,14 +1682,14 @@ CREATE TABLE `lololo` (
 -- ----------------------------
 DROP TABLE IF EXISTS `mail`;
 CREATE TABLE `mail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `is_active` varchar(8) NOT NULL DEFAULT 'true',
   `account` varchar(255) DEFAULT NULL,
   `send_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `content` text,
   `code` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of mail
@@ -1537,7 +1710,7 @@ CREATE TABLE `mmhi` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `tests` varchar(255) DEFAULT NULL COMMENT '测试',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of mmhi
@@ -1554,7 +1727,7 @@ CREATE TABLE `nrxb` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `asd` varchar(255) DEFAULT NULL COMMENT 'asd',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of nrxb
@@ -1566,12 +1739,12 @@ CREATE TABLE `nrxb` (
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE `person` (
   `code` varchar(255) NOT NULL COMMENT '编号',
-  `age` int(11) DEFAULT NULL COMMENT '年龄',
+  `age` int DEFAULT NULL COMMENT '年龄',
   `name` varchar(255) DEFAULT NULL COMMENT '姓名',
   `date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '日期',
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='人员信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='人员信息表';
 
 -- ----------------------------
 -- Records of person
@@ -1660,14 +1833,14 @@ INSERT INTO `person` VALUES ('2', '13', '张三', '2021-11-03 10:24:02', '2021-1
 -- ----------------------------
 DROP TABLE IF EXISTS `postal_comments`;
 CREATE TABLE `postal_comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email_code` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email_code` int DEFAULT NULL,
   `comment_content` text,
   `comment_nickname` varchar(16) DEFAULT NULL,
   `comment_mail_address` varchar(255) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of postal_comments
@@ -1678,7 +1851,7 @@ CREATE TABLE `postal_comments` (
 -- ----------------------------
 DROP TABLE IF EXISTS `postal_options`;
 CREATE TABLE `postal_options` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `is_active` varchar(8) NOT NULL DEFAULT 'true',
   `start_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `sender` varchar(120) NOT NULL,
@@ -1689,85 +1862,103 @@ CREATE TABLE `postal_options` (
   `account` varchar(255) DEFAULT NULL,
   `mail_key` varchar(120) NOT NULL DEFAULT 'false' COMMENT '是否寄出',
   `is_send` varchar(8) DEFAULT 'false',
+  `actual_send_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of postal_options
 -- ----------------------------
-INSERT INTO `postal_options` VALUES ('14', 'true', '2022-11-30 15:10:33', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'false', '<p>123</p>', null, '29b0491c-64f2-4add-a05b-a1b09e04061e', 'false');
-INSERT INTO `postal_options` VALUES ('15', 'true', '2022-11-30 15:12:27', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'false', '<p>123</p>', null, 'cee8afc6-544a-4e0f-ba9f-999ebf729666', 'false');
-INSERT INTO `postal_options` VALUES ('16', 'true', '2022-11-30 15:16:12', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '64fcfb89-5427-4759-bdff-1e5ebda94599', 'false');
-INSERT INTO `postal_options` VALUES ('17', 'true', '2022-11-30 15:17:33', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '520313cb-6015-4e0c-8d88-ecd62b1dbe77', 'false');
-INSERT INTO `postal_options` VALUES ('18', 'true', '2022-11-30 15:26:53', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '269f4d4d-f683-46a8-b4d6-040a95ae4e3f', 'false');
-INSERT INTO `postal_options` VALUES ('19', 'true', '2022-11-30 15:28:00', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '3f94fc4f-46e4-494f-bfd3-edee52c966bb', 'false');
-INSERT INTO `postal_options` VALUES ('20', 'true', '2022-11-30 15:29:24', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, 'e2aa6c6d-4b8a-4b3d-ae65-4298828eaa98', 'false');
-INSERT INTO `postal_options` VALUES ('21', 'true', '2022-11-30 15:32:07', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, 'b0788e74-77de-497a-80c0-702b42aed975', 'false');
-INSERT INTO `postal_options` VALUES ('22', 'true', '2022-11-30 15:32:23', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '00698c09-c837-409b-a5ef-805d86e2f5f4', 'false');
-INSERT INTO `postal_options` VALUES ('23', 'true', '2022-11-30 15:32:41', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '803d4d5f-5a5d-46dc-845e-190e0c62782e', 'false');
-INSERT INTO `postal_options` VALUES ('24', 'true', '2022-11-30 15:34:45', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '488cc30e-f938-417b-855a-305cdae8cd29', 'false');
-INSERT INTO `postal_options` VALUES ('25', 'true', '2022-11-30 15:36:49', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '5080f078-d38d-4039-abb9-34cc7abecc9d', 'false');
-INSERT INTO `postal_options` VALUES ('26', 'true', '2022-11-30 15:38:11', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '68e80953-35ff-4606-9b59-25daac02fb86', 'false');
-INSERT INTO `postal_options` VALUES ('27', 'true', '2022-11-30 15:42:17', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', 'admin', '5050991b-2118-4991-b9d4-7ed239ecfdef', 'false');
-INSERT INTO `postal_options` VALUES ('28', 'true', '2022-11-30 15:52:22', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '349b06d8-2966-45e1-af99-8f71562fda1b', 'false');
-INSERT INTO `postal_options` VALUES ('29', 'true', '2022-11-30 16:02:20', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '2ef30cb2-2227-4d89-a019-67c7e94d9d29', 'false');
-INSERT INTO `postal_options` VALUES ('30', 'true', '2022-11-30 16:06:42', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', 'db927e18-8cb0-4976-8dc5-52d2239d45a5', 'false');
-INSERT INTO `postal_options` VALUES ('31', 'true', '2022-11-30 16:11:35', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '94341be4-8e54-4805-b5a1-4a1db9889981', 'false');
-INSERT INTO `postal_options` VALUES ('32', 'true', '2022-11-30 16:12:14', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '99838a15-ff46-4a59-b91a-d406787fc382', 'false');
-INSERT INTO `postal_options` VALUES ('33', 'true', '2022-11-30 16:12:36', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '516256cb-721e-49b4-b07d-3d6ed1841d76', 'false');
-INSERT INTO `postal_options` VALUES ('34', 'true', '2022-11-30 16:13:21', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '3833597f-e5ca-4e63-b976-2494fddb1bb9', 'false');
-INSERT INTO `postal_options` VALUES ('35', 'true', '2022-11-30 16:17:09', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', 'fc57fe50-c538-4fe8-8a77-197f25744713', 'false');
-INSERT INTO `postal_options` VALUES ('36', 'true', '2022-11-30 16:28:18', 'asdf12313', '9123232@qq.com', '2022-12-01 16:27:56', 'true', '<p>asdasd as Ad 123</p>', 'admin', '7c252860-5b5d-4cce-9f68-df4ca60e576a', 'false');
-INSERT INTO `postal_options` VALUES ('37', 'true', '2022-11-30 16:31:15', 'asdf12313', '9123232@qq.com', '2022-12-01 16:27:56', 'true', '<p>asdasd as Ad 123</p>', 'admin', 'defaa1ba-6032-49de-80ec-73871c0ee472', 'false');
-INSERT INTO `postal_options` VALUES ('38', 'true', '2022-11-30 16:34:05', 'qweqwe', 'qwe@qq.com', '2022-12-01 16:33:55', 'false', '<p>asdasd</p>', 'admin', 'a88638d7-5309-4abf-bfc6-4cafa4fa6b1e', 'false');
-INSERT INTO `postal_options` VALUES ('39', 'true', '2022-11-30 16:37:03', '123123', '912323520@qq.com', '2022-12-02 16:36:54', 'false', '<p>啊实打实的</p>', 'admin', 'eb2e498b-c021-49e4-9d90-339edb5cf777', 'false');
-INSERT INTO `postal_options` VALUES ('40', 'true', '2022-12-01 10:40:10', 'asdasdadasdasdadasdads', '912323520@qq.com', '2022-12-02 10:39:57', 'true', '<p>asd</p>', 'admin', 'b057f0d6-9eb0-4323-a3b0-1217effea073', 'false');
-INSERT INTO `postal_options` VALUES ('41', 'true', '2022-12-01 11:51:55', '啊实打实的', '912323520@qq.com', '2023-01-01 11:51:35', 'false', '<p>阿松大</p>', 'admin', 'b9783e7b-7cfc-4ed5-88f5-c676ba3d17b6', 'false');
-INSERT INTO `postal_options` VALUES ('42', 'true', '2022-12-01 14:42:39', '得到充分v把你后面就,', '912323520@qq.com', '2023-01-06 14:42:30', 'false', '<p>啊实打实大苏打</p>', 'admin', '9b67edf0-399f-4db3-934e-38eb5135974b', 'false');
-INSERT INTO `postal_options` VALUES ('43', 'true', '2022-12-01 16:04:48', '123123', '912323520@qq.com', '2023-01-01 16:04:34', 'true', '<p>的风格斯大法官</p>', 'admin', 'c70c8bab-5f77-4fb9-baee-1159ba7ebacc', 'false');
-INSERT INTO `postal_options` VALUES ('44', 'true', '2022-12-01 16:07:09', '123123', '912323520@qq.com', '2023-01-01 16:06:26', 'false', '<p>   asd asd ASd asASDF ASDF 啊手动阀 啊手<span class=\"ql-size-huge\">动阀手动阀阿斯顿发生阿道夫啊手</span><span class=\"ql-size-huge ql-font-serif\">动阀aasdf</span><img src=\"http://127.0.0.1:3001/avatar/asd.jpg\"></p>', 'admin', 'a3e60696-d743-4e7e-8ad1-44cfa28f0271', 'false');
-INSERT INTO `postal_options` VALUES ('45', 'true', '2022-12-01 16:41:03', '啊手动阀手动阀', 'lee912323520@163.com', '2023-01-01 16:39:47', 'true', '<p><img style=\'max-width:max-width: 1.5rem;max-height: 1.5rem;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\">asdfasdfasa<span class=\"ql-size-small\">sdfasdfasdfasdfasdfasfasdfasdfasdf </span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">啊手动阀阿三阿松大</span><span style=\"color: rgb(156, 220, 254);\" class=\"ql-size-large\">阿萨大大俺的</span><img style=\'max-width:max-width: 1.5rem;max-height: 1.5rem;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/asd.jpg\"></p>', 'admin', '150137ba-a7fa-4cf7-875e-032bba1943be', 'false');
-INSERT INTO `postal_options` VALUES ('46', 'true', '2022-12-02 14:52:40', '了客户就兔兔有机会', 'lee912323520@163.com', '2022-12-03 14:50:31', 'true', '<div class=\"ql-editor\"><h1>的风格变化的风格变化<strong>的风格变</strong>化的<u>风格变化的</u><s>风格变化啊大苏打</s></h1><ol><li>俺的阿萨大</li><li>阿萨大</li></ol><ul><li class=\"ql-indent-1 ql-align-right ql-direction-rtl\">阿萨大阿三<span class=\"ql-size-small\">阿萨大</span></li><li class=\"ql-indent-1\"><span class=\"ql-size-small\" style=\"color: rgb(230, 0, 0);\">阿萨大   阿萨大</span></li><li class=\"ql-indent-1\"><span class=\"ql-size-small\" style=\"color: rgb(204, 224, 245);\">阿萨大阿萨大阿萨大</span></li><li class=\"ql-indent-1\"><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/asd.jpg\">指数大幅撒打发</li><li class=\"ql-indent-1\"><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\"></li></ul></div>', 'admin', '34657bd9-8a0d-4dfa-8301-38ac610cb8d7', 'false');
-INSERT INTO `postal_options` VALUES ('47', 'true', '2022-12-02 15:07:05', '阿萨大123', 'lee912323520@163.cpm', '2022-12-03 15:06:48', 'false', '<div class=\"ql-editor\"><p>asd</p></div>', 'admin', '8d568b71-1d84-42b1-b569-83efd3ea3987', 'false');
-INSERT INTO `postal_options` VALUES ('48', 'true', '2022-12-02 15:10:45', 'sadasd', 'lee912323520@163.com', '2022-12-03 15:10:02', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><h2>asdas<sup>dasdasdasdasdasd</sup>asdasdasdasdasd</h2><blockquote>asdasd</blockquote></div></div>', 'admin', 'e7d5417f-2a2a-499e-a3e2-15ab3d59959d', 'false');
-INSERT INTO `postal_options` VALUES ('49', 'true', '2022-12-02 17:02:52', 'fvvb', 'lee912323520@163.com', '2022-12-03 17:02:18', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>lkjlkj </p></div></div>', 'admin', 'cc29874f-9604-4393-88f8-2c9b5614e6ac', '1');
-INSERT INTO `postal_options` VALUES ('50', 'true', '2022-12-03 20:20:11', '咯咯咯', '1416254740@qq.com', '2022-12-04 20:19:38', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p><span style=\"background-color: rgb(255, 255, 255);\">1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com</span><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\"><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/default-male.png\"></p></div></div>', 'admin', 'c76de19b-7365-4f57-aeb2-4fc6beb66910', 'true');
-INSERT INTO `postal_options` VALUES ('51', 'true', '2022-12-03 20:32:25', '蒲晓雪', '1416254740@qq.com', '2022-12-04 20:31:52', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>这个是有效信息<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', 'd08c69ec-8e52-4664-9607-68ee979999a2', 'true');
-INSERT INTO `postal_options` VALUES ('52', 'true', '2022-12-03 20:38:22', '咯咯咯', '912323520@qq.com', '2022-12-04 20:38:08', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>asdfas fas s f<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '29b3ec07-a3d2-48f4-aed5-95b9abcb3fb0', 'false');
-INSERT INTO `postal_options` VALUES ('53', 'true', '2022-12-03 20:40:41', 'asdfasfd 啊撒打发', 'lee912323520@163.com', '2022-12-04 20:40:18', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\">asdf <img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '953e6884-e189-4d92-8a53-5a83032c38dd', 'true');
-INSERT INTO `postal_options` VALUES ('54', 'true', '2022-12-03 20:47:38', '哟西哟西', '912323520@qq.com', '2022-12-18 20:47:17', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>哟西哟西大大地<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '93dbcb66-ee7f-4fae-9a81-6c6e98a6e046', 'true');
+INSERT INTO `postal_options` VALUES ('14', 'true', '2022-11-30 15:10:33', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'false', '<p>123</p>', null, '29b0491c-64f2-4add-a05b-a1b09e04061e', 'false', null);
+INSERT INTO `postal_options` VALUES ('15', 'true', '2022-11-30 15:12:27', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'false', '<p>123</p>', null, 'cee8afc6-544a-4e0f-ba9f-999ebf729666', 'false', null);
+INSERT INTO `postal_options` VALUES ('16', 'true', '2022-11-30 15:16:12', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '64fcfb89-5427-4759-bdff-1e5ebda94599', 'false', null);
+INSERT INTO `postal_options` VALUES ('17', 'true', '2022-11-30 15:17:33', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '520313cb-6015-4e0c-8d88-ecd62b1dbe77', 'false', null);
+INSERT INTO `postal_options` VALUES ('18', 'true', '2022-11-30 15:26:53', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '269f4d4d-f683-46a8-b4d6-040a95ae4e3f', 'false', null);
+INSERT INTO `postal_options` VALUES ('19', 'true', '2022-11-30 15:28:00', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '3f94fc4f-46e4-494f-bfd3-edee52c966bb', 'false', null);
+INSERT INTO `postal_options` VALUES ('20', 'true', '2022-11-30 15:29:24', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, 'e2aa6c6d-4b8a-4b3d-ae65-4298828eaa98', 'false', null);
+INSERT INTO `postal_options` VALUES ('21', 'true', '2022-11-30 15:32:07', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, 'b0788e74-77de-497a-80c0-702b42aed975', 'false', null);
+INSERT INTO `postal_options` VALUES ('22', 'true', '2022-11-30 15:32:23', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '00698c09-c837-409b-a5ef-805d86e2f5f4', 'false', null);
+INSERT INTO `postal_options` VALUES ('23', 'true', '2022-11-30 15:32:41', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '803d4d5f-5a5d-46dc-845e-190e0c62782e', 'false', null);
+INSERT INTO `postal_options` VALUES ('24', 'true', '2022-11-30 15:34:45', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '488cc30e-f938-417b-855a-305cdae8cd29', 'false', null);
+INSERT INTO `postal_options` VALUES ('25', 'true', '2022-11-30 15:36:49', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '5080f078-d38d-4039-abb9-34cc7abecc9d', 'false', null);
+INSERT INTO `postal_options` VALUES ('26', 'true', '2022-11-30 15:38:11', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', null, '68e80953-35ff-4606-9b59-25daac02fb86', 'false', null);
+INSERT INTO `postal_options` VALUES ('27', 'true', '2022-11-30 15:42:17', '1312123', '123@qq.com', '2022-12-01 15:09:13', 'true', '<p>123</p>', 'admin', '5050991b-2118-4991-b9d4-7ed239ecfdef', 'false', null);
+INSERT INTO `postal_options` VALUES ('28', 'true', '2022-11-30 15:52:22', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '349b06d8-2966-45e1-af99-8f71562fda1b', 'false', null);
+INSERT INTO `postal_options` VALUES ('29', 'true', '2022-11-30 16:02:20', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '2ef30cb2-2227-4d89-a019-67c7e94d9d29', 'false', null);
+INSERT INTO `postal_options` VALUES ('30', 'true', '2022-11-30 16:06:42', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', 'db927e18-8cb0-4976-8dc5-52d2239d45a5', 'false', null);
+INSERT INTO `postal_options` VALUES ('31', 'true', '2022-11-30 16:11:35', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '94341be4-8e54-4805-b5a1-4a1db9889981', 'false', null);
+INSERT INTO `postal_options` VALUES ('32', 'true', '2022-11-30 16:12:14', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '99838a15-ff46-4a59-b91a-d406787fc382', 'false', null);
+INSERT INTO `postal_options` VALUES ('33', 'true', '2022-11-30 16:12:36', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '516256cb-721e-49b4-b07d-3d6ed1841d76', 'false', null);
+INSERT INTO `postal_options` VALUES ('34', 'true', '2022-11-30 16:13:21', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', '3833597f-e5ca-4e63-b976-2494fddb1bb9', 'false', null);
+INSERT INTO `postal_options` VALUES ('35', 'true', '2022-11-30 16:17:09', '阿松大', '123@qq.com', '2022-12-01 15:52:10', 'true', '<p>阿松大</p>', 'admin', 'fc57fe50-c538-4fe8-8a77-197f25744713', 'false', null);
+INSERT INTO `postal_options` VALUES ('36', 'true', '2022-11-30 16:28:18', 'asdf12313', '9123232@qq.com', '2022-12-01 16:27:56', 'true', '<p>asdasd as Ad 123</p>', 'admin', '7c252860-5b5d-4cce-9f68-df4ca60e576a', 'false', null);
+INSERT INTO `postal_options` VALUES ('37', 'true', '2022-11-30 16:31:15', 'asdf12313', '9123232@qq.com', '2022-12-01 16:27:56', 'true', '<p>asdasd as Ad 123</p>', 'admin', 'defaa1ba-6032-49de-80ec-73871c0ee472', 'false', null);
+INSERT INTO `postal_options` VALUES ('38', 'true', '2022-11-30 16:34:05', 'qweqwe', 'qwe@qq.com', '2022-12-01 16:33:55', 'false', '<p>asdasd</p>', 'admin', 'a88638d7-5309-4abf-bfc6-4cafa4fa6b1e', 'false', null);
+INSERT INTO `postal_options` VALUES ('39', 'true', '2022-11-30 16:37:03', '123123', '912323520@qq.com', '2022-12-02 16:36:54', 'false', '<p>啊实打实的</p>', 'admin', 'eb2e498b-c021-49e4-9d90-339edb5cf777', 'false', null);
+INSERT INTO `postal_options` VALUES ('40', 'true', '2022-12-01 10:40:10', 'asdasdadasdasdadasdads', '912323520@qq.com', '2022-12-02 10:39:57', 'true', '<p>asd</p>', 'admin', 'b057f0d6-9eb0-4323-a3b0-1217effea073', 'false', null);
+INSERT INTO `postal_options` VALUES ('41', 'true', '2022-12-01 11:51:55', '啊实打实的', '912323520@qq.com', '2023-01-01 11:51:35', 'false', '<p>阿松大</p>', 'admin', 'b9783e7b-7cfc-4ed5-88f5-c676ba3d17b6', 'false', null);
+INSERT INTO `postal_options` VALUES ('42', 'true', '2022-12-01 14:42:39', '得到充分v把你后面就,', '912323520@qq.com', '2023-01-06 14:42:30', 'false', '<p>啊实打实大苏打</p>', 'admin', '9b67edf0-399f-4db3-934e-38eb5135974b', 'false', null);
+INSERT INTO `postal_options` VALUES ('43', 'true', '2022-12-01 16:04:48', '123123', '912323520@qq.com', '2023-01-01 16:04:34', 'true', '<p>的风格斯大法官</p>', 'admin', 'c70c8bab-5f77-4fb9-baee-1159ba7ebacc', 'false', null);
+INSERT INTO `postal_options` VALUES ('44', 'true', '2022-12-01 16:07:09', '123123', '912323520@qq.com', '2023-01-01 16:06:26', 'false', '<p>   asd asd ASd asASDF ASDF 啊手动阀 啊手<span class=\"ql-size-huge\">动阀手动阀阿斯顿发生阿道夫啊手</span><span class=\"ql-size-huge ql-font-serif\">动阀aasdf</span><img src=\"http://127.0.0.1:3001/avatar/asd.jpg\"></p>', 'admin', 'a3e60696-d743-4e7e-8ad1-44cfa28f0271', 'false', null);
+INSERT INTO `postal_options` VALUES ('45', 'true', '2022-12-01 16:41:03', '啊手动阀手动阀', 'lee912323520@163.com', '2023-01-01 16:39:47', 'true', '<p><img style=\'max-width:max-width: 1.5rem;max-height: 1.5rem;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\">asdfasdfasa<span class=\"ql-size-small\">sdfasdfasdfasdfasdfasfasdfasdfasdf </span>&nbsp;<span style=\"color: rgb(156, 220, 254);\">啊手动阀阿三阿松大</span><span style=\"color: rgb(156, 220, 254);\" class=\"ql-size-large\">阿萨大大俺的</span><img style=\'max-width:max-width: 1.5rem;max-height: 1.5rem;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/asd.jpg\"></p>', 'admin', '150137ba-a7fa-4cf7-875e-032bba1943be', 'false', null);
+INSERT INTO `postal_options` VALUES ('46', 'true', '2022-12-02 14:52:40', '了客户就兔兔有机会', 'lee912323520@163.com', '2022-12-03 14:50:31', 'true', '<div class=\"ql-editor\"><h1>的风格变化的风格变化<strong>的风格变</strong>化的<u>风格变化的</u><s>风格变化啊大苏打</s></h1><ol><li>俺的阿萨大</li><li>阿萨大</li></ol><ul><li class=\"ql-indent-1 ql-align-right ql-direction-rtl\">阿萨大阿三<span class=\"ql-size-small\">阿萨大</span></li><li class=\"ql-indent-1\"><span class=\"ql-size-small\" style=\"color: rgb(230, 0, 0);\">阿萨大   阿萨大</span></li><li class=\"ql-indent-1\"><span class=\"ql-size-small\" style=\"color: rgb(204, 224, 245);\">阿萨大阿萨大阿萨大</span></li><li class=\"ql-indent-1\"><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/asd.jpg\">指数大幅撒打发</li><li class=\"ql-indent-1\"><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\"></li></ul></div>', 'admin', '34657bd9-8a0d-4dfa-8301-38ac610cb8d7', 'false', null);
+INSERT INTO `postal_options` VALUES ('47', 'true', '2022-12-02 15:07:05', '阿萨大123', 'lee912323520@163.cpm', '2022-12-03 15:06:48', 'false', '<div class=\"ql-editor\"><p>asd</p></div>', 'admin', '8d568b71-1d84-42b1-b569-83efd3ea3987', 'false', null);
+INSERT INTO `postal_options` VALUES ('48', 'true', '2022-12-02 15:10:45', 'sadasd', 'lee912323520@163.com', '2022-12-03 15:10:02', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><h2>asdas<sup>dasdasdasdasdasd</sup>asdasdasdasdasd</h2><blockquote>asdasd</blockquote></div></div>', 'admin', 'e7d5417f-2a2a-499e-a3e2-15ab3d59959d', 'false', null);
+INSERT INTO `postal_options` VALUES ('49', 'true', '2022-12-02 17:02:52', 'fvvb', 'lee912323520@163.com', '2022-12-03 17:02:18', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>lkjlkj </p></div></div>', 'admin', 'cc29874f-9604-4393-88f8-2c9b5614e6ac', '1', null);
+INSERT INTO `postal_options` VALUES ('50', 'true', '2022-12-03 20:20:11', '咯咯咯', '1416254740@qq.com', '2022-12-04 20:19:38', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p><span style=\"background-color: rgb(255, 255, 255);\">1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com1416254740@qq.com</span><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/yo.jpeg\"><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/default-male.png\"></p></div></div>', 'admin', 'c76de19b-7365-4f57-aeb2-4fc6beb66910', 'true', null);
+INSERT INTO `postal_options` VALUES ('51', 'true', '2022-12-03 20:32:25', '蒲晓雪', '1416254740@qq.com', '2022-12-04 20:31:52', 'true', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>这个是有效信息<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', 'd08c69ec-8e52-4664-9607-68ee979999a2', 'true', null);
+INSERT INTO `postal_options` VALUES ('52', 'true', '2022-12-03 20:38:22', '咯咯咯', '912323520@qq.com', '2022-12-04 20:38:08', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>asdfas fas s f<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '29b3ec07-a3d2-48f4-aed5-95b9abcb3fb0', 'false', null);
+INSERT INTO `postal_options` VALUES ('53', 'true', '2022-12-03 20:40:41', 'asdfasfd 啊撒打发', 'lee912323520@163.com', '2022-12-04 20:40:18', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p><img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\">asdf <img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '953e6884-e189-4d92-8a53-5a83032c38dd', 'true', null);
+INSERT INTO `postal_options` VALUES ('54', 'true', '2022-12-03 20:47:38', '哟西哟西', '912323520@qq.com', '2022-12-18 20:47:17', 'false', '<div class=\"ql-snow\"><div class=\"ql-editor\"><link href=\"https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css\" rel=\"stylesheet\"><p>哟西哟西大大地<img style=\'max-width:max-width: 150px;max-height: 150px;vertical-align: baseline;\' src=\"http://127.0.0.1:3001/avatar/å¾®ä¿¡æªå¾_20221203203127.png\"></p></div></div>', 'admin', '93dbcb66-ee7f-4fae-9a81-6c6e98a6e046', 'true', null);
+
+-- ----------------------------
+-- Table structure for rupi
+-- ----------------------------
+DROP TABLE IF EXISTS `rupi`;
+CREATE TABLE `rupi` (
+  `code` varchar(24) NOT NULL COMMENT '风格编码',
+  `is_active` varchar(8) DEFAULT NULL COMMENT '是否使用',
+  `last_modify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
+  `a` varchar(255) DEFAULT NULL COMMENT 'a',
+  PRIMARY KEY (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of rupi
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for st_collection_personal_account_copy
 -- ----------------------------
 DROP TABLE IF EXISTS `st_collection_personal_account_copy`;
 CREATE TABLE `st_collection_personal_account_copy` (
-  `id` varchar(32) COLLATE utf8_bin NOT NULL,
+  `id` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   `deleted_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `DWYJCE` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '单位月缴存额',
-  `GRCKZHHM` varchar(30) COLLATE utf8_bin DEFAULT NULL COMMENT '个人存款账户号码',
-  `GRCKZHKHYHDM` int(11) DEFAULT NULL COMMENT '个人存款账户开户银行代码',
-  `GRCKZHKH\Y%/\HMC` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '个人存款账户开户银行名称',
+  `GRCKZHHM` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '个人存款账户号码',
+  `GRCKZHKHYHDM` int DEFAULT NULL COMMENT '个人存款账户开户银行代码',
+  `GRCKZHKH\Y%/\HMC` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '个人存款账户开户银行名称',
   `GRJCJS` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '个人缴存基数',
-  `GRYJCE` smallint(6) NOT NULL DEFAULT '0' COMMENT '个人月缴存额',
-  `GRZH` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '个人账号',
+  `GRYJCE` smallint NOT NULL DEFAULT '0' COMMENT '个人月缴存额',
+  `GRZH` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '个人账号',
   `GRZHDNGJYE` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '个人账户当年归集余额',
   `GRZHSNJZYE` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '个人账户上年结转余额',
   `GRZHYE` decimal(18,2) NOT NULL DEFAULT '0.00' COMMENT '个人账户余额',
-  `GRZHZT` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '个人账户状态',
+  `GRZHZT` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '个人账户状态',
   `KHRQ` datetime DEFAULT NULL COMMENT '开户日期',
   `XHRQ` datetime DEFAULT NULL COMMENT '销户日期',
-  `XHYY` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '销户原因',
+  `XHYY` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL COMMENT '销户原因',
   PRIMARY KEY (`id`),
   UNIQUE KEY `INDEX_GRZH` (`GRZH`) USING BTREE,
   KEY `index_GRZHZT` (`GRZHZT`) USING BTREE,
   KEY `index_created_at` (`created_at`) USING BTREE,
   KEY `index_GRZHYE` (`GRZHYE`) USING BTREE,
   KEY `I_ST_COLLECTION_PERSONAL_ACCOUNT_GGK` (`GRZH`,`GRZHZT`,`KHRQ`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='个人账户信息 表5.0.4';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin COMMENT='个人账户信息 表5.0.4';
 
 -- ----------------------------
 -- Records of st_collection_personal_account_copy
@@ -2779,15 +2970,15 @@ INSERT INTO `st_collection_personal_account_copy` VALUES ('006ba709d2b811e79ad84
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nickname` varchar(64) COLLATE utf8_bin DEFAULT NULL,
-  `is_active` varchar(8) COLLATE utf8_bin NOT NULL DEFAULT 'true',
-  `account` varchar(64) COLLATE utf8_bin NOT NULL,
-  `email` varchar(64) COLLATE utf8_bin NOT NULL,
-  `password` varchar(64) COLLATE utf8_bin NOT NULL,
-  `avatar` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nickname` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL,
+  `is_active` varchar(8) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL DEFAULT 'true',
+  `account` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL,
+  `email` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL,
+  `password` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8_bin NOT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of users
@@ -2804,6 +2995,53 @@ INSERT INTO `users` VALUES ('19', '鱼_天_海', 'true', 'Moshiqu3332', '9123235
 INSERT INTO `users` VALUES ('20', '鱼_天_海', 'true', 'admin', '9123232@qq.com', '$2b$10$OdcW.DVLLRV6hQLVwNmprOr9b6UMKxMZ1yOW3088rJLL3DyawAFdC', 'http://127.0.0.1:3001/avatar/yo.jpeg');
 
 -- ----------------------------
+-- Table structure for user_copy
+-- ----------------------------
+DROP TABLE IF EXISTS `user_copy`;
+CREATE TABLE `user_copy` (
+  `code` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_copy
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for user_evaluation
+-- ----------------------------
+DROP TABLE IF EXISTS `user_evaluation`;
+CREATE TABLE `user_evaluation` (
+  `CODE` varchar(24) NOT NULL COMMENT '数据编码',
+  `IS_ACTIVE` varchar(8) DEFAULT NULL COMMENT '是否使用',
+  `CHANGE_FROM` varchar(24) DEFAULT NULL COMMENT '记录来源',
+  `CHANGE_INDEX` decimal(8,0) DEFAULT NULL,
+  `CHANGE_NUMBER` decimal(8,0) DEFAULT NULL,
+  `SECRET` decimal(4,0) DEFAULT NULL,
+  `SECRECY` decimal(4,0) DEFAULT NULL COMMENT '密级',
+  `BUILDER` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `OWNER` varchar(64) DEFAULT NULL,
+  `START_DATE` decimal(15,0) DEFAULT NULL COMMENT '开始使用日期',
+  `END_DATE` decimal(15,0) DEFAULT NULL COMMENT '结束使用日期',
+  `ACCOUNT_NAME` varchar(64) DEFAULT NULL,
+  `OBJECT_TYPE` varchar(24) DEFAULT NULL COMMENT 'resource：资源/app：应用',
+  `OBJECT_CODE` varchar(24) DEFAULT NULL,
+  `CONTENT` varchar(512) DEFAULT NULL,
+  `SCORE` int DEFAULT NULL,
+  `CREATE_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CONNECTION_CODE` varchar(24) DEFAULT NULL,
+  PRIMARY KEY (`CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of user_evaluation
+-- ----------------------------
+INSERT INTO `user_evaluation` VALUES ('1652941087551003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652944610830', '0', 'ceshi2', 'app', '1652941086766003', 'lkj l;oj \'l; ', '5', '2022-05-19 15:16:50', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652944635712003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652946369493', '0', 'ceshi2', 'app', '1652941086766003', '第二条评论 评论', '4', '2022-05-19 15:46:09', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652944659586003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947179160', '0', 'ceshi2', 'app', '1652944658348003', '第二个app 第条评论 评分', '2', '2022-05-19 15:59:39', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652944660176003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947197939', '0', 'ceshi2', 'app', '1652944658348003', '第二个APP 第二条评论 评分4分', '4', '2022-05-19 15:59:57', '1516760168505001');
+INSERT INTO `user_evaluation` VALUES ('1652944660833003', 'true', null, '1', '0', '0', '0', 'ceshi2', 'ceshi2', '1652947218791', '0', 'ceshi2', 'app', '1652944658348003', '第二个APP 第三条评论 评分3分', '3', '2022-05-19 16:00:18', '1516760168505001');
+
+-- ----------------------------
 -- Table structure for xzcv
 -- ----------------------------
 DROP TABLE IF EXISTS `xzcv`;
@@ -2814,7 +3052,7 @@ CREATE TABLE `xzcv` (
   `record_code` varchar(24) DEFAULT NULL COMMENT '文件标识',
   `aasd` varchar(255) DEFAULT NULL COMMENT 'asd',
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of xzcv

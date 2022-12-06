@@ -16,13 +16,14 @@
         }
     }
 
-    .verifyCode_box{
-        width: 90px;
-        height: 40px;
-        background-color: red;
+    .CaptchaImg {
+        display: flex;
+        position: absolute;
+        left: -1.15rem;
+        cursor: pointer;
     }
 }
 
-.EmailDetail :global(.ant-form-item-label){
+.EmailDetail :global(.ant-form-item-label) {
     font-weight: 900;
 }

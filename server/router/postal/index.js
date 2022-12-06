@@ -3,6 +3,7 @@ const { recordPostalHandler } = require('./routerHandler/recordPostalHandler')
 const { emailInfoHandler } = require('./routerHandler/emailInfoHandler')
 const { emailManualHandler } = require('./routerHandler/emailManualHandler')
 const { publicMailHandler } = require('./routerHandler/publicMailHandler')
+const { viewEmailHandler } = require('./routerHandler/viewEmailHandler')
 const { body, check } = require('express-validator');
 const { RegDateTime } = require('@root/config')
 
@@ -20,7 +21,7 @@ router.post('/record', [
 router.post("/email/info", emailInfoHandler)
 
 // 手动发送
-router.post("/mail/manual",[
+router.post("/mail/manual", [
     body("email_key").notEmpty().withMessage("提取码不能为空")
 ], emailManualHandler)
 
@@ -30,6 +31,11 @@ router.get("/mail/public", [
     check("pageSize").notEmpty().withMessage("每页条数不能为空").matches(/^[1-9]\d*$/).withMessage("每页条数必须是非零正整数"),
     check("type").notEmpty().withMessage("分类类型不能为空")
 ], publicMailHandler)
+
+// 根据id获取公开信
+router.get("/email", [
+    check("email_id").notEmpty().withMessage("邮件id不能为空")
+], viewEmailHandler)
 
 
 module.exports = router
