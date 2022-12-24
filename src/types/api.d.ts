@@ -184,3 +184,18 @@ type EmailInfoAndCommentAPIResData = {
     is_send: boolean;
     content: string;
 }
+
+// 邮件写入评论
+type EmailCommentAPIReq = {
+    email_id: number,
+    nickname: string,
+    comment: string,
+    verify_code: string,
+    uuid: string,
+    comment_email: string
+}
+
+interface EmailCommentAPIRes {
+    status: 'success' | 'fail',
+    msg: string
+}

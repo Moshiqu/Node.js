@@ -38,3 +38,6 @@ export const PublicEmailsAPI = (data: PublicEmailsAPIReq): Promise<PublicEmailsA
 
 // 根据邮件id获取邮件信息和评论
 export const EmailInfoAndCommentAPI = (data: EmailInfoAndCommentAPIReq): Promise<EmailInfoAndCommentAPIRes> => request.get('/apis/postal/email', { params: data })
+
+// 写入评论
+export const EmailCommentAPI = (data: EmailCommentAPIReq): Promise<EmailCommentAPIRes> => request.post('/apis/postal/email/comment', data)

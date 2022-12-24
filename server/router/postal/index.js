@@ -4,8 +4,9 @@ const { emailInfoHandler } = require('./routerHandler/emailInfoHandler')
 const { emailManualHandler } = require('./routerHandler/emailManualHandler')
 const { publicMailHandler } = require('./routerHandler/publicMailHandler')
 const { viewEmailHandler } = require('./routerHandler/viewEmailHandler')
+const { createCommentHandler } = require('./routerHandler/createCommentHandler')
 const { body, check } = require('express-validator');
-const { RegDateTime } = require('@root/config')
+const { RegDateTime, RegNickname } = require('@root/config')
 
 // 记录邮件信息
 router.post('/record', [
@@ -36,6 +37,16 @@ router.get("/mail/public", [
 router.get("/email", [
     check("email_id").notEmpty().withMessage("邮件id不能为空")
 ], viewEmailHandler)
+
+// 写入评论
+router.post("/email/comment", [
+    body("email_id").notEmpty().withMessage("邮件id不能为空"),
+    body('nickname').notEmpty().withMessage("昵称不能为空").matches(RegNickname).withMessage('昵称格式错误'),
+    body('comment').notEmpty().withMessage("评论不能为空").isLength({ max: 300 }).withMessage("评论字数不能超过300个字符"),
+    body('comment_email').notEmpty().withMessage("评论邮箱不能为空").isEmail().withMessage("邮箱格式不正确"),
+    body('verify_code').notEmpty().withMessage("验证码不能为空"),
+    body('uuid').notEmpty().withMessage("uuid不能为空"),
+], createCommentHandler)
 
 
 module.exports = router
