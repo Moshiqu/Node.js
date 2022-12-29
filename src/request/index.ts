@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { message } from 'antd';
+
 
 const instance = axios.create({
     // baseURL: '127.0.0.1:3001',
@@ -28,12 +30,15 @@ instance.interceptors.response.use(res => {
         switch (err.response.status) {
             // 对得到的状态码的处理，具体的设置视自己的情况而定
             case 401:
+                // 用户信息过期
+                message.error('登录失效, 请重新登陆!')
                 localStorage.removeItem('token')
                 window.location.href = '/login'
                 break
-            // case 404:
-            //     window.location.href = '/'
-            //     break
+            case 402:
+                // 数据获取失败
+                message.error(err.response.data.msg)
+                break
             // case 405:
             //     console.log('不支持的方法')
             //     break

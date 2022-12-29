@@ -3,13 +3,14 @@ import style from '@/components/postal/Mail/Mail.module.scss';
 import { Button, Segmented, Tabs, Card, Space } from 'antd';
 import { SegmentedValue } from 'antd/lib/segmented';
 import PaginationView from '@/components/Pagination';
-import { PublicEmailsAPI } from '@/request/api';
+import { PublicEmailsAPI, RandomEmailIdAPI } from '@/request/api';
 import { useNavigate } from 'react-router-dom';
 
 const Mail: React.FC = () => {
     const [segment, setSegment] = useState<SegmentedValue>("最新公开信")
     const [emailsList, setEmailsList] = useState<PublicEmailsAPIResData[]>()
     const [pagination, setPagination] = useState<PaginationType>({ pageNum: 1, pageSize: 5, total: 0 })
+    const [randomLoading, setRandomLoading] = useState(false);
 
     const options = ['最新公开信', '最新评论', '最多评论']
     const navigateTo = useNavigate()
@@ -59,6 +60,18 @@ const Mail: React.FC = () => {
         console.log(key);
     };
 
+    const toRandom = () => {
+        setRandomLoading(true)
+        RandomEmailIdAPI().then(res => {
+            navigateTo(`/postal/detail?${res.id}`)
+        }).catch(err => {
+            console.log(err);
+        }).finally(() => {
+            setRandomLoading(false)
+        })
+    }
+
+
     type CardsProps = {
         type: string,
     }
@@ -103,7 +116,7 @@ const Mail: React.FC = () => {
         <div className={style.Mail}>
             <div style={{ marginBottom: ".1rem" }}>
                 <Segmented options={options} style={{ backgroundColor: "#ebebeb" }} onChange={(value) => setSegment(value)} />
-                <Button type="primary" style={{ marginLeft: ".3rem" }}>随机阅读一篇公开信</Button>
+                <Button type="primary" style={{ marginLeft: ".3rem" }} onClick={toRandom} loading={randomLoading}>随机阅读一篇公开信</Button>
             </div>
             <div>
                 <Tabs

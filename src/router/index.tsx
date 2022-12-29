@@ -12,6 +12,8 @@ import Key from '@/components/postal/KeyLetter';
 import WriteLetter from '@/components/postal/WriteLetter';
 import Mail from '@/components/postal/Mail';
 import EmailDetail from '@/components/postal/EmailDetail';
+import List from '@/components/postal/List';
+import SearchLetter from '@/components/postal/SearchLetter';
 
 const Login = lazy(() => import("@/views/Login"))
 const Register = lazy(() => import("@/views/Register"))
@@ -73,6 +75,12 @@ const router = [
             }, {
                 path: "/postal/detail",
                 element: <EmailDetail />
+            }, {
+                path: "/postal/list",
+                element: <List />
+            }, {
+                path: "/postal/search",
+                element: <SearchLetter />
             }
         ]
     }, {

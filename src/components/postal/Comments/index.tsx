@@ -73,7 +73,7 @@ const Comments: React.FC = () => {
 
     return (
         <List
-            className={ style.demo_loadmore_list }
+            className={style.demo_loadmore_list}
             loading={initLoading}
             itemLayout="horizontal"
             loadMore={loadMore}

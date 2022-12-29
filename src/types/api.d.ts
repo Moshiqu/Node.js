@@ -199,3 +199,9 @@ interface EmailCommentAPIRes {
     status: 'success' | 'fail',
     msg: string
 }
+
+// 获取随机邮件id
+interface RandomEmailIdAPIRes {
+    msg: string,
+    id?: number
+}

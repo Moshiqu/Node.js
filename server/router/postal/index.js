@@ -5,6 +5,7 @@ const { emailManualHandler } = require('./routerHandler/emailManualHandler')
 const { publicMailHandler } = require('./routerHandler/publicMailHandler')
 const { viewEmailHandler } = require('./routerHandler/viewEmailHandler')
 const { createCommentHandler } = require('./routerHandler/createCommentHandler')
+const { getRandomEmailHandler } = require('./routerHandler/getRandomEmailHandler')
 const { body, check } = require('express-validator');
 const { RegDateTime, RegNickname } = require('@root/config')
 
@@ -47,6 +48,9 @@ router.post("/email/comment", [
     body('verify_code').notEmpty().withMessage("验证码不能为空"),
     body('uuid').notEmpty().withMessage("uuid不能为空"),
 ], createCommentHandler)
+
+// 获取随机一篇邮件id
+router.get("/email/random", getRandomEmailHandler)
 
 
 module.exports = router

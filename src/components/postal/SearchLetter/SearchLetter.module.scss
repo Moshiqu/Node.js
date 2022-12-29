@@ -1,0 +1,17 @@
+.SearchLetter {
+    padding: .15rem;
+
+    .SearchForm {
+        width: 12rem;
+    }
+
+    .black_bold {
+        font-weight: 900;
+        padding: .02rem;
+        font-size: .15rem;
+    }
+}
+
+.SearchLetter :global(.ant-form-item-label){
+    font-weight: 900;
+}

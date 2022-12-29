@@ -1,12 +1,14 @@
 import type { MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import style from "@/views/Postal/postal.module.scss"
 import "@/views/Postal/postal.less"
 import { useNavigate } from 'react-router';
 import { Outlet, useLocation } from 'react-router-dom';
 import Poster from "@/assets/imgs/postal/header.jpg"
+import { RandomEmailIdAPI } from '@/request/api';
+
 
 const { Header, Content, Footer, } = Layout;
 
@@ -21,7 +23,7 @@ const navItem: MenuProps['items'] = [
         key: 'random',
         label: "随机阅读一封公开信"
     }, {
-        key: 'list',
+        key: '/postal/list',
         label: "信件列表"
     }, {
         key: 'tools',
@@ -35,12 +37,9 @@ const navItem: MenuProps['items'] = [
                 key: '/postal/manual',
                 label: '手动提取'
             }, {
-                key: 'cancel',
-                label: '取消公开信'
-            }, {
-                key: 'reissue',
-                label: '补发邮件'
-            },
+                key: '/postal/search',
+                label: '取消公开信/补发邮件'
+            }
         ]
     },
 ];
@@ -60,6 +59,14 @@ const Postal: React.FC = () => {
     }
 
     const menuClick = (e: { key: string }) => {
+        if (e.key === 'random') {
+            RandomEmailIdAPI().then(res => {
+                navigateTo(`/postal/detail?${res.id}`)
+            }).catch(err => {
+                console.log(err);
+            })
+            return false
+        }
         navigateTo(e.key)
     }
 
@@ -67,7 +74,7 @@ const Postal: React.FC = () => {
         <Layout id='postalPage'>
             <Header style={{ position: 'sticky', top: 0, zIndex: 1, width: '100%' }}>
                 <span className={style.logo} onClick={logoClick} >时光邮局</span>
-                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[currentRoute.pathname]} items={navItem} onClick={menuClick} />
+                <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[currentRoute.pathname]} selectedKeys={[currentRoute.pathname]} items={navItem} onClick={menuClick} />
             </Header>
             <Content>
                 <img src={Poster} alt='' style={{ width: '100%' }} />
