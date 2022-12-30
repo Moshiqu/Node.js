@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { message } from 'antd';
-
+import { useLocation } from "react-router-dom"
+import configObj from '@/assets/js/config.js';
 
 const instance = axios.create({
     // baseURL: '127.0.0.1:3001',
@@ -30,10 +31,14 @@ instance.interceptors.response.use(res => {
         switch (err.response.status) {
             // 对得到的状态码的处理，具体的设置视自己的情况而定
             case 401:
-                // 用户信息过期
-                message.error('登录失效, 请重新登陆!')
-                localStorage.removeItem('token')
-                window.location.href = '/login'
+                const path = useLocation().pathname
+                // 允许跳过登录验证的页面
+                if (!configObj.skipSignInArr.find(() => path.split('/')[1])) {
+                    // 用户信息过期
+                    message.error('登录失效, 请重新登陆!')
+                    localStorage.removeItem('token')
+                    window.location.href = '/login'
+                }
                 break
             case 402:
                 // 数据获取失败

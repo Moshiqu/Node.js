@@ -7,7 +7,7 @@ const RegEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 // 昵称正则
 const RegNickname = /^([a-zA-Z0-9_\u4e00-\u9fa5]{4,16})$/
 // 日期+时间正则
-const RegDateTime= /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d$/
+const RegDateTime = /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d$/
 // token生成的密钥
 const TokenSecretKey = 'b9fcf57e16fa23b2d81bc587ffde4788'
 // token配置对象
@@ -33,6 +33,8 @@ const serverPort = 3001
 // 客户端地址端口号
 const clientAddress = '127.0.0.1'
 const clientPort = 3002
+// 允许跳过登录的模块或页面
+const skipSignInArr = ['postal']
 
 const configObj = {
     RegAccount,
@@ -47,7 +49,8 @@ const configObj = {
     ExpiredVlideTime,
     TokenOptions,
     clientAddress,
-    clientPort
+    clientPort,
+    skipSignInArr
 }
 
 export default configObj

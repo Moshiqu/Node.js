@@ -44,3 +44,6 @@ export const EmailCommentAPI = (data: EmailCommentAPIReq): Promise<EmailCommentA
 
 // 获取随机邮件id
 export const RandomEmailIdAPI = (): Promise<RandomEmailIdAPIRes> => request.get('/apis/postal/email/random')
+
+// 搜索邮件
+export const SearchEmailsApi = (data: EmailSearchAPIReq): Promise<EmailSearchAPIRes> => request.get('/apis/postal/email/search', { params: data })

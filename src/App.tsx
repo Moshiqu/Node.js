@@ -6,13 +6,14 @@ import { message } from "antd";
 import { useDispatch } from 'react-redux';
 import userInfoStatus from '@/store/UserInfo';
 
+import configObj from '@/assets/js/config.js';
 
 const NotLoginPage = () => {
     const navigateTo = useNavigate()
 
     useEffect(() => {
-        navigateTo('/home')
         message.warn('您已经登录过了!')
+        navigateTo('/home')
     }, [navigateTo])
 
     return <div></div>
@@ -22,20 +23,22 @@ const LoginPage = () => {
     const navigateTo = useNavigate()
 
     useEffect(() => {
-        navigateTo('/login')
         message.warn('您还未登录,请登录后访问!')
+        navigateTo('/login')
     }, [navigateTo])
 
     return <div></div>
 }
-
-
 
 const BeforeRouterEnter: React.FC = () => {
     const outlet = useRoutes(router)
     const hasToken = !!localStorage.getItem('token')
     const path = useLocation().pathname
 
+    // 允许跳过登录验证的页面
+    if (configObj.skipSignInArr.find(() => path.split('/')[1])) return outlet
+
+    // 登录验证
     if (hasToken && (path === '/login' || path === '/register')) {
         return <NotLoginPage />
     } else if (!hasToken && path !== '/login' && path !== '/register') {
@@ -45,12 +48,10 @@ const BeforeRouterEnter: React.FC = () => {
     return outlet
 }
 
-
-
 function App() {
     const path = useLocation().pathname
     const dispatch = useDispatch()
-    if (path !== '/login' && path !== '/register') {
+    if (path !== '/login' && path !== '/register' && !configObj.skipSignInArr.find(() => path.split('/')[1])) {
         dispatch(userInfoStatus.asyncActions.asyncGetUserInfo as any)
     }
 

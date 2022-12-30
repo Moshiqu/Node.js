@@ -15,3 +15,7 @@
 .SearchLetter :global(.ant-form-item-label){
     font-weight: 900;
 }
+
+.SearchLetter :global(.ant-form-item-control-input-content){
+    display: flex;
+}

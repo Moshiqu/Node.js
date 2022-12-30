@@ -205,3 +205,30 @@ interface RandomEmailIdAPIRes {
     msg: string,
     id?: number
 }
+
+// 查找邮件
+type EmailSearchAPIReq = {
+    verification: string,
+    emailAddress: string,
+    name: string,
+    uuid: string
+}
+
+interface EmailSearchAPIRes {
+    emailsList: EmailSearchData[],
+    msg: string
+}
+
+interface EmailSearchData {
+    id: number;
+    is_active: string;
+    start_time: string;
+    sender: string;
+    destination_mail: string;
+    send_time: string;
+    is_open: string;
+    content: string;
+    account?: string;
+    mail_key: string;
+    is_send: string;
+}

@@ -6,8 +6,9 @@ const { publicMailHandler } = require('./routerHandler/publicMailHandler')
 const { viewEmailHandler } = require('./routerHandler/viewEmailHandler')
 const { createCommentHandler } = require('./routerHandler/createCommentHandler')
 const { getRandomEmailHandler } = require('./routerHandler/getRandomEmailHandler')
+const { searchEmailHandler } = require('./routerHandler/searchEmailHandler')
 const { body, check } = require('express-validator');
-const { RegDateTime, RegNickname } = require('@root/config')
+const { RegDateTime, RegNickname,RegEmail } = require('@root/config')
 
 // 记录邮件信息
 router.post('/record', [
@@ -51,6 +52,14 @@ router.post("/email/comment", [
 
 // 获取随机一篇邮件id
 router.get("/email/random", getRandomEmailHandler)
+
+// 搜索邮件
+router.get("/email/search", [
+    check('verification').notEmpty().withMessage("验证码不能为空"),
+    check("name").notEmpty().withMessage("查找邮件姓名不能为空").isLength({ max: 120 }).withMessage("姓名不能大于120个中文字符"),
+    check("emailAddress").notEmpty().withMessage("查找邮件地址不能为空").matches(RegEmail).withMessage('邮件地址格式不正确'),
+    check("uuid").notEmpty().withMessage("uuid不能为空"),
+], searchEmailHandler)
 
 
 module.exports = router
