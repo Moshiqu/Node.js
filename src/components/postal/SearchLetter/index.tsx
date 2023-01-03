@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import style from "@/components/postal/SearchLetter/SearchLetter.module.scss"
-import { Button, Form, Input, notification, Space, Table } from 'antd';
+import { Button, Form, Input, notification, Space, Table, Modal } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { CaptchaAPI, SearchEmailsApi } from '@/request/api';
 import useStateRef from 'react-usestateref'
@@ -118,6 +118,7 @@ const SearchList: React.FC<SearchListPropsType> = (props) => {
 
     const { searchList } = props
     const [mapSearchList, setMapSearchList] = useState<DataType[]>([])
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const mapArr = searchList.map(item => {
@@ -185,10 +186,10 @@ const SearchList: React.FC<SearchListPropsType> = (props) => {
                 <Space size="middle">
                     <Button onClick={() => navigateTo(`/postal/detail?${record.key}`)} type="primary" size='small'>查看</Button>
                     {
-                        record.is_open ? <Button type="primary" size='small'>取消公开信</Button> : null
+                        record.is_open ? <Button type="primary" size='small' onClick={() => setIsModalOpen(true)}>取消公开信</Button> : null
                     }
                     {
-                        record.is_send ? <Button type="primary" size='small'>补发邮件</Button> : null
+                        record.is_send ? null : <Button type="primary" size='small'>补发邮件</Button>
                     }
                 </Space>
             ),
@@ -196,8 +197,21 @@ const SearchList: React.FC<SearchListPropsType> = (props) => {
         },
     ];
 
+    const ComfirmModal = () => {
+        return (
+            <Modal title="Basic Modal" open={isModalOpen} onOk={() => setIsModalOpen(false)} onCancel={() => setIsModalOpen(false)}>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
+        )
+    }
+
     return (
-        <Table columns={columns} dataSource={mapSearchList} pagination={false} />
+        <>
+            <Table columns={columns} dataSource={mapSearchList} pagination={false} />
+            <ComfirmModal></ComfirmModal>
+        </>
     )
 }
 
