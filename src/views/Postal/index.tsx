@@ -77,8 +77,10 @@ const Postal: React.FC = () => {
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[currentRoute.pathname]} selectedKeys={[currentRoute.pathname]} items={navItem} onClick={menuClick} />
             </Header>
             <Content>
-                <img src={Poster} alt='' style={{ width: '100%' }} />
-                <Outlet />
+                <img src={Poster} alt='' style={{ width: '100%', height: '3.71rem' }} />
+                <div style={{minHeight:"calc(100vh - 50px - 3.71rem - 70px)"}}>
+                    <Outlet />
+                </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>

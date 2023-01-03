@@ -38,9 +38,9 @@ const getEmailInfo = (mail_key) => {
             const currentStamp = new Date().getTime()
             const startStamp = new Date(start_time).getTime()
             const expiredStamp = startStamp + 100 * 1000
-            // if (currentStamp > expiredStamp) {
-            //     return resolve({ status: "success", msg: "100秒有效期已过", data: {} })
-            // }
+            if (currentStamp > expiredStamp) {
+                return resolve({ status: "success", msg: "100秒有效期已过", data: {} })
+            }
 
             return resolve({
                 status: "success", msg: "", data: {

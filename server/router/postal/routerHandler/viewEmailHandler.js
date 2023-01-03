@@ -26,7 +26,7 @@ const getEmailInfo = (email_id) => {
             if (!result.length) return reject({ status: "fail", msg: "未查询到该邮件信息" })
 
             const [emailInfo] = result
-            const { sender, destination_mail, send_time, is_open, start_time, content } = emailInfo
+            const { sender, destination_mail, send_time, is_open, start_time, content, is_send } = emailInfo
             emailInfo.is_open = is_open === 'true' ? true : false
             emailInfo.sender = sender[0] + makeStar(sender.length - 1)
 
@@ -37,6 +37,8 @@ const getEmailInfo = (email_id) => {
             emailInfo.send_time = dayjs(send_time).format('YYYY-MM-DD HH:mm:ss')
 
             emailInfo.start_time = dayjs(start_time).format('YYYY-MM-DD HH:mm:ss')
+
+            emailInfo.is_send = is_send === 'true' || is_send === true
 
             emailInfo.content = content.replace(`<link href="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css" rel="stylesheet">`, '')
 

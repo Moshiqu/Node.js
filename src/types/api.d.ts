@@ -232,3 +232,27 @@ interface EmailSearchData {
     mail_key: string;
     is_send: string;
 }
+
+// 邮件列表
+type EmailsListAPIReq = {
+    pageNum: number,
+    pageSize: number
+}
+
+interface EmailsListRes {
+    data: EmailsListData[];
+    pagination: {
+        pageNum: number;
+        total: number;
+        pageSize: number;
+    };
+}
+
+interface EmailsListData {
+    sender: string;
+    destination_mail: string;
+    start_time: string;
+    send_time: string;
+    is_send: boolean;
+    id: number;
+}

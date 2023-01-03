@@ -7,8 +7,9 @@ const { viewEmailHandler } = require('./routerHandler/viewEmailHandler')
 const { createCommentHandler } = require('./routerHandler/createCommentHandler')
 const { getRandomEmailHandler } = require('./routerHandler/getRandomEmailHandler')
 const { searchEmailHandler } = require('./routerHandler/searchEmailHandler')
+const { emailsListHandler } = require('./routerHandler/emailsListHandler')
 const { body, check } = require('express-validator');
-const { RegDateTime, RegNickname,RegEmail } = require('@root/config')
+const { RegDateTime, RegNickname, RegEmail } = require('@root/config')
 
 // 记录邮件信息
 router.post('/record', [
@@ -60,6 +61,12 @@ router.get("/email/search", [
     check("emailAddress").notEmpty().withMessage("查找邮件地址不能为空").matches(RegEmail).withMessage('邮件地址格式不正确'),
     check("uuid").notEmpty().withMessage("uuid不能为空"),
 ], searchEmailHandler)
+
+// 邮件列表
+router.get("/email/emails-list", [
+    check("pageNum").notEmpty().withMessage("请求页码不能为空").matches(/^[1-9]\d*$/).withMessage("请求页码必须是非零正整数"),
+    check("pageSize").notEmpty().withMessage("每页条数不能为空").matches(/^[1-9]\d*$/).withMessage("每页条数必须是非零正整数"),
+], emailsListHandler)
 
 
 module.exports = router

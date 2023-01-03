@@ -1,74 +1,88 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import style from '@/components/postal/List/List.module.scss';
+import { EmailsListApi } from '@/request/api';
+import PaginationView from '@/components/Pagination';
 
-interface DataType {
-    key: React.Key;
-    name: string;
-    email: string;
-    create_time: string;
-    send_time: string;
-    status: boolean
-}
 
-const columns: ColumnsType<DataType> = [
+const columns: ColumnsType<EmailsListData> = [
     {
         title: '姓名',
-        dataIndex: 'name',
-        key: 'name',
+        dataIndex: 'sender',
+        key: 'sender',
+        width: '20%'
         // render: (text) => <a>{text}</a>,
     },
     {
         title: 'email地址',
-        dataIndex: 'email',
-        key: 'email',
+        dataIndex: 'destination_mail',
+        key: 'destination_mail',
         responsive: ['md'],
+        width: '20%'
     },
     {
         title: '创建时间',
-        dataIndex: 'create_time',
-        key: 'create_time',
+        dataIndex: 'start_time',
+        key: 'start_time',
         responsive: ['lg'],
+        width: '20%'
     },
     {
         title: '收信时间',
         dataIndex: 'send_time',
         key: 'send_time',
         responsive: ['lg'],
+        width: '20%'
     },
     {
         title: '当前状态',
         dataIndex: 'status',
         key: 'status',
         responsive: ['lg'],
+        width: '20%',
         render: (status) => <span style={{ color: status ? '#000' : "red" }}>{status ? "成功寄送" : "尚未寄送"}</span>
     },
 ];
 
-const data: DataType[] = [
-    {
-        key: '1',
-        name: 'John Brown',
-        email: '912323520@qq.com',
-        create_time: 'New York No. 1 Lake Park',
-        send_time: 'New York No. 1 Lake Park',
-        status: true,
-    },
-    {
-        key: '2',
-        name: 'John Brown',
-        email: '912323520@qq.com',
-        create_time: 'New York No. 1 Lake Park',
-        send_time: 'New York No. 1 Lake Park',
-        status: false,
-    },
-];
-
 const List: React.FC = () => {
+    const [data, setData] = useState<EmailsListData[]>([])
+    const [pagination, setPagination] = useState<PaginationType>({ pageNum: 1, pageSize: 5, total: 0 })
+    const [tableLoading, setTableLoading] = useState(false)
+
+    useEffect(() => {
+        getList()
+        window.scrollTo(0, 0)
+
+        return () => {
+            document.title = `这是个啥时光邮箱|信件列表`
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pagination.pageNum, pagination.pageSize])
+
+    const getList = () => {
+        const sendData: EmailsListAPIReq = {
+            pageNum: pagination.pageNum,
+            pageSize: pagination.pageSize,
+        }
+        setTableLoading(true)
+        EmailsListApi(sendData).then(res => {
+            console.log(res);
+            setData(res.data)
+            setPagination(res.pagination)
+        }).catch(err => {
+            setData([])
+            console.log(pagination, '===>pagination');
+            console.log(err);
+        }).finally(() => {
+            setTableLoading(false)
+        })
+    }
+
     return (
         <div className={style.List}>
-            <Table columns={columns} dataSource={data} pagination={false} />
+            <Table columns={columns} dataSource={data} pagination={false} loading={tableLoading} />
+            <PaginationView setPagination={setPagination} pagination={pagination} />
         </div>
     )
 };

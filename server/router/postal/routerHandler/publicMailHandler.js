@@ -61,9 +61,9 @@ const getPublicEmails = (pageNum, pageSize, type) => {
 
                     item.start_time = dayjs(start_time).format('YYYY-MM-DD HH:mm:ss')
 
-                    item.is_open = is_open === 'true' ? true : false
+                    item.is_open = is_open === 'true' || is_open === true
 
-                    item.content = content.replace(`<link href="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css" rel="stylesheet">`,'')
+                    item.content = content.replace(`<link href="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css" rel="stylesheet">`, '')
                 })
                 resolve({ status: 'success', data: list, pagination: { pageNum: parseInt(pageNum), total: total, pageSize: parseInt(pageSize) } })
             })
