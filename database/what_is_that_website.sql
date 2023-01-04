@@ -394,12 +394,12 @@ DROP TABLE IF EXISTS `postal_comments`;
 CREATE TABLE `postal_comments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `postal_id` int DEFAULT NULL,
-  `comment_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT '评论',
-  `comment_nickname` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '评论人昵称',
-  `comment_mail_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '评论人邮箱',
+  `comment_content` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '评论',
+  `comment_nickname` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '评论人昵称',
+  `comment_mail_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '评论人邮箱',
   `start_time` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of postal_comments

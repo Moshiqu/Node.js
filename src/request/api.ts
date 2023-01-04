@@ -50,3 +50,6 @@ export const SearchEmailsApi = (data: EmailSearchAPIReq): Promise<EmailSearchAPI
 
 // 获取邮件列表
 export const EmailsListApi = (data: EmailsListAPIReq): Promise<EmailsListRes> => request.get('/apis/postal/email/emails-list', { params: data })
+
+// 取消公开信
+export const RevokePublicApi = (data: PublicRevokeAPIReq): Promise<PublicRevokeAPIRes> => request.post('/apis/postal/email/public-revoke', data)

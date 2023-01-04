@@ -8,6 +8,7 @@ const { createCommentHandler } = require('./routerHandler/createCommentHandler')
 const { getRandomEmailHandler } = require('./routerHandler/getRandomEmailHandler')
 const { searchEmailHandler } = require('./routerHandler/searchEmailHandler')
 const { emailsListHandler } = require('./routerHandler/emailsListHandler')
+const { revokePublicHandler } = require('./routerHandler/revokePublicHandler')
 const { body, check } = require('express-validator');
 const { RegDateTime, RegNickname, RegEmail } = require('@root/config')
 
@@ -67,6 +68,11 @@ router.get("/email/emails-list", [
     check("pageNum").notEmpty().withMessage("请求页码不能为空").matches(/^[1-9]\d*$/).withMessage("请求页码必须是非零正整数"),
     check("pageSize").notEmpty().withMessage("每页条数不能为空").matches(/^[1-9]\d*$/).withMessage("每页条数必须是非零正整数"),
 ], emailsListHandler)
+
+// 取消公开信
+router.post("/email/public-revoke", [
+    body("id").notEmpty().withMessage("邮件id不能为空").isInt().withMessage("邮件id格式不正确"),
+], revokePublicHandler)
 
 
 module.exports = router

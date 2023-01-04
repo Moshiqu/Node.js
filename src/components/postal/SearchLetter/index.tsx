@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import style from "@/components/postal/SearchLetter/SearchLetter.module.scss"
-import { Button, Form, Input, notification, Space, Table, Modal } from 'antd';
+import { Button, Form, Input, notification, Space, Table, Modal, message } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
-import { CaptchaAPI, SearchEmailsApi } from '@/request/api';
+import { CaptchaAPI, RevokePublicApi, SearchEmailsApi } from '@/request/api';
 import useStateRef from 'react-usestateref'
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from "dayjs";
 import { useNavigate } from 'react-router-dom';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 type SearchFormPropsType = {
     setShowSearchListHandler: Function,
@@ -118,7 +119,7 @@ const SearchList: React.FC<SearchListPropsType> = (props) => {
 
     const { searchList } = props
     const [mapSearchList, setMapSearchList] = useState<DataType[]>([])
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
         const mapArr = searchList.map(item => {
@@ -186,10 +187,10 @@ const SearchList: React.FC<SearchListPropsType> = (props) => {
                 <Space size="middle">
                     <Button onClick={() => navigateTo(`/postal/detail?${record.key}`)} type="primary" size='small'>查看</Button>
                     {
-                        record.is_open ? <Button type="primary" size='small' onClick={() => setIsModalOpen(true)}>取消公开信</Button> : null
+                        record.is_open ? <Button type="primary" size='small' onClick={() => comfirmModal('open', record)}>取消公开信</Button> : null
                     }
                     {
-                        record.is_send ? null : <Button type="primary" size='small'>补发邮件</Button>
+                        record.is_send ? null : <Button type="primary" size='small' onClick={() => comfirmModal('resend', record)} >补发邮件</Button>
                     }
                 </Space>
             ),
@@ -197,20 +198,46 @@ const SearchList: React.FC<SearchListPropsType> = (props) => {
         },
     ];
 
-    const ComfirmModal = () => {
+    const comfirmModal = (type: 'open' | 'resend', itemData: DataType) => {
+        console.log(itemData);
+
+        const revoke = () => {
+            RevokePublicApi({ id: itemData.key }).then(res => {
+                messageApi.open({
+                    type: 'success',
+                    content: res.msg,
+                });
+                mapSearchList.forEach(item=>{
+                    if(item.key === itemData.key){
+                        item.is_open = false
+                    }
+                })
+                setMapSearchList(mapSearchList)
+            }).catch(err => {
+                messageApi.open({
+                    type: 'error',
+                    content: err.msg,
+                });
+            })
+        }
+
         return (
-            <Modal title="Basic Modal" open={isModalOpen} onOk={() => setIsModalOpen(false)} onCancel={() => setIsModalOpen(false)}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
+            Modal.confirm({
+                title: '提示',
+                icon: <ExclamationCircleOutlined />,
+                content: (type === 'open' ? <>是否取消公开信 <span style={{ color: "red" }}>(此操作不可逆)</span></> : <>是否需要补发该邮件</>),
+                okText: '确认',
+                cancelText: '取消',
+                className: style.Confirm_modal,
+                onOk: revoke
+            })
         )
     }
 
     return (
         <>
+            {contextHolder}
             <Table columns={columns} dataSource={mapSearchList} pagination={false} />
-            <ComfirmModal></ComfirmModal>
         </>
     )
 }

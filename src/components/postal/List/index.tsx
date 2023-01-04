@@ -67,7 +67,6 @@ const List: React.FC = () => {
         }
         setTableLoading(true)
         EmailsListApi(sendData).then(res => {
-            console.log(res);
             setData(res.data)
             setPagination(res.pagination)
         }).catch(err => {

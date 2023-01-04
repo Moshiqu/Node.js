@@ -256,3 +256,12 @@ interface EmailsListData {
     is_send: boolean;
     id: number;
 }
+
+// 取消公开信
+type PublicRevokeAPIReq  = {
+    id:number
+}
+
+interface PublicRevokeAPIRes {
+    msg: string
+}

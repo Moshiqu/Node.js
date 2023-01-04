@@ -36,7 +36,7 @@ const BeforeRouterEnter: React.FC = () => {
     const path = useLocation().pathname
 
     // 允许跳过登录验证的页面
-    if (configObj.skipSignInArr.find(() => path.split('/')[1])) return outlet
+    if (configObj.skipSignInArr.some((item: string) => item === path.split('/')[1])) return outlet
 
     // 登录验证
     if (hasToken && (path === '/login' || path === '/register')) {
@@ -51,7 +51,7 @@ const BeforeRouterEnter: React.FC = () => {
 function App() {
     const path = useLocation().pathname
     const dispatch = useDispatch()
-    if (path !== '/login' && path !== '/register' && !configObj.skipSignInArr.find(() => path.split('/')[1])) {
+    if (path !== '/login' && path !== '/register' && !configObj.skipSignInArr.some((item: string) => item === path.split('/')[1])) {
         dispatch(userInfoStatus.asyncActions.asyncGetUserInfo as any)
     }
 

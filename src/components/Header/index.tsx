@@ -8,13 +8,15 @@ import ChangePwdModal from '@/components/ChangePwdModal';
 import ChangeUserInfoModal from '@/components/ChangeUserInfoModal';
 import style from "@/components/Header/header.module.scss";
 import '@/components/Header/header.less';
+import DefaultImg from "@/assets/imgs/header/default-female.png"
 
 import { useSelector } from 'react-redux';
 
 const { Header } = Layout;
 
 const HeaderView: React.FC = () => {
-    const [avatarUrl, setAvatarUrl] = useState('https://joeschmoe.io/api/v1/random')
+    // const [avatarUrl, setAvatarUrl] = useState('https://joeschmoe.io/api/v1/random') // 随机头像
+    const [avatarUrl, setAvatarUrl] = useState(DefaultImg)
 
     const navigateTo = useNavigate()
 
@@ -69,17 +71,15 @@ const HeaderView: React.FC = () => {
                 </ul>
 
                 <Dropdown menu={{ items }} trigger={['click']} arrow>
-                    <a onClick={(e) => e.preventDefault()}>
+                    <span>
                         <Space>
                             <div className={style.avatarBox}>
                                 <img src={avatarUrl} alt="" title={userInfo.nickname || userInfo.account} />
                             </div>
                         </Space>
-                    </a>
+                    </span>
                 </Dropdown>
             </div>
-
-
         </Header>
     );
 };
