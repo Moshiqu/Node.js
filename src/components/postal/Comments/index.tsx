@@ -1,4 +1,5 @@
 import { Avatar, Button, List, Skeleton } from 'antd';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react';
 import style from '@/components/postal/Comments/Comments.module.scss'
 
@@ -19,10 +20,17 @@ interface DataType {
     loading: boolean;
 }
 
+interface CommentsType {
+    emailId: number
+}
+
+
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 
-const Comments: React.FC = () => {
+const Comments: React.FC<CommentsType> = (props) => {
+    const { emailId } = props
+
     const [initLoading, setInitLoading] = useState(true);
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<DataType[]>([]);
@@ -80,7 +88,7 @@ const Comments: React.FC = () => {
             dataSource={list}
             renderItem={item => (
                 <List.Item
-                    actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+                    actions={[<HeartOutlined style={{ color: '#eb2f96' }} />, <HeartFilled style={{ color: '#eb2f96' }}/>]}
                 >
                     <Skeleton avatar title={false} loading={item.loading} active>
                         <List.Item.Meta

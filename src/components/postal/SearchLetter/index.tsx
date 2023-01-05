@@ -207,8 +207,8 @@ const SearchList: React.FC<SearchListPropsType> = (props) => {
                     type: 'success',
                     content: res.msg,
                 });
-                mapSearchList.forEach(item=>{
-                    if(item.key === itemData.key){
+                mapSearchList.forEach(item => {
+                    if (item.key === itemData.key) {
                         item.is_open = false
                     }
                 })
@@ -229,7 +229,8 @@ const SearchList: React.FC<SearchListPropsType> = (props) => {
                 okText: '确认',
                 cancelText: '取消',
                 className: style.Confirm_modal,
-                onOk: revoke
+                onOk: revoke,
+                centered: true,
             })
         )
     }

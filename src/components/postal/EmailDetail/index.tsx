@@ -56,13 +56,14 @@ const EmailDetail: React.FC = () => {
             comment
         }
         EmailCommentAPI(postData).then(res => {
-            if (res.status !== 'success') {
-                message.error(res.msg)
-                setUuid(uuidv4())
-            }
+            if (res.status !== 'success') return message.error(res.msg)
             resetForm()
+            setComment("")
+            message.success(res.msg)
         }).catch(err => {
             message.error(err.msg)
+        }).finally(()=>{
+            setUuid(uuidv4())
         })
     };
 
@@ -123,8 +124,8 @@ const EmailDetail: React.FC = () => {
                 </Form.Item>
             </Form>
 
-            <TextArea showCount maxLength={300} onChange={(e) => setComment(e.currentTarget.value)} placeholder="来说两句吧..." style={{ marginBottom: ".3rem" }} />
-            <Comments />
+            <TextArea showCount maxLength={300} onChange={(e) => setComment(e.currentTarget.value)} value={comment} placeholder="来说两句吧..." style={{ marginBottom: ".3rem" }} />
+            <Comments emailId={emailId} />
         </div >
     )
 }

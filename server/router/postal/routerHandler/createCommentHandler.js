@@ -57,18 +57,18 @@ const checkVerifyCode = (verifyCode, uuid) => {
 /**
  * @description: 写入评论
  * @param {comment_content} 评论
- * @param {email_id} 邮件id
+ * @param {postal_id} 邮件id
  * @param {comment_mail_address} 评论人邮箱
  * @param {comment_nickname} 评论人昵称
  * @return {*}
  */
-const writeComment = (comment_content, email_id, comment_mail_address, comment_nickname) => {
+const writeComment = (comment_content, postal_id, comment_mail_address, comment_nickname) => {
     return new Promise((resolve, reject) => {
         const writeCommentSql = `INSERT INTO postal_comments SET ?`
         db.getConnection((err, conn) => {
             if (err) return reject({ status: "fail", msg: "从连接池获取连接失败" })
 
-            conn.query(writeCommentSql, { comment_content, comment_nickname, comment_mail_address, email_id }, (err, result) => {
+            conn.query(writeCommentSql, { comment_content, comment_nickname, comment_mail_address, postal_id }, (err, result) => {
                 if (err) return reject({ status: 'fail', msg: err.message || err.sqlMessage })
 
                 result = JSON.parse(JSON.stringify(result))
