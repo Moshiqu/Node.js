@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2023-01-11 17:59:32
+Date: 2023-01-12 17:51:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `captcha` (
   `start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `verify_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=352 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=468 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of captcha
@@ -345,6 +345,122 @@ INSERT INTO `captcha` VALUES ('348', '8nNN', 'true', null, '94d328be-2c13-4473-9
 INSERT INTO `captcha` VALUES ('349', 'yn2S', 'true', null, '94d328be-2c13-4473-9b1a-d559f182e8a0', '2023-01-11 17:07:26', null);
 INSERT INTO `captcha` VALUES ('350', 'snIr', 'true', null, 'ceb2d121-472b-457f-a3d2-b544eaa86330', '2023-01-11 17:07:33', null);
 INSERT INTO `captcha` VALUES ('351', 'GbuD', 'true', null, 'ceb2d121-472b-457f-a3d2-b544eaa86330', '2023-01-11 17:07:33', null);
+INSERT INTO `captcha` VALUES ('352', 'eT2R', 'true', null, 'e49a9802-3b11-454c-8c0a-8b6d2d6bb25c', '2023-01-12 09:48:35', null);
+INSERT INTO `captcha` VALUES ('353', 'TgLe', 'true', null, 'e49a9802-3b11-454c-8c0a-8b6d2d6bb25c', '2023-01-12 09:48:35', null);
+INSERT INTO `captcha` VALUES ('354', '2IEq', 'true', null, 'ef753eb2-186e-4675-8c86-2f5e6f11f753', '2023-01-12 11:06:34', null);
+INSERT INTO `captcha` VALUES ('355', 'ZzZ6', 'true', null, 'ef753eb2-186e-4675-8c86-2f5e6f11f753', '2023-01-12 11:06:34', null);
+INSERT INTO `captcha` VALUES ('356', 'Ibfs', 'true', null, 'f6780d76-fdf3-49ae-855b-ab6a52339e9f', '2023-01-12 11:27:02', null);
+INSERT INTO `captcha` VALUES ('357', 'XMFJ', 'true', null, 'f6780d76-fdf3-49ae-855b-ab6a52339e9f', '2023-01-12 11:27:02', null);
+INSERT INTO `captcha` VALUES ('358', 'x5d1', 'true', null, '3af2da17-0828-4a6d-99fe-d57a3ea9d662', '2023-01-12 11:29:53', null);
+INSERT INTO `captcha` VALUES ('359', '8BEa', 'true', null, '3af2da17-0828-4a6d-99fe-d57a3ea9d662', '2023-01-12 11:29:53', null);
+INSERT INTO `captcha` VALUES ('360', 'cFoz', 'true', null, 'd4afbab8-b025-46d0-b1fa-f655ed7698d2', '2023-01-12 11:53:46', null);
+INSERT INTO `captcha` VALUES ('361', 'kGEr', 'true', null, 'd4afbab8-b025-46d0-b1fa-f655ed7698d2', '2023-01-12 11:53:46', null);
+INSERT INTO `captcha` VALUES ('362', 'Jfxl', 'true', null, 'ef58e4dc-0956-4356-b560-d4e8251c8ca5', '2023-01-12 11:54:15', null);
+INSERT INTO `captcha` VALUES ('363', 'ZhP3', 'true', null, 'ef58e4dc-0956-4356-b560-d4e8251c8ca5', '2023-01-12 11:54:15', null);
+INSERT INTO `captcha` VALUES ('364', 'JA6C', 'true', null, '4f6272c8-7c2c-402a-a543-83ed458583a6', '2023-01-12 11:55:11', null);
+INSERT INTO `captcha` VALUES ('365', 'binm', 'true', null, '4f6272c8-7c2c-402a-a543-83ed458583a6', '2023-01-12 11:55:11', null);
+INSERT INTO `captcha` VALUES ('366', 'KcCL', 'true', null, 'c743ae8c-2853-4bca-b465-8113a1d67b54', '2023-01-12 11:58:36', null);
+INSERT INTO `captcha` VALUES ('367', 'YZ34', 'true', null, 'c743ae8c-2853-4bca-b465-8113a1d67b54', '2023-01-12 11:58:37', null);
+INSERT INTO `captcha` VALUES ('368', 'zgGy', 'true', null, '603fd704-28c5-45d5-beba-d6e44f0c10bf', '2023-01-12 14:57:32', null);
+INSERT INTO `captcha` VALUES ('369', 'h1SC', 'true', null, '603fd704-28c5-45d5-beba-d6e44f0c10bf', '2023-01-12 14:57:32', null);
+INSERT INTO `captcha` VALUES ('370', 'JtxY', 'true', null, '6ca606c3-edf5-429c-b2e3-77018c02157f', '2023-01-12 14:57:41', null);
+INSERT INTO `captcha` VALUES ('371', 'voHz', 'true', null, '6ca606c3-edf5-429c-b2e3-77018c02157f', '2023-01-12 14:57:41', null);
+INSERT INTO `captcha` VALUES ('372', '6KIc', 'true', null, '1605fb9d-6366-4957-ab1e-5ca8827da2ed', '2023-01-12 15:02:38', null);
+INSERT INTO `captcha` VALUES ('373', 'IEOr', 'true', null, '1605fb9d-6366-4957-ab1e-5ca8827da2ed', '2023-01-12 15:02:38', null);
+INSERT INTO `captcha` VALUES ('374', 'FjbI', 'true', null, '111ae944-323e-493a-b77d-5f754f74e20f', '2023-01-12 15:05:09', null);
+INSERT INTO `captcha` VALUES ('375', 'Q6OZ', 'true', null, '111ae944-323e-493a-b77d-5f754f74e20f', '2023-01-12 15:05:09', null);
+INSERT INTO `captcha` VALUES ('376', 'tnPB', 'true', null, '240fc7e2-8155-471c-b809-adb0ed84e883', '2023-01-12 15:05:43', null);
+INSERT INTO `captcha` VALUES ('377', 'rDKT', 'true', null, '240fc7e2-8155-471c-b809-adb0ed84e883', '2023-01-12 15:05:43', null);
+INSERT INTO `captcha` VALUES ('378', 'JQEt', 'true', null, 'ab465b1c-a81c-4c0b-87bd-9839526cde7a', '2023-01-12 15:10:54', null);
+INSERT INTO `captcha` VALUES ('379', 'AZwG', 'true', null, 'ab465b1c-a81c-4c0b-87bd-9839526cde7a', '2023-01-12 15:10:54', null);
+INSERT INTO `captcha` VALUES ('380', 'ND5Q', 'true', null, '98800dde-c853-49a3-8832-bb8353f5f582', '2023-01-12 15:13:23', null);
+INSERT INTO `captcha` VALUES ('381', '76k5', 'true', null, '98800dde-c853-49a3-8832-bb8353f5f582', '2023-01-12 15:13:23', null);
+INSERT INTO `captcha` VALUES ('382', 'O6vt', 'true', null, '02b9be4a-a1a8-4dc5-b3dd-fc49f9757540', '2023-01-12 15:14:30', null);
+INSERT INTO `captcha` VALUES ('383', 'rRAx', 'true', null, '02b9be4a-a1a8-4dc5-b3dd-fc49f9757540', '2023-01-12 15:14:30', null);
+INSERT INTO `captcha` VALUES ('384', 'mZTs', 'true', null, 'b449d8fb-0113-4587-8915-7bdc0f51ebd5', '2023-01-12 15:16:25', null);
+INSERT INTO `captcha` VALUES ('385', 'xrcr', 'true', null, 'b449d8fb-0113-4587-8915-7bdc0f51ebd5', '2023-01-12 15:16:25', null);
+INSERT INTO `captcha` VALUES ('386', 'Jbb5', 'true', null, 'a3be7861-c029-4520-bc2b-ad3fd87f6aa8', '2023-01-12 15:16:58', null);
+INSERT INTO `captcha` VALUES ('387', '7PCt', 'true', null, 'a3be7861-c029-4520-bc2b-ad3fd87f6aa8', '2023-01-12 15:16:58', null);
+INSERT INTO `captcha` VALUES ('388', 'PpMp', 'true', null, 'cc5dd431-4a13-4266-9fb5-07c7286d06c0', '2023-01-12 15:17:29', null);
+INSERT INTO `captcha` VALUES ('389', 'nfhB', 'true', null, 'cc5dd431-4a13-4266-9fb5-07c7286d06c0', '2023-01-12 15:17:29', null);
+INSERT INTO `captcha` VALUES ('390', '0D49', 'true', null, 'd347c0dd-40fe-4f9e-9106-dc1b291a8234', '2023-01-12 15:17:46', null);
+INSERT INTO `captcha` VALUES ('391', 'vbTO', 'true', null, 'd347c0dd-40fe-4f9e-9106-dc1b291a8234', '2023-01-12 15:17:46', null);
+INSERT INTO `captcha` VALUES ('392', '87pb', 'true', null, 'b8650a14-31ea-4589-9b5d-f967bc00f6b8', '2023-01-12 15:17:59', null);
+INSERT INTO `captcha` VALUES ('393', 'F8VZ', 'true', null, 'b8650a14-31ea-4589-9b5d-f967bc00f6b8', '2023-01-12 15:17:59', null);
+INSERT INTO `captcha` VALUES ('394', 'Aq7K', 'true', null, '539ee323-e716-429f-817b-551f1d947605', '2023-01-12 15:36:17', null);
+INSERT INTO `captcha` VALUES ('395', 'wzOa', 'true', null, '539ee323-e716-429f-817b-551f1d947605', '2023-01-12 15:36:17', null);
+INSERT INTO `captcha` VALUES ('396', 'bhu0', 'true', null, '084a3e96-0d56-4447-951f-79549f0b97a1', '2023-01-12 15:36:56', null);
+INSERT INTO `captcha` VALUES ('397', 'BNoL', 'true', null, '459f0a6d-d34e-4d1e-b69c-c5cd304ab9f7', '2023-01-12 15:38:36', null);
+INSERT INTO `captcha` VALUES ('398', 'ZRZT', 'true', null, '459f0a6d-d34e-4d1e-b69c-c5cd304ab9f7', '2023-01-12 15:38:36', null);
+INSERT INTO `captcha` VALUES ('399', '1c1Z', 'true', null, 'b3adea7a-ba73-416d-8bdc-f46c6decfe43', '2023-01-12 15:40:12', null);
+INSERT INTO `captcha` VALUES ('400', 'Nlia', 'true', null, 'b3adea7a-ba73-416d-8bdc-f46c6decfe43', '2023-01-12 15:40:12', null);
+INSERT INTO `captcha` VALUES ('401', 'eoYc', 'true', null, 'f57d4f97-9b5a-4216-a93d-20c4addc3a75', '2023-01-12 15:49:58', null);
+INSERT INTO `captcha` VALUES ('402', 'h8wI', 'true', null, 'f57d4f97-9b5a-4216-a93d-20c4addc3a75', '2023-01-12 15:49:58', null);
+INSERT INTO `captcha` VALUES ('403', 'HfIU', 'true', null, '1e18828b-9877-428b-b69b-f5f9c42c508e', '2023-01-12 15:52:23', null);
+INSERT INTO `captcha` VALUES ('404', '2Nzr', 'true', null, '1e18828b-9877-428b-b69b-f5f9c42c508e', '2023-01-12 15:52:23', null);
+INSERT INTO `captcha` VALUES ('405', 'Cn2m', 'true', null, 'd0837261-dcb1-449f-b929-12e796b7be07', '2023-01-12 15:53:37', null);
+INSERT INTO `captcha` VALUES ('406', 'KwEL', 'true', null, 'd0837261-dcb1-449f-b929-12e796b7be07', '2023-01-12 15:53:37', null);
+INSERT INTO `captcha` VALUES ('407', 'gwhq', 'true', null, 'c9fae0e2-48a3-4a56-8871-40e323062163', '2023-01-12 16:08:42', null);
+INSERT INTO `captcha` VALUES ('408', 'fWQ1', 'true', null, 'c9fae0e2-48a3-4a56-8871-40e323062163', '2023-01-12 16:08:42', null);
+INSERT INTO `captcha` VALUES ('409', 'WkfN', 'true', null, '9b55d8c1-0fa9-4e5e-8fc8-2d67549bfcce', '2023-01-12 16:15:10', null);
+INSERT INTO `captcha` VALUES ('410', 'enQQ', 'true', null, '9b55d8c1-0fa9-4e5e-8fc8-2d67549bfcce', '2023-01-12 16:15:10', null);
+INSERT INTO `captcha` VALUES ('411', 'POjH', 'true', null, 'eaabd7aa-234d-4141-ab8f-0f1f9591dd83', '2023-01-12 16:15:25', null);
+INSERT INTO `captcha` VALUES ('412', 'onEX', 'true', null, 'eaabd7aa-234d-4141-ab8f-0f1f9591dd83', '2023-01-12 16:15:25', null);
+INSERT INTO `captcha` VALUES ('413', 'YDXh', 'true', null, 'd2cdfed9-2762-43f5-884d-694701bca6f2', '2023-01-12 16:18:59', null);
+INSERT INTO `captcha` VALUES ('414', '00Cs', 'true', null, 'd2cdfed9-2762-43f5-884d-694701bca6f2', '2023-01-12 16:18:59', null);
+INSERT INTO `captcha` VALUES ('415', 'Xwtj', 'true', null, 'c07e9959-fc9a-4622-9688-3f82cccf3060', '2023-01-12 16:19:44', null);
+INSERT INTO `captcha` VALUES ('416', 'DDju', 'true', null, 'c07e9959-fc9a-4622-9688-3f82cccf3060', '2023-01-12 16:19:44', null);
+INSERT INTO `captcha` VALUES ('417', 'dObP', 'true', null, 'a836da84-1281-4d44-bb74-7411cc27e05e', '2023-01-12 16:24:02', null);
+INSERT INTO `captcha` VALUES ('418', 'BO4t', 'true', null, 'a836da84-1281-4d44-bb74-7411cc27e05e', '2023-01-12 16:24:02', null);
+INSERT INTO `captcha` VALUES ('419', 'QD5B', 'true', null, '1a947c62-3252-48ed-8021-508490f851b9', '2023-01-12 16:24:07', null);
+INSERT INTO `captcha` VALUES ('420', 'Ukfr', 'true', null, '1a947c62-3252-48ed-8021-508490f851b9', '2023-01-12 16:24:07', null);
+INSERT INTO `captcha` VALUES ('421', 'k870', 'true', null, '1f121058-eb18-422e-b85b-7243b09362f0', '2023-01-12 16:26:25', null);
+INSERT INTO `captcha` VALUES ('422', 'bOr3', 'true', null, '1f121058-eb18-422e-b85b-7243b09362f0', '2023-01-12 16:26:25', null);
+INSERT INTO `captcha` VALUES ('423', '0cxF', 'true', null, '181ce189-d81e-4955-bf67-8124aa545d0e', '2023-01-12 16:26:42', null);
+INSERT INTO `captcha` VALUES ('424', 'siKW', 'true', null, '181ce189-d81e-4955-bf67-8124aa545d0e', '2023-01-12 16:26:42', null);
+INSERT INTO `captcha` VALUES ('425', 'dVmu', 'true', null, '6f4aec1c-d92f-4dbb-92bd-db8eba1e86e8', '2023-01-12 16:27:53', null);
+INSERT INTO `captcha` VALUES ('426', '0BLb', 'true', null, '6f4aec1c-d92f-4dbb-92bd-db8eba1e86e8', '2023-01-12 16:27:53', null);
+INSERT INTO `captcha` VALUES ('427', 'xndj', 'true', null, '0379c298-89af-4a34-839a-15e9502710b8', '2023-01-12 16:27:59', null);
+INSERT INTO `captcha` VALUES ('428', 'SmIi', 'true', null, '0379c298-89af-4a34-839a-15e9502710b8', '2023-01-12 16:27:59', null);
+INSERT INTO `captcha` VALUES ('429', 'nzNs', 'true', null, '57e297ad-51d6-4d53-b5ba-20245ab932fe', '2023-01-12 16:28:08', null);
+INSERT INTO `captcha` VALUES ('430', 'CsxS', 'true', null, '57e297ad-51d6-4d53-b5ba-20245ab932fe', '2023-01-12 16:28:08', null);
+INSERT INTO `captcha` VALUES ('431', 'wzLo', 'true', null, '500a7b71-4243-4021-ab37-1cce5cb3a5e0', '2023-01-12 16:31:03', null);
+INSERT INTO `captcha` VALUES ('432', 'l21U', 'true', null, '500a7b71-4243-4021-ab37-1cce5cb3a5e0', '2023-01-12 16:31:03', null);
+INSERT INTO `captcha` VALUES ('433', 'JWxn', 'true', null, '45089b09-0e12-417a-bfd6-754526e7a860', '2023-01-12 16:33:16', null);
+INSERT INTO `captcha` VALUES ('434', 'qUrO', 'true', null, '45089b09-0e12-417a-bfd6-754526e7a860', '2023-01-12 16:33:16', null);
+INSERT INTO `captcha` VALUES ('435', 'IoEr', 'true', null, 'a9227853-7b75-4ec4-85ad-1db04f41b92e', '2023-01-12 16:33:21', null);
+INSERT INTO `captcha` VALUES ('436', 'cjqn', 'true', null, 'a9227853-7b75-4ec4-85ad-1db04f41b92e', '2023-01-12 16:33:21', null);
+INSERT INTO `captcha` VALUES ('437', '1v6R', 'true', null, '5d86338a-32ac-4266-943c-3ce989914484', '2023-01-12 16:35:19', null);
+INSERT INTO `captcha` VALUES ('438', 'YddN', 'true', null, '5d86338a-32ac-4266-943c-3ce989914484', '2023-01-12 16:35:19', null);
+INSERT INTO `captcha` VALUES ('439', 'c5ST', 'true', null, '7e5eef90-e9c9-409a-a404-0c591a457dc0', '2023-01-12 16:35:54', null);
+INSERT INTO `captcha` VALUES ('440', 'C0Fb', 'true', null, '7e5eef90-e9c9-409a-a404-0c591a457dc0', '2023-01-12 16:35:56', null);
+INSERT INTO `captcha` VALUES ('441', 'ew1h', 'true', null, '8685e560-f3bc-4ff2-b08e-396fe30b042f', '2023-01-12 16:45:37', null);
+INSERT INTO `captcha` VALUES ('442', 'qZ08', 'true', null, '8685e560-f3bc-4ff2-b08e-396fe30b042f', '2023-01-12 16:45:39', null);
+INSERT INTO `captcha` VALUES ('443', 'Zs81', 'true', null, '8685e560-f3bc-4ff2-b08e-396fe30b042f', '2023-01-12 16:48:00', null);
+INSERT INTO `captcha` VALUES ('444', '1kqn', 'true', null, '8685e560-f3bc-4ff2-b08e-396fe30b042f', '2023-01-12 16:48:31', null);
+INSERT INTO `captcha` VALUES ('445', 'Bjba', 'true', null, '8685e560-f3bc-4ff2-b08e-396fe30b042f', '2023-01-12 16:49:40', null);
+INSERT INTO `captcha` VALUES ('446', '19Vb', 'true', null, '8685e560-f3bc-4ff2-b08e-396fe30b042f', '2023-01-12 16:50:35', null);
+INSERT INTO `captcha` VALUES ('447', 'U85G', 'true', null, '674a5b03-b437-46fa-b59b-912f78ca483d', '2023-01-12 16:57:00', null);
+INSERT INTO `captcha` VALUES ('448', 'VL2J', 'true', null, '674a5b03-b437-46fa-b59b-912f78ca483d', '2023-01-12 16:57:00', null);
+INSERT INTO `captcha` VALUES ('449', 'Ur5T', 'true', null, '1594f2ee-3b09-45b9-9450-2119a41bd5f3', '2023-01-12 16:59:36', null);
+INSERT INTO `captcha` VALUES ('450', 'l0lN', 'true', null, '1594f2ee-3b09-45b9-9450-2119a41bd5f3', '2023-01-12 16:59:36', null);
+INSERT INTO `captcha` VALUES ('451', 'DCuC', 'true', null, '23775f22-13f3-4fb2-8061-691dbb0731d7', '2023-01-12 16:59:39', null);
+INSERT INTO `captcha` VALUES ('452', 'orbH', 'true', null, '23775f22-13f3-4fb2-8061-691dbb0731d7', '2023-01-12 16:59:39', null);
+INSERT INTO `captcha` VALUES ('453', 'jaY3', 'true', null, '045119e7-e5d6-4a3d-ae0a-9a6eadbeb7c8', '2023-01-12 17:05:07', null);
+INSERT INTO `captcha` VALUES ('454', 'cchp', 'true', null, '045119e7-e5d6-4a3d-ae0a-9a6eadbeb7c8', '2023-01-12 17:05:07', null);
+INSERT INTO `captcha` VALUES ('455', 'ehdd', 'true', null, '045119e7-e5d6-4a3d-ae0a-9a6eadbeb7c8', '2023-01-12 17:07:28', null);
+INSERT INTO `captcha` VALUES ('456', 'T7My', 'true', null, '045119e7-e5d6-4a3d-ae0a-9a6eadbeb7c8', '2023-01-12 17:08:32', null);
+INSERT INTO `captcha` VALUES ('457', 'TUFy', 'true', null, '045119e7-e5d6-4a3d-ae0a-9a6eadbeb7c8', '2023-01-12 17:10:03', null);
+INSERT INTO `captcha` VALUES ('458', 'PASa', 'true', null, '5d488205-3f51-477c-a0ef-e55fb05c340f', '2023-01-12 17:10:13', null);
+INSERT INTO `captcha` VALUES ('459', 'cYXN', 'false', null, '9d66b38b-c78f-452b-9377-aa5591024afb', '2023-01-12 17:10:13', null);
+INSERT INTO `captcha` VALUES ('460', '8kgi', 'true', null, 'efea1657-e3c0-4d86-8af6-ca193951d286', '2023-01-12 17:16:36', null);
+INSERT INTO `captcha` VALUES ('461', 'Zflo', 'true', null, '9a0cd19b-fe8d-45a2-88d1-4812ea117ab3', '2023-01-12 17:16:49', null);
+INSERT INTO `captcha` VALUES ('462', '04y7', 'true', null, '9a0cd19b-fe8d-45a2-88d1-4812ea117ab3', '2023-01-12 17:16:49', null);
+INSERT INTO `captcha` VALUES ('463', 'e3Qj', 'true', null, '77ce99e5-614e-4d06-b0c4-2a2f8baa6e74', '2023-01-12 17:20:17', null);
+INSERT INTO `captcha` VALUES ('464', 'pq9u', 'true', null, '77ce99e5-614e-4d06-b0c4-2a2f8baa6e74', '2023-01-12 17:20:17', null);
+INSERT INTO `captcha` VALUES ('465', 'eUpi', 'true', null, 'ba751328-1475-4467-b85a-70fce1bda1c7', '2023-01-12 17:20:52', null);
+INSERT INTO `captcha` VALUES ('466', 'NHBl', 'false', null, '0690c5be-4973-47dc-85b2-a0c0fecdbb8e', '2023-01-12 17:21:00', null);
+INSERT INTO `captcha` VALUES ('467', 'XmGh', 'true', null, '810806fa-228b-4f98-b26b-7354055d44b9', '2023-01-12 17:21:05', null);
 
 -- ----------------------------
 -- Table structure for mail
@@ -469,24 +585,24 @@ INSERT INTO `person` VALUES ('2', '13', '张三', '2021-11-03 10:24:02', '2021-1
 DROP TABLE IF EXISTS `postal_comments`;
 CREATE TABLE `postal_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `is_active` varchar(8) DEFAULT NULL,
+  `is_active` varchar(8) DEFAULT 'true',
   `postal_id` int(11) DEFAULT NULL,
   `comment_content` text COMMENT '评论',
   `comment_nickname` varchar(16) DEFAULT NULL COMMENT '评论人昵称',
   `comment_mail_address` varchar(255) DEFAULT NULL COMMENT '评论人邮箱',
   `start_time` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of postal_comments
 -- ----------------------------
-INSERT INTO `postal_comments` VALUES ('1', 'true', null, '321', 'Moshiqu3', '912323520@qq.com', null);
-INSERT INTO `postal_comments` VALUES ('2', 'true', null, '321', 'Moshiqu3', '912323520@qq.com', null);
-INSERT INTO `postal_comments` VALUES ('3', 'true', null, '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:22:07');
-INSERT INTO `postal_comments` VALUES ('4', 'true', null, '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:34:27');
-INSERT INTO `postal_comments` VALUES ('5', 'true', null, '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:46:25');
-INSERT INTO `postal_comments` VALUES ('6', 'true', null, '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:51:03');
+INSERT INTO `postal_comments` VALUES ('1', 'true', '42', '321', 'Moshiqu3', '912323520@qq.com', null);
+INSERT INTO `postal_comments` VALUES ('2', 'true', '42', '321', 'Moshiqu3', '912323520@qq.com', null);
+INSERT INTO `postal_comments` VALUES ('3', 'true', '42', '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:22:07');
+INSERT INTO `postal_comments` VALUES ('4', 'true', '42', '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:34:27');
+INSERT INTO `postal_comments` VALUES ('5', 'true', '42', '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:46:25');
+INSERT INTO `postal_comments` VALUES ('6', 'true', '42', '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:51:03');
 INSERT INTO `postal_comments` VALUES ('7', 'true', '51', '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 18:55:12');
 INSERT INTO `postal_comments` VALUES ('8', 'true', '51', '321', 'Moshiqu3', '912323520@qq.com', '2022-12-24 19:16:22');
 INSERT INTO `postal_comments` VALUES ('9', 'true', '51', '123', 'Moshiqu', '912323520@qq.com', '2022-12-24 19:17:35');
@@ -514,6 +630,8 @@ INSERT INTO `postal_comments` VALUES ('30', 'true', '51', '阿萨大大', '爱�
 INSERT INTO `postal_comments` VALUES ('31', 'true', '51', '阿萨大大去问驱蚊器为', '请问请问', '912352@qq.com', '2022-12-24 20:29:46');
 INSERT INTO `postal_comments` VALUES ('32', 'true', '51', '阿萨大大去问驱蚊器为啊实打实的啊阿松大阿松大阿松大阿松大阿萨大时代阿松大阿松大阿松大', '从v主程序', '912352@qq.com', '2022-12-24 20:33:36');
 INSERT INTO `postal_comments` VALUES ('33', 'true', '51', '爱死春春', 'asdqwegb', '666@qq.com', '2023-01-05 09:58:58');
+INSERT INTO `postal_comments` VALUES ('34', 'true', '42', 'asdasd\nzxcz c 啊手动阀啊手动阀', '阿萨苏1', '33313@qq.com', '2023-01-12 17:16:36');
+INSERT INTO `postal_comments` VALUES ('35', 'true', '42', 'cesces', '阿松大斯大', '65161@qq.com', '2023-01-12 17:21:05');
 
 -- ----------------------------
 -- Table structure for postal_options

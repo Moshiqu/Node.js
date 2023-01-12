@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import style from '@/components/postal/Mail/Mail.module.scss';
-import { Button, Segmented, Tabs, Card, Space } from 'antd';
+import { Button, Segmented, Tabs, Card, Space, message } from 'antd';
 import { SegmentedValue } from 'antd/lib/segmented';
 import PaginationView from '@/components/Pagination';
 import { PublicEmailsAPI, RandomEmailIdAPI } from '@/request/api';
@@ -53,6 +53,7 @@ const Mail: React.FC = () => {
             setEmailsList([])
             console.log(pagination, '===>pagination');
             console.log(err);
+            message.error(err.msg)
         })
     }
 

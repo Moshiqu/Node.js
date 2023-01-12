@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useLocation } from 'react-router-dom';
 import style from '@/components/postal/EmailDetail/EmailDetail.module.scss';
 import { Divider, Form, Input, Button, Space, message } from 'antd';
@@ -14,6 +14,7 @@ const EmailDetail: React.FC = () => {
     const [svgTag, setSvgTag] = useState('')
     const [emailInfo, setEmailInfo] = useState<EmailInfoAndCommentAPIResData>()
     const [comment, setComment] = useState('')
+    const CommentRef = useRef<any>(null)
 
     const [form] = Form.useForm();
 
@@ -60,9 +61,10 @@ const EmailDetail: React.FC = () => {
             resetForm()
             setComment("")
             message.success(res.msg)
+            CommentRef.current && CommentRef.current.getRepies();
         }).catch(err => {
             message.error(err.msg)
-        }).finally(()=>{
+        }).finally(() => {
             setUuid(uuidv4())
         })
     };
@@ -125,7 +127,7 @@ const EmailDetail: React.FC = () => {
             </Form>
 
             <TextArea showCount maxLength={300} onChange={(e) => setComment(e.currentTarget.value)} value={comment} placeholder="来说两句吧..." style={{ marginBottom: ".3rem" }} />
-            <Comments emailId={emailId} />
+            <Comments emailId={emailId} ref={CommentRef} />
         </div >
     )
 }

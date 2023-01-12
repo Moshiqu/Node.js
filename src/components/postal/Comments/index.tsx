@@ -1,107 +1,85 @@
-import { Avatar, Button, List, Skeleton } from 'antd';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons'
-import React, { useEffect, useState } from 'react';
+import { Pagination, Empty, Spin, message } from 'antd';
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import style from '@/components/postal/Comments/Comments.module.scss'
-
-interface DataType {
-    gender?: string;
-    name: {
-        title?: string;
-        first?: string;
-        last?: string;
-    };
-    email?: string;
-    picture: {
-        large?: string;
-        medium?: string;
-        thumbnail?: string;
-    };
-    nat?: string;
-    loading: boolean;
-}
+import { EmailRepliesAPI } from '@/request/api';
 
 interface CommentsType {
-    emailId: number
+    emailId: number,
+    ref: any
 }
 
-
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
-
-const Comments: React.FC<CommentsType> = (props) => {
+const Comments: React.FC<CommentsType> = forwardRef((props, ref) => {
     const { emailId } = props
 
     const [initLoading, setInitLoading] = useState(true);
-    const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<DataType[]>([]);
-    const [list, setList] = useState<DataType[]>([]);
+    const [list, setList] = useState<RepliesDatum[]>([]);
+    const [pagination, setPagination] = useState<Pagination>({ total: 0, pageNum: 0, pageSize: 0 })
+
+    const getRepies = (pageNum = 1, pageSize = 2) => {
+        EmailRepliesAPI({ pageNum, pageSize, email_id: emailId }).then(res => {
+            setPagination(res.pagination)
+            setList(res.data)
+            setInitLoading(false)
+        }).catch(err => {
+            message.error(err.msg)
+        })
+    }
 
     useEffect(() => {
-        fetch(fakeDataUrl)
-            .then(res => res.json())
-            .then(res => {
-                setInitLoading(false);
-                setData(res.results);
-                setList(res.results);
-            });
+        getRepies()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const onLoadMore = () => {
-        setLoading(true);
-        setList(
-            data.concat([...new Array(count)].map(() => ({ loading: true, name: {}, picture: {} }))),
-        );
-        fetch(fakeDataUrl)
-            .then(res => res.json())
-            .then(res => {
-                const newData = data.concat(res.results);
-                setData(newData);
-                setList(newData);
-                setLoading(false);
-                // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-                // In real scene, you can using public method of react-virtualized:
-                // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-                window.dispatchEvent(new Event('resize'));
-            });
-    };
+    const pageSizeHandler = (page: number, pageSize: number) => {
+        getRepies(page, pageSize)
+    }
 
-    const loadMore =
-        !initLoading && !loading ? (
-            <div
-                style={{
-                    textAlign: 'center',
-                    marginTop: 12,
-                    height: 32,
-                    lineHeight: '32px',
-                }}
-            >
-                <Button onClick={onLoadMore}>loading more</Button>
+    useImperativeHandle(ref, () => ({
+        getRepies
+    }))
+
+    const CommentItem: React.FC<RepliesDatum> = (props) => {
+        const { nickname, email, time, content } = props
+
+        return (
+            <div className={style.comment_item}>
+                <div className={style.comment_item_header}>
+                    <div>
+                        昵称: <span style={{ marginLeft: "5px" }}>{nickname}({email})</span>
+                    </div>
+                    <div className={style.comment_item_header_right}>
+                        <div style={{ display: "inline-block" }}>{time}</div>
+                        <button className={style.btn}>引用</button>
+                    </div>
+                </div>
+                <div className={style.comment_item_body}>
+                    {content}
+                </div>
             </div>
-        ) : null;
+        )
+    }
 
     return (
-        <List
-            className={style.demo_loadmore_list}
-            loading={initLoading}
-            itemLayout="horizontal"
-            loadMore={loadMore}
-            dataSource={list}
-            renderItem={item => (
-                <List.Item
-                    actions={[<HeartOutlined style={{ color: '#eb2f96' }} />, <HeartFilled style={{ color: '#eb2f96' }}/>]}
-                >
-                    <Skeleton avatar title={false} loading={item.loading} active>
-                        <List.Item.Meta
-                            avatar={<Avatar src={item.picture.large} />}
-                            title={<a href="https://ant.design">{item.name?.last}</a>}
-                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                        />
-                        <div>content</div>
-                    </Skeleton>
-                </List.Item>
-            )}
-        />
+        <div>
+            <Spin spinning={initLoading}>
+                <div style={{ marginTop: "40px" }}>
+                    {
+                        list.length ? list.map((item) => <CommentItem key={item.id} {...item}></CommentItem>) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                    }
+                </div>
+            </Spin>
+            <Pagination
+                defaultCurrent={pagination.pageNum}
+                current={pagination.pageNum}
+                total={pagination.total}
+                pageSize={pagination.pageSize}
+                style={{ display: 'flex', justifyContent: "center" }}
+                onChange={pageSizeHandler}
+            />
+
+        </div>
+
     );
-};
+});
 
 export default Comments;

@@ -53,3 +53,6 @@ export const EmailsListApi = (data: EmailsListAPIReq): Promise<EmailsListRes> =>
 
 // 取消公开信
 export const RevokePublicApi = (data: PublicRevokeAPIReq): Promise<PublicRevokeAPIRes> => request.post('/apis/postal/email/public-revoke', data)
+
+// 根据邮件id获取评论
+export const EmailRepliesAPI = (data: RepliesAPIReq): Promise<RepliesAPIRes> => request.get('/apis/postal/email/replies', { params: data })

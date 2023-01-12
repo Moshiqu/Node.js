@@ -258,10 +258,37 @@ interface EmailsListData {
 }
 
 // 取消公开信
-type PublicRevokeAPIReq  = {
-    id:number
+type PublicRevokeAPIReq = {
+    id: number
 }
 
 interface PublicRevokeAPIRes {
     msg: string
+}
+
+
+// 根据邮件id获取评论
+type RepliesAPIReq = {
+    email_id: number,
+    pageSize: number,
+    pageNum: number
+}
+
+interface RepliesAPIRes {
+    data: RepliesDatum[];
+    pagination: Pagination;
+}
+
+interface Pagination {
+    total: number;
+    pageNum: number;
+    pageSize: number;
+}
+
+interface RepliesDatum {
+    content: string;
+    nickname: string;
+    email: string;
+    time?: string;
+    id:number
 }
