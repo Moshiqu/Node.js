@@ -53,7 +53,7 @@ const getReplies = (email_id, pageNum, pageSize) => {
 
                     if (email) {
                         const [address, suffix] = email.split("@")
-                        item.email = address.slice(0, 2) + makeStar(address.length - 2) + suffix
+                        item.email = address.slice(0, 2) + makeStar(address.length - 2) + '@' +suffix
                     }
 
                 });

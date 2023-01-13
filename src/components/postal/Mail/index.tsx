@@ -84,7 +84,8 @@ const Mail: React.FC = () => {
             destination: string,
             send_time: string,
             start_time: string,
-            id: number
+            id: number,
+            comment_count: number,
         }
 
         const cardClickHandler = (id: number) => {
@@ -94,9 +95,9 @@ const Mail: React.FC = () => {
         const CardHeader: React.FC<CardHeaderProps> = (props) => {
             return (
                 <div className={style.card_header} onClick={() => cardClickHandler(props.id)}>
-                    <span>投递人:<span>{props.sender}</span><span>{props.destination}</span></span>
+                    <span>投递人: <span>{props.sender}</span> <span>{props.destination}</span></span>
                     <span>
-                        <span style={{ color: '#000' }}>{props.send_time} 寄往 {props.send_time}</span><span style={{ marginLeft: "20px" }}>【0】个评论</span>
+                        <span style={{ color: '#000' }}>{props.send_time} 寄往 {props.send_time}</span><span style={{ marginLeft: "20px" }}>【{props.comment_count}】个评论</span>
                     </span>
                 </div>
             )
@@ -105,7 +106,7 @@ const Mail: React.FC = () => {
         return (
             <Space direction="vertical" size="middle" style={{ width: "100%" }}>
                 {emailsList?.map(item =>
-                    <Card title={<CardHeader sender={item.sender} destination={item.destination_mail} send_time={item.send_time} start_time={item.start_time} id={item.id} />} bordered={false} hoverable key={`${type}-${item.id}`} style={{ cursor: "pointer" }}>
+                    <Card title={<CardHeader sender={item.sender} destination={item.destination_mail} send_time={item.send_time} start_time={item.start_time} id={item.id} comment_count={item.comment_count} />} bordered={false} hoverable key={`${type}-${item.id}`} style={{ cursor: "pointer" }}>
                         <div dangerouslySetInnerHTML={{ __html: item.content }}></div>
                     </Card>
                 )}

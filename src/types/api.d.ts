@@ -154,7 +154,8 @@ type PublicEmailsAPIResData = {
     start_time: string,
     id: number,
     content: string,
-    is_send: boolean
+    is_send: boolean,
+    comment_count: number,
 }
 
 type PaginationType = {
@@ -290,5 +291,5 @@ interface RepliesDatum {
     nickname: string;
     email: string;
     time?: string;
-    id:number
+    id: number
 }

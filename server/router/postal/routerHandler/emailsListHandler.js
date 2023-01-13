@@ -30,7 +30,7 @@ const emailsListHandler = (req, res) => {
 
                     return {
                         sender: sender[0] + makeStar(sender.length - 1),
-                        destination_mail: address.slice(0, 2) + makeStar(address.length - 2) + suffix,
+                        destination_mail: address.slice(0, 2) + makeStar(address.length - 2) + '@' + suffix,
                         start_time: dayjs(start_time).format('YYYY-MM-DD HH:mm:ss'),
                         send_time: dayjs(send_time).format('YYYY-MM-DD HH:mm:ss'),
                         status: is_send === 'true',

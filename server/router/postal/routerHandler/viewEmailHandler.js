@@ -31,7 +31,7 @@ const getEmailInfo = (email_id) => {
             emailInfo.sender = sender[0] + makeStar(sender.length - 1)
 
             const [address, suffix] = destination_mail.split("@")
-            emailInfo.destination_mail = address.slice(0, 2) + makeStar(address.length - 2) + suffix
+            emailInfo.destination_mail = address.slice(0, 2) + makeStar(address.length - 2) + '@' + suffix
 
             const dayjs = require("dayjs")
             emailInfo.send_time = dayjs(send_time).format('YYYY-MM-DD HH:mm:ss')

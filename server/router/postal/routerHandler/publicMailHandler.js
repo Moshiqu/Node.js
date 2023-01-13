@@ -35,13 +35,13 @@ const getPublicEmails = (pageNum, pageSize, type) => {
         let result = null
         switch (type) {
             case 1:
-                getPublicEmailsSql = `SELECT sender, destination_mail, send_time, content, is_send, start_time, id  FROM postal_options WHERE is_active = "true" and is_open = "true" ORDER BY start_time DESC LIMIT ${pageSize} offset ${start}`
+                getPublicEmailsSql = `SELECT a.sender, a.destination_mail, a.send_time, a.content, a.is_send, a.start_time, a.id, count(b.postal_id) AS comment_count FROM postal_options AS a LEFT JOIN postal_comments AS b ON a.id = b.postal_id WHERE a.is_active = 'true' GROUP BY a.id ORDER BY a.start_time DESC LIMIT ${pageSize} offset ${start}`
                 break;
             case 2:
-                getPublicEmailsSql = `SELECT postal_id, count(1) AS account FROM postal_comments WHERE is_active = "true" GROUP BY postal_id`
+                getPublicEmailsSql = `SELECT a.sender, a.destination_mail, a.send_time, a.content, a.is_send, a.start_time, a.id, count(b.postal_id) AS comment_count, b.start_time as comment_start_time FROM postal_options AS a LEFT JOIN postal_comments AS b ON a.id = b.postal_id WHERE a.is_active = 'true' GROUP BY a.id ORDER BY comment_start_time DESC LIMIT ${pageSize} offset ${start}`
                 break;
             case 3:
-                getPublicEmailsSql = `SELECT postal_id, count(1) AS account FROM postal_comments WHERE is_active = "true" GROUP BY postal_id`
+                getPublicEmailsSql = `SELECT a.sender, a.destination_mail, a.send_time, a.content, a.is_send, a.start_time, a.id, count(b.postal_id) as comment_count FROM postal_options AS a LEFT JOIN postal_comments AS b ON a.id = b.postal_id WHERE a.is_active = 'true' GROUP BY a.id ORDER BY comment_count DESC LIMIT ${pageSize} offset ${start}`
                 break;
 
             default:
@@ -49,13 +49,7 @@ const getPublicEmails = (pageNum, pageSize, type) => {
         }
 
         try {
-            if (type === 1) {
-                result = await latestTypeEmail(getCountSql, getPublicEmailsSql, pageNum, pageSize)
-            } else if (type === 2) {
-                // result = await latestTypeEmail(getCountSql, getPublicEmailsSql, pageNum, pageSize)
-            } else if (type === 3) {
-                result = await mostTypeEmail(getCountSql, getPublicEmailsSql, pageNum, pageSize)
-            }
+            result = await getPublicEmailsArr(getCountSql, getPublicEmailsSql, pageNum, pageSize)
             return resolve(result)
         } catch (error) {
             return reject(error)
@@ -71,7 +65,7 @@ const getPublicEmails = (pageNum, pageSize, type) => {
  * @param {pageSize} pageSize
  * @return 
  */
-const latestTypeEmail = (getCountSql, getPublicEmailsSql, pageNum, pageSize) => {
+const getPublicEmailsArr = (getCountSql, getPublicEmailsSql, pageNum, pageSize) => {
     return new Promise((resolve, reject) => {
         db.query(getCountSql, (err, result) => {
             if (err) return reject({ status: "fail", msg: err.message || err.sqlMessage })
@@ -87,7 +81,7 @@ const latestTypeEmail = (getCountSql, getPublicEmailsSql, pageNum, pageSize) => 
                     item.sender = sender[0] + makeStar(sender.length - 1)
 
                     const [address, suffix] = destination_mail.split("@")
-                    item.destination_mail = address.slice(0, 2) + makeStar(address.length - 2) + suffix
+                    item.destination_mail = address.slice(0, 2) + makeStar(address.length - 2) + '@' +suffix
 
                     item.send_time = dayjs(send_time).format('YYYY-MM-DD HH:mm:ss')
 
@@ -102,39 +96,6 @@ const latestTypeEmail = (getCountSql, getPublicEmailsSql, pageNum, pageSize) => 
         })
     })
 }
-
-const mostTypeEmail = (getCountSql, getPublicEmailsSql, pageNum, pageSize) => {
-    return new Promise((resolve, reject) => {
-        db.query(getCountSql, (err, result) => {
-            if (err) return reject({ status: "fail", msg: err.message || err.sqlMessage })
-            const total = result[0].total
-
-            db.query(getPublicEmailsSql, (err, result1) => {
-                if (err) return reject({ status: "fail", msg: err.message || err.sqlMessage })
-
-                const list = JSON.parse(JSON.stringify(result1))
-
-                list.forEach(item => {
-                    const { sender, destination_mail, send_time, is_open, start_time, content } = item
-                    item.sender = sender[0] + makeStar(sender.length - 1)
-
-                    const [address, suffix] = destination_mail.split("@")
-                    item.destination_mail = address.slice(0, 2) + makeStar(address.length - 2) + suffix
-
-                    item.send_time = dayjs(send_time).format('YYYY-MM-DD HH:mm:ss')
-
-                    item.start_time = dayjs(start_time).format('YYYY-MM-DD HH:mm:ss')
-
-                    item.is_open = is_open === 'true' || is_open === true
-
-                    item.content = content.replace(`<link href="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.css" rel="stylesheet">`, '')
-                })
-                resolve({ status: 'success', data: list, pagination: { pageNum: parseInt(pageNum), total: total, pageSize: parseInt(pageSize) } })
-            })
-        })
-    })
-}
-
 /**
  * @description: 生成数量的*号
  * @param {num} 需要的数量

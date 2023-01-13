@@ -15,7 +15,7 @@ const Comments: React.FC<CommentsType> = forwardRef((props, ref) => {
     const [list, setList] = useState<RepliesDatum[]>([]);
     const [pagination, setPagination] = useState<Pagination>({ total: 0, pageNum: 0, pageSize: 0 })
 
-    const getRepies = (pageNum = 1, pageSize = 2) => {
+    const getRepies = (pageNum = 1, pageSize = 5) => {
         EmailRepliesAPI({ pageNum, pageSize, email_id: emailId }).then(res => {
             setPagination(res.pagination)
             setList(res.data)
@@ -64,19 +64,20 @@ const Comments: React.FC<CommentsType> = forwardRef((props, ref) => {
             <Spin spinning={initLoading}>
                 <div style={{ marginTop: "40px" }}>
                     {
-                        list.length ? list.map((item) => <CommentItem key={item.id} {...item}></CommentItem>) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                        list.length ? list.map((item) => <CommentItem key={item.id} {...item}></CommentItem>) : <Empty image={Empty.PRESENTED_IMAGE_DEFAULT} description="暂无评论" />
                     }
                 </div>
             </Spin>
-            <Pagination
-                defaultCurrent={pagination.pageNum}
-                current={pagination.pageNum}
-                total={pagination.total}
-                pageSize={pagination.pageSize}
-                style={{ display: 'flex', justifyContent: "center" }}
-                onChange={pageSizeHandler}
-            />
-
+            {
+                pagination.total / pagination.pageSize > 1 ? <Pagination
+                    defaultCurrent={pagination.pageNum}
+                    current={pagination.pageNum}
+                    total={pagination.total}
+                    pageSize={pagination.pageSize}
+                    style={{ display: 'flex', justifyContent: "center" }}
+                    onChange={pageSizeHandler}
+                /> : null
+            }
         </div>
 
     );
