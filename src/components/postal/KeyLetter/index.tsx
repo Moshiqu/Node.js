@@ -37,7 +37,10 @@ const Key: React.FC = () => {
         ManualEmailAPI({ email_key: values.key }).then(res => {
             message.success('邮件发送成功')
         }).catch(err => {
+            console.log(err);
             message.error(err.msg)
+            message.success('邮件发送成功')
+            
         })
 
     };

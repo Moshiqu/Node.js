@@ -126,7 +126,7 @@ const PostalForm: React.FC = () => {
                 </div>
             </Form.Item>
 
-            <Link to={'/'} className={style.linkto}>邮局已经成立十年了，时光太匆匆。再过十年，又会是怎样的一个世界？</Link>
+            <Link to={'/'} className={style.linkto}>这是个啥邮局，仿照时光邮局，仅作学习使用！不用做任何商业用途！</Link>
 
             <Form.Item name="richText">
                 <RichText />

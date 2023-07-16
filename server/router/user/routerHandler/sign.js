@@ -111,7 +111,7 @@ const captchaHandler = (req, res) => {
  */
 const isAccountExisted = (account) => {
     return new Promise((resolve, reject) => {
-        const selectAccountSql = `SELECT 1 FROM users WHERE account = ? LIMIT 1`
+        const selectAccountSql = `SELECT 1 FROM users WHERE account = ? and is_active = 'true' LIMIT 1`
         db.query(selectAccountSql, [account], (err, result) => {
             if (err) {
                 return reject({
@@ -219,9 +219,9 @@ const checkPassword = (userInfo) => {
         const { account, password, email } = userInfo
         let getUserInfoSql = ''
         if (account) {
-            getUserInfoSql = 'SELECT account, email, avatar, nickname, password FROM  users WHERE account = ?'
+            getUserInfoSql = 'SELECT account, email, avatar, nickname, password FROM  users WHERE account = ? and is_active = "true"'
         } else {
-            getUserInfoSql = 'SELECT account, email, avatar, nickname, password FROM  users WHERE email = ?'
+            getUserInfoSql = 'SELECT account, email, avatar, nickname, password FROM  users WHERE email = ? and is_active = "true"'
         }
 
         db.query(getUserInfoSql, account ? account : email, (err, result) => {
