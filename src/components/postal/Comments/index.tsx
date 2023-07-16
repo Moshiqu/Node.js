@@ -2,6 +2,7 @@ import { Pagination, Empty, Spin, message } from 'antd';
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import style from '@/components/postal/Comments/Comments.module.scss'
 import { EmailRepliesAPI } from '@/request/api';
+import { useInterval } from '@/hooks'
 
 interface CommentsType {
     emailId: number,
@@ -13,9 +14,11 @@ const Comments: React.FC<CommentsType> = forwardRef((props, ref) => {
 
     const [initLoading, setInitLoading] = useState(true);
     const [list, setList] = useState<RepliesDatum[]>([]);
-    const [pagination, setPagination] = useState<Pagination>({ total: 0, pageNum: 0, pageSize: 0 })
+    const [pagination, setPagination] = useState<Pagination>({ total: 0, pageNum: 1, pageSize: 5 })
 
-    const getRepies = (pageNum = 1, pageSize = 5) => {
+
+    const getRepies = () => {
+        const { pageNum, pageSize } = pagination
         EmailRepliesAPI({ pageNum, pageSize, email_id: emailId }).then(res => {
             setPagination(res.pagination)
             setList(res.data)
@@ -24,15 +27,12 @@ const Comments: React.FC<CommentsType> = forwardRef((props, ref) => {
             message.error(err.msg)
         })
     }
-
     useEffect(() => {
         getRepies()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [pagination.pageNum, pagination.pageSize])
 
-    const pageSizeHandler = (page: number, pageSize: number) => {
-        getRepies(page, pageSize)
-    }
+    useInterval(getRepies, 30000)
 
     useImperativeHandle(ref, () => ({
         getRepies
@@ -75,7 +75,7 @@ const Comments: React.FC<CommentsType> = forwardRef((props, ref) => {
                     total={pagination.total}
                     pageSize={pagination.pageSize}
                     style={{ display: 'flex', justifyContent: "center" }}
-                    onChange={pageSizeHandler}
+                    onChange={(page, pageSize) => setPagination({ total: pagination.total, pageNum: page, pageSize })}
                 /> : null
             }
         </div>

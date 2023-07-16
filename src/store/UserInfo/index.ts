@@ -41,7 +41,7 @@ const store: UserInfo = {
             UserInfoAPI().then(res => {
                 return dispatch({ type: 'getUserInfo', val: res.data })
             }).catch(err => {
-                console.log(err);
+                localStorage.removeItem('token')
             })
         }
     }

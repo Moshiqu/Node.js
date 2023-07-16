@@ -192,7 +192,7 @@ const updateUser = (account, avatar, nickname) => {
  */
 const getUserInfo = (account) => {
     return new Promise((resolve, reject) => {
-        const getUserInfoSql = `SELECT account, email, avatar, nickname FROM users WHERE account = ?`
+        const getUserInfoSql = `SELECT account, email, avatar, nickname FROM users WHERE account = ? AND is_active = 'true'`
         db.query(getUserInfoSql, account, (err, result) => {
             if (err) {
                 return reject({
