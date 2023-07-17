@@ -14,6 +14,8 @@ import Mail from '@/components/postal/Mail';
 import EmailDetail from '@/components/postal/EmailDetail';
 import List from '@/components/postal/List';
 import SearchLetter from '@/components/postal/SearchLetter';
+import Chat from '@/views/Chat';
+import ChatHome from '@/components/Chat/Home';
 
 const Login = lazy(() => import("@/views/Login"))
 const Register = lazy(() => import("@/views/Register"))
@@ -86,6 +88,18 @@ const router = [
     }, {
         path: '*',
         element: <Navigate to='/about' />,
+    }, {
+        path: '/chat',
+        element: <Chat />
+    }, {
+        // path: '/chat',
+        // element: withLoaingComponent(<Chat />),
+        // children: [
+        //     {
+        //         path: '/postal/home',
+        //         element: <ChatHome />
+        //     }
+        // ]
     }
 ]
 export default router

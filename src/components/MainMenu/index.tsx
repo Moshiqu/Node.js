@@ -28,7 +28,7 @@ function getItem(
 
 const items: MenuItem[] = [
     getItem('用户', '/user', <PieChartOutlined />),
-    getItem('关于', '/about', <DesktopOutlined />),
+    getItem('聊天室', '/chat', <DesktopOutlined />),
     getItem('页面', '/page3', <UserOutlined />, [
         getItem('第一页', '/page3/page301'),
         getItem('第二页', '/page3/page302'),
